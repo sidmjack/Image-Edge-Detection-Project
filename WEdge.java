@@ -6,8 +6,6 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
     private GVertex<T> source;
     /** Ending Gvertex<T> of an Wedge. */
     private GVertex<T> end;
-    /** Whether or not the Wedge is directed. */
-    private boolean directed;
     /** Edge Weight */
     private double weight;
 
@@ -18,27 +16,7 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
     public WEdge(GVertex<T> u, GVertex<T> v, double w) {
         this.source = u;
         this.end = v;
-        this.directed = false;
         this.weight = w;
-    }
-
-    /** Create an Wedge.
-     *  @param u the start
-     *  @param v the end
-     *  @param dir true if directed, false otherwise
-     */
-    public WEdge(GVertex<T> u, GVertex<T> v, boolean dir, double w) {
-        this.source = u;
-        this.end = v;
-        this.directed = dir;
-        this.weight = w;
-    }
-
-    /** Is the Wedge directed.
-     *  @return true if yes, false otherwise
-     */
-    public boolean isDirected() {
-        return this.directed;
     }
 
     /** Is a Gvertex<T> incident to this Wedge.
