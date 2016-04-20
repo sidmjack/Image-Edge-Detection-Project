@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class WGraphP4<VT> implements WGraph<VT> {
 
@@ -101,7 +102,20 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean deleteEdge(GVertex<VT> v, GVertex<VT> u) {
-
+        boolean verticesExist = this.vertexInGraph(v) && this.vertexInGraph(u);
+        if (verticesExist) {
+            //don't check if the edge is already there before removing
+            //since it makes no difference. If it isn't there, null will be
+            //returned and the hashmap won't be changed
+            //if it is there, it'll be removed, so there's no reason to check.
+            boolean edgeExists = true;
+            edgeExists &= this.removeEdgeDirectional(v.id(), u.id()) != null;
+            edgeExists &= this.removeEdgeDirectional(u.id(), v.id()) != null;
+            if (edgeExists) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** Return true if there is an edge between v and u. 
@@ -111,7 +125,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean areAdjacent(GVertex<VT> v, GVertex<VT> u) {
-
+        // symmetry is assumed
+        return this.edges.get(v.id()).containsKey(u.id());
     }
 
     /** Return a list of all the neighbors of vertex v.  
@@ -120,7 +135,12 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> neighbors(GVertex<VT> v) {
-
+        Set<Integer> idSet = this.edges.get(v.id()).keySet();
+        List<GVertex<VT>> neighborList = new ArrayList<GVertex<VT>>(idSet.size());
+        for (Integer id : idSet) {
+            neighborList.add(this.verts.get(id));
+        }
+        return neighborList;
     }
 
     /** Return the number of edges incident to v.  
@@ -185,6 +205,20 @@ public class WGraphP4<VT> implements WGraph<VT> {
     @Override
     public List<WEdge<VT>> kruskals() {
 
+    }
+
+    private boolean vertexInGraph(GVertex<VT> vtx) {
+        return this.verts.contains(vtx);
+    }
+
+    /**
+     * Removes a directional edge
+     * @param  firstID  ID of source vertex
+     * @param  secondID ID of destination vertex
+     * @return          weight of removed vertex
+     */
+    private Double removeEdgeDirectional(int firstID, int secondID) {
+        return this.edges.get(firstID).remove(secondID);
     }
     
 }
