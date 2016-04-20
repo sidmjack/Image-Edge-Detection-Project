@@ -6,4 +6,9 @@
  * Due Date: Friday - April 29, 2016
  */
 
-README: 
+README:
+PART A: 
+
+Last Modified 4/17/2016
+Part A.3 -> WGraph (Adjacency List):
+In implementing the data structure expected to store for each vertex a list of neighboring vertices adjacency/edge using incidence lists instead of an adjacency matrix (graph), we opted to use a primitive array of hashmaps guaranteeing constant time look up. To be "space cautious", we also wanted to ensure that hashmaps were given only to array slots we knew were in use, where everything not in use is simply null. And, to generally summarize the data structure, the hashmap key is the vertex neighbor of the current array index (the referred to vertex), and the value is the weight of the edge leading to that particular neighbor.
