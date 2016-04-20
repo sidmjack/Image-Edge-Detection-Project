@@ -76,18 +76,10 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
      *  @return true if directedness and endpoints match, false otherwise
      */
     public boolean equals(WEdge<T> that) {
-        if (this.directed != that.directed) {
-            return false;
-        }
-        if (this.directed) {
-            return this.source.equals(that.source)
-                && this.end.equals(that.end);
-        } else {
-            return this.source.equals(that.source)
-                && this.end.equals(that.end)
-                || this.source.equals(that.end)
-                && this.end.equals(that.source);
-        }
+        return this.source.equals(that.source)
+            && this.end.equals(that.end)
+            || this.source.equals(that.end)
+            && this.end.equals(that.source);
     }
 
     /** Make a hashCode based on the toString.
