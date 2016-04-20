@@ -63,8 +63,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addVertex(GVertex<VT> v) {
-        boolean alreadyThere = this.verts.contains(v);
-        if (alreadyThere) {
+        if (this.vertexInGraph(v)) {
             return false;
         } else {
             return this.verts.add(v);
@@ -89,6 +88,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addEdge(GVertex<VT> v, GVertex<VT> u, double weight) {
+        this.addVertex(v);
+        this.addVertex(u);
         HashMap<Integer, Double> tempH = this.edges.get(v.id());
         HashMap<Integer, Double> tempHe = this.edges.get(u.id());
         if(tempH.containsKey(u.id())) {
@@ -141,12 +142,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> neighbors(GVertex<VT> v) {
-        Set<Integer> idSet = this.edges.get(v.id()).keySet();
-        List<GVertex<VT>> neighborList = new ArrayList<GVertex<VT>>(idSet.size());
-        for (Integer id : idSet) {
-            neighborList.add(this.verts.get(id));
+        if (this.vertexInGraph(v)) {
+            Set<Integer> idSet = this.edges.get(v.id()).keySet();
+            List<GVertex<VT>> neighborList = new ArrayList<GVertex<VT>>(idSet.size());
+            for (Integer id : idSet) {
+                neighborList.add(this.getAssociatedVertex(id));
+            }
+            return neighborList;
+        } else {
+            
         }
-        return neighborList;
     }
 
     /** Return the number of edges incident to v.  
@@ -155,7 +160,11 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public int degree(GVertex<VT> v) {
-
+        if (this.vertexInGraph(v)) {
+            return this.edges.get(v.id()).keySet().size();
+        }
+        
+        return -1;
     }
 
     /** See if an edge and vertex are incident to each other.
@@ -243,4 +252,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         return this.edges.get(firstID).remove(secondID);
     }
     
+    private GVertex<VT> getAssociatedVertex(int id) {
+        return this.verts.get(id);
+    }
 }
