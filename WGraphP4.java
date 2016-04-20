@@ -13,12 +13,11 @@ public class WGraphP4<VT> implements WGraph<VT> {
     private ArrayList<HashMap<Integer, Double>> edges;
     private int numEdges;
 
-    public WGraphP4() {
+    public WGraphP4(int maxVerts) {
         this.nextID = 0;
         this.numEdges = 0;
-        this.verts = new ArrayList<GVertex<VT>>();
-        this.edges = new ArrayList<HashMap<Integer, Double>>();
-
+        this.verts = new ArrayList<GVertex<VT>>(maxVerts);
+        this.edges = new ArrayList<HashMap<Integer, Double>>(maxVerts);
     }
 
     /** Get the number of edges. 
@@ -58,7 +57,6 @@ public class WGraphP4<VT> implements WGraph<VT> {
     /** Add a vertex if it doesn't exist yet. 
      *  @param v the vertex to add
      *  @return false if already there, true if added
-     *          false also if v's ID is outside of 0 <= id <= maxVerts
      */
     @Override
     public boolean addVertex(GVertex<VT> v) {
@@ -66,10 +64,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         if (alreadyThere) {
             return false;
         } else {
-            int idToAdd = v.id();
-            this.edges.add(idToAdd, new HashMap<Integer, Double>());
-            this.verts.add(idToAdd, v);
-            return true;
+            return this.verts.add(v);
         }
     }
         
@@ -79,16 +74,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
      *  @return false if already there, true if added
      */
     @Override
-    public boolean addEdge(WEdge<VT> e) {  
-        HashMap<Integer, Double> tempH = this.edges.get(e.source().id());
-        if(tempH.containsKey(e.end().id())) {
-            return true;
-            
-        } else {
-            return false;
-        }
-                
-        
+    public boolean addEdge(WEdge<VT> e) {                
+        return addEdge(e.source(), e.end(), e.weight());  
     }
 
     /** Add a weighted edge, may also add vertices. 
@@ -99,7 +86,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addEdge(GVertex<VT> v, GVertex<VT> u, double weight) {
-
+        HashMap<Integer, Double> tempH = this.edges.get(v.id());
+        HashMap<Integer, Double> tempHe = this.edges.get(u.id());
+        if(tempH.containsKey(u.id())) {
+            return false;
+            
+        } else {
+            tempH.put(v.id(), weight);
+            tempHe.put(u.id(), weight);
+            return true;
+        }
     }
 
     /** Remove an edge if there.  
