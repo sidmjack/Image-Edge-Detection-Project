@@ -1,7 +1,9 @@
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class WGraphP4<VT> implements WGraph<VT> {
@@ -173,7 +175,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean areIncident(WEdge<VT> e, GVertex<VT> v) {
-
+        return e.source().equals(v) || e.end().equals(v);
     }
 
     /** Return a list of all the edges.  
@@ -181,7 +183,22 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> allEdges() {
-
+        Set<WEdge<VT>> setEdges = new HashSet<WEdge<VT>>();
+        int nv = this.numVerts();
+        ArrayList<WEdge<VT>> edges = new ArrayList<WEdge<VT>>(nv);
+        int id = 0;// id of start index
+        for (HashMap<Integer, Double> index: this.edges) {
+            Set<Map.Entry<Integer, Double>> entrySet = index.entrySet();
+            GVertex<VT> start = this.getAssociatedVertex(id);
+            for(Map.Entry<Integer, Double> entry: entrySet) {
+                Double weight = entry.getValue();
+                GVertex<VT> end = this.getAssociatedVertex(entry.getKey());
+                WEdge<VT> tempEdge = new WEdge<VT>(start, end, weight);
+                setEdges.add(tempEdge); 
+            }
+            id++;
+        }
+        return edges;
     }
 
     /** Return a list of all the vertices.  
@@ -189,7 +206,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> allVertices() {
-
+        return this.verts;
     }
 
     /** Return a list of all the vertices that can be reached from v,
@@ -201,6 +218,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     @Override
     public List<GVertex<VT>> depthFirst(GVertex<VT> v) {
         ArrayList<GVertex<VT>> reaches = new ArrayList<GVertex<VT>>(this.numVerts());
+        // using LinkedList<Vertex> as a Stack
         LinkedList<GVertex<VT>> stack = new LinkedList<GVertex<VT>>();
         boolean[] visited = new boolean[this.numVerts()];  // inits to false
         stack.addFirst(v);
@@ -216,8 +234,6 @@ public class WGraphP4<VT> implements WGraph<VT> {
             }
         }
         return reaches;
-
-
     }
 
     /** Return a list of all the edges incident on vertex v.  
@@ -226,7 +242,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> incidentEdges(GVertex<VT> v) {
-
+        List<WEdge<VT>> allEdges = this.allEdges();
+        List<WEdge<VT>> iEdges = new ArrayList <WEdge<VT>>();
+        for (WEdge<VT> edge: allEdges) {
+            if (this.areIncident(edge, v)) {
+                iEdges.add(edge);
+            }
+        }
+        return iEdges;
     }
 
     /** Return a list of edges in a minimum spanning forest by
