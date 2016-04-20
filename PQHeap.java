@@ -1,6 +1,9 @@
 
 class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T> {
 	
+
+	T[] heapArray;
+
 	/** Insert a value. Duplicate values <b>do</b> end up in the
 	 *  queue, so inserting X three times means it has to be removed
 	 *  three times before it's gone again.
