@@ -50,7 +50,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addVertex(VT d) {
-
+        GVertex<VT> vtx = new GVertex<VT>(d, this.nextID());
+        return addVertex(vtx);
     }
 
     /** Add a vertex if it doesn't exist yet. 
@@ -58,8 +59,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
      *  @return false if already there, true if added
      */
     @Override
-    public boolean addVertex(Vertex v) {
-
+    public boolean addVertex(GVertex<VT> v) {
+        return this.verts.add(v);
     }
 
     /** Add a weighted edge, may also add the incident vertices. 
