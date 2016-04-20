@@ -87,14 +87,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addEdge(GVertex<VT> v, GVertex<VT> u, double weight) {
+        this.addVertex(v);
+        this.addVertex(u);
         HashMap<Integer, Double> tempH = this.edges.get(v.id());
         HashMap<Integer, Double> tempHe = this.edges.get(u.id());
         if(tempH.containsKey(u.id())) {
             return false;
             
         } else {
-            tempH.put(v.id(), weight);
-            tempHe.put(u.id(), weight);
+            tempH.put(u.id(), weight);
+            tempHe.put(v.id(), weight);
             return true;
         }
     }
@@ -153,7 +155,11 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public int degree(GVertex<VT> v) {
-
+        if (this.vertexInGraph(v)) {
+            return this.edges.get(v.id()).keySet().size();
+        }
+        
+        return this.neighbors(v).size();
     }
 
     /** See if an edge and vertex are incident to each other.
