@@ -1,7 +1,9 @@
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class WGraphP4<VT> implements WGraph<VT> {
@@ -93,8 +95,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
             return false;
             
         } else {
-            tempH.put(v.id(), weight);
-            tempHe.put(u.id(), weight);
+            tempH.put(u.id(), weight);
+            tempHe.put(v.id(), weight);
             return true;
         }
     }
@@ -163,7 +165,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean areIncident(WEdge<VT> e, GVertex<VT> v) {
-
+        return e.source().equals(v) || e.end().equals(v);
     }
 
     /** Return a list of all the edges.  
@@ -171,7 +173,23 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> allEdges() {
-
+        Set<WEdge<VT>> setEdges = new HashSet<WEdge<VT>>();
+        int nv = this.numVerts();
+        ArrayList<WEdge<T>> edges = new ArrayList<Edge>(nv);
+        int id = 0;// id of start index
+        for (HashMap<Integer, Double> index: this.edges) {
+            Set<Map.Entry<Integer, Double>> entrySet = index.entrySet();
+            GVertex<VT> start = this.getAssociatedVertex(id);
+            for(Map.Entry<Integer, Double> entry: entrySet) {
+                Double weight = entry.getValue();
+                GVertex<VT> end = this.getAssociatedVertex(entry.getKey());
+                WEdge<VT> tempEdge = new WEdge<VT>(start, end, weight);
+                setEdges.add(tempEdge); 
+            }
+            id++;
+        }
+        edges.ad
+        return edges;
     }
 
     /** Return a list of all the vertices.  
@@ -179,7 +197,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> allVertices() {
-
+        return this.verts;
     }
 
     /** Return a list of all the vertices that can be reached from v,
