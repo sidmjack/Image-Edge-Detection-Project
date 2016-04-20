@@ -10,14 +10,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
 
     /** the vertices */
     private ArrayList<GVertex<VT>> verts;
-    private ArrayList<HashMap<Integer, Double>> list;
+    private ArrayList<HashMap<Integer, Double>> edges;
     private int numEdges;
 
     public WGraphP4(int maxVerts) {
         this.nextID = 0;
         this.numEdges = 0;
         this.verts = new ArrayList<GVertex<VT>>(maxVerts);
-        this.list = new ArrayList<HashMap<Integer, Double>>(maxVerts);
+        this.edges = new ArrayList<HashMap<Integer, Double>>(maxVerts);
     }
 
     /** Get the number of edges. 
@@ -60,8 +60,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addVertex(GVertex<VT> v) {
-        return this.verts.add(v);
+        boolean alreadyThere = this.verts.contains(v);
+        if (alreadyThere) {
+            return false;
+        } else {
+            return this.verts.add(v);
+        }
     }
+        
 
     /** Add a weighted edge, may also add the incident vertices. 
      *  @param e the edge to add
