@@ -74,8 +74,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
      *  @return false if already there, true if added
      */
     @Override
-    public boolean addEdge(WEdge<VT> e) {
-
+    public boolean addEdge(WEdge<VT> e) {  
+        HashMap<Integer, Double> tempH = this.edges.get(e.source().id());
+        if(tempH.containsKey(e.end().id())) {
+            return true;
+            
+        } else {
+            return false;
+        }
+                
+        
     }
 
     /** Add a weighted edge, may also add vertices. 
