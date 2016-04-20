@@ -216,7 +216,23 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> depthFirst(GVertex<VT> v) {
-
+        ArrayList<GVertex<VT>> reaches = new ArrayList<GVertex<VT>>(this.numVerts());
+        // using LinkedList<Vertex> as a Stack
+        LinkedList<GVertex<VT>> stack = new LinkedList<GVertex<VT>>();
+        boolean[] visited = new boolean[this.numVerts()];  // inits to false
+        stack.addFirst(v);
+        visited[v.id()] = true;
+        while (! stack.isEmpty()) {
+            v = stack.removeFirst();
+            reaches.add(v);
+            for (GVertex<VT> u: this.neighbors(v)) {
+                if (! visited[u.id()]) {
+                    visited[u.id()] = true;
+                    stack.addFirst(u);
+                }
+            }
+        }
+        return reaches;
     }
 
     /** Return a list of all the edges incident on vertex v.  
@@ -225,7 +241,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> incidentEdges(GVertex<VT> v) {
-
+        List<WEdge<VT>> allEdges = this.allEdges();
+        List<WEdge<VT>> iEdges = new ArrayList <WEdge<VT>>();
+        for (WEdge<VT> edge: allEdges) {
+            if (this.areIncident(edge, v)) {
+                iEdges.add(edge);
+            }
+        }
+        return iEdges;
     }
 
     /** Return a list of edges in a minimum spanning forest by
