@@ -150,7 +150,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
             }
             return neighborList;
         } else {
-            
+            return null;
         }
     }
 
@@ -184,7 +184,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     public List<WEdge<VT>> allEdges() {
         Set<WEdge<VT>> setEdges = new HashSet<WEdge<VT>>();
         int nv = this.numVerts();
-        ArrayList<WEdge<T>> edges = new ArrayList<Edge>(nv);
+        ArrayList<WEdge<VT>> edges = new ArrayList<WEdge<VT>>(nv);
         int id = 0;// id of start index
         for (HashMap<Integer, Double> index: this.edges) {
             Set<Map.Entry<Integer, Double>> entrySet = index.entrySet();
@@ -197,7 +197,6 @@ public class WGraphP4<VT> implements WGraph<VT> {
             }
             id++;
         }
-        edges.ad
         return edges;
     }
 
