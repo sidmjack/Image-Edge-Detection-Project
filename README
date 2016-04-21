@@ -7,8 +7,75 @@
  */
 
 README:
+------------------------------------------------------------------------------
 PART A: 
 
 Last Modified 4/17/2016
 Part A.3 -> WGraph (Adjacency List):
-In implementing the data structure expected to store for each vertex a list of neighboring vertices adjacency/edge using incidence lists instead of an adjacency matrix (graph), we opted to use a primitive array of hashmaps guaranteeing constant time look up. To be "space cautious", we also wanted to ensure that hashmaps were given only to array slots we knew were in use, where everything not in use is simply null. And, to generally summarize the data structure, the hashmap key is the vertex neighbor of the current array index (the referred to vertex), and the value is the weight of the edge leading to that particular neighbor.
+In implementing the data structure expected to store for each vertex a list of neighboring 
+vertices adjacency/edge using incidence lists instead of an adjacency matrix (graph), we 
+opted to use an arraylist of hashmaps guaranteeing constant time look up. To be "space 
+cautious", we also wanted to ensure that hashmaps were given only to array slots we knew were
+in use, where everything not in use is simply null. And, to generally summarize the data 
+structure, the hashmap key is the vertex neighbor of the current array index (the referred to
+vertex), and the value is the weight of the edge leading to that particular neighbor.
+
+Last Modified 4/20/2016
+Part A.JUNIT -> WGraphTest.java JUnit Test:
+(The following HAS NOT YET HAPPENED)
+We modified the given JUnit test so that it could work with
+generics and tested the new implementation for unweighted graph by 
+changing the type of graph instantiated. Further, the modified JUNIT test
+tests the incidentEdges method (to compute a minimum spanning tree/forest), 
+and the kruskals minimum spanning tree method for Part B .  
+
+------------------------------------------------------------------------------
+PART B:
+Last Modified 4/20/2016
+Part B.1 -> WEdge.java (Kruskals Method):
+Worked on Kruskal's Method.
+
+Last Modified 4/20/2016
+Part B.2 -> PQHeap.java:
+Implemented interface methods.
+------------------------------------------------------------------------------
+PART C: 
+	Not there yet! TBD!
+------------------------------------------------------------------------------
+Summary:
+	So far so good. 
+------------------------------------------------------------------------------
+Complications:
+	
+	We ran into the issue of composing primitive arrays out of generics.
+	For whatever reason, java doesn't like making generic arrays (???) which is
+	a bit odd considering that it's the most basic data strcture in java. 
+	Anyway, after "surfing piazza" we discovered that we should just switch to
+	Array lists because they're more flexible and makes java happy.
+
+	Took a bit of time to figure out how to implement Kruskal's Algorithm.
+------------------------------------------------------------------------------
+
+"ACTIVITY LOG":
+
+Date: 4/17/2016
+PART A:
+WGraph.java (Lawrence/Eddie) -> Modified Graph Implementation to use lists instead
+	of matrices,
+GVertex.java (Sidney/Lawrence) -> Modified Vertex.java to handle generics 
+	for  GVertex.java.  
+WEdge.java (Sidney/Eddie) -> Modified Edge.java to include weight/ implement 
+		comparable for WEdge.java 
+
+Date: 4/20/2016
+PART A:
+WGraphP4 (Eddie/Lawrence) -> Completed WGraph Methods
+WEdge.java (Lawrence/Eddie/Sidney) -> Worked on modifying Edge.java function for WEdge.java
+PART B:
+WEdge.java (Eddie/Sidney) -> Implemented Kruskals Method
+PQHeap.java (Lawrence) -> Implemented Priority Queue Heap
+
+
+Date: 4/22/2016
+...
+------------------------------------------------------------------------------
