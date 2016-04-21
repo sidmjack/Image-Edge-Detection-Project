@@ -98,7 +98,6 @@ public class WGraphP4<VT> implements WGraph<VT> {
         } else {
             tempH.put(u.id(), weight);
             tempHe.put(v.id(), weight);
-            this.numEdges++;
             return true;
         }
     }
@@ -223,11 +222,11 @@ public class WGraphP4<VT> implements WGraph<VT> {
         boolean[] visited = new boolean[this.numVerts()];  // inits to false
         stack.addFirst(v);
         visited[v.id()] = true;
-        while (!stack.isEmpty()) {
+        while (! stack.isEmpty()) {
             v = stack.removeFirst();
             reaches.add(v);
             for (GVertex<VT> u: this.neighbors(v)) {
-                if (!visited[u.id()]) {
+                if (! visited[u.id()]) {
                     visited[u.id()] = true;
                     stack.addFirst(u);
                 }
@@ -258,15 +257,32 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> kruskals() {
+        PQHeap<WEdge<VT>> Pqueue = new PQHeap<WEdge<VT>>();
+        Pqueue.init(this.allEdges());
+        Partition p = new Partition(this.numEdges);
+        List<WEdge<VT>> edgeSet = new ArrayList<WEdge<VT>>();
+        int addEdges = 0;
+        int vert = this.numVerts();
+        while (addEdges < vert) {
+            WEdge<VT> small = Pqueue.remove();
+            //small is the current smallest edge 
+            int uset = p.find(small.source().id());
+            // uset is the id of one of small's two verticies
+            int vset = p.find(small.end().id());
+            // vset is the id of small's second vertex
+            if (uset != vset) {
+                //meaning I can add an edge 
+                addEdges++;
+                edgeSet.add(small);
+                p.union(uset, vset);
+            }
+            
+        }
+       
+        
         
     }
 
-
-    /**
-     * Determines if the given vertex is in the graph
-     * @param  vtx vertex to check
-     * @return     true if in graph, false otherwise
-     */
     private boolean vertexInGraph(GVertex<VT> vtx) {
         return this.verts.contains(vtx);
     }
@@ -281,11 +297,6 @@ public class WGraphP4<VT> implements WGraph<VT> {
         return this.edges.get(firstID).remove(secondID);
     }
     
-    /**
-     * gets the vertex associated with an ID
-     * @param  id ID whose vertex to fetch
-     * @return    vertex, or null if doesn't there
-     */
     private GVertex<VT> getAssociatedVertex(int id) {
         return this.verts.get(id);
     }
