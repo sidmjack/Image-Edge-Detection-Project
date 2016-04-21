@@ -7,8 +7,30 @@
  */
 
 README:
+------------------------------------------------------------------------------
 PART A: 
 
 Last Modified 4/17/2016
 Part A.3 -> WGraph (Adjacency List):
-In implementing the data structure expected to store for each vertex a list of neighboring vertices adjacency/edge using incidence lists instead of an adjacency matrix (graph), we opted to use a primitive array of hashmaps guaranteeing constant time look up. To be "space cautious", we also wanted to ensure that hashmaps were given only to array slots we knew were in use, where everything not in use is simply null. And, to generally summarize the data structure, the hashmap key is the vertex neighbor of the current array index (the referred to vertex), and the value is the weight of the edge leading to that particular neighbor.
+In implementing the data structure expected to store for each vertex a list of neighboring 
+vertices adjacency/edge using incidence lists instead of an adjacency matrix (graph), we 
+opted to use an arraylist of hashmaps guaranteeing constant time look up. To be "space 
+cautious", we also wanted to ensure that hashmaps were given only to array slots we knew were
+in use, where everything not in use is simply null. And, to generally summarize the data 
+structure, the hashmap key is the vertex neighbor of the current array index (the referred to
+vertex), and the value is the weight of the edge leading to that particular neighbor.
+
+Last Modified 4/20/2016
+Part A.JUNIT -> WGraphTest.java JUnit Test:
+(The following HAS NOT YET HAPPENED)
+We modified the given JUnit test so that it could work with
+generics and tested the new implementation for unweighted graph by 
+changing the type of graph instantiated. Further, the modified JUNIT test
+tests the incidentEdges method (to compute a minimum spanning tree/forest), 
+and the kruskals minimum spanning tree method for Part B .  
+
+------------------------------------------------------------------------------
+PART B: 
+------------------------------------------------------------------------------
+PART C: 
+------------------------------------------------------------------------------
