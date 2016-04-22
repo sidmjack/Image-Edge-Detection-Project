@@ -22,6 +22,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
 
     public PQHeap(Comparator<? super T> cmprtr) {
         this.comparator = cmprtr;
+        this.heapArray = new ArrayList<T>();
         this.clear();
     }
 
