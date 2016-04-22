@@ -41,24 +41,24 @@
  *      insertions are made, the max value is the expected value.
  *  (11)Explicit Tests for insert(T val) Method to ensure insertions allow
  *      for duplicate values.   
- *  (12)Explicit Tests for getMax() Method to ensure the values "returned"
+ *  (12)Explicit Tests for peek() Method to ensure the values "returned"
  *      is the expected maximum value.
- *  (13)Explicit Tests for getMax() Method to ensure that the maximum
+ *  (13)Explicit Tests for peek() Method to ensure that the maximum
  *      value isn't actually removed (size remains the same).
- *  (14)Explicit Tests for getMax() Method to ensure that an exception
+ *  (14)Explicit Tests for peek() Method to ensure that an exception
  *      is thrown when an attempt to get max is made on an empty queue.     
- *  (15)Explicit Tests for removeMax() Method to ensure the expected max
+ *  (15)Explicit Tests for remove() Method to ensure the expected max
  *      value is actually removed (Ensure Size()--). 
- *  (16)Explicit Tests for removeMax() Method to ensure the expected max
+ *  (16)Explicit Tests for remove() Method to ensure the expected max
  *      value is found, returned, and removed after the removeMax operation. 
- *  (17)Explicit Tests for removeMax() Method to ensure that after the
+ *  (17)Explicit Tests for remove() Method to ensure that after the
  *      removal is complete, the new max is the expected new max.
- *  (18)Explicit Tests for removeMax() Method to ensure the expected max
+ *  (18)Explicit Tests for remove() Method to ensure the expected max
  *      values when duplicates are present operates as expected.  
- *  (19)Explicit Tests for removeMax() Method to ensure that when run 
+ *  (19)Explicit Tests for remove() Method to ensure that when run 
  *      against duplicate values, that only one duplicate value is removed
  *      as well as that the new max is equivalent to the value removed.
- *  (20)Explicit Tests for removeMax() Method to ensure that an exception
+ *  (20)Explicit Tests for remove() Method to ensure that an exception
  *      is thrown if a remove operation is attempted on an empty queue.  
  */
 
@@ -343,11 +343,11 @@ public class MaxPriorityQueueTest {
         // Test whether MAX is maintained.
         for (int i = 0; i < setArray.length; i++) {
             intMPQ.insert(setArray[i]);
-            assertEquals("Max value NOT bubbling up.", maxArray[i], intMPQ.getMax());
+            assertEquals("Max value NOT bubbling up.", maxArray[i], intMPQ.peek());
         }
         // Deconstruct Queue.
         for (int j = setArray.length - 1; j >= 0 ; j--) {
-            assertEquals("Remove may be broken.", j, (long)intMPQ.removeMax());
+            assertEquals("Remove may be broken.", j, (long)intMPQ.remove());
             assertEquals(j, intMPQ.size());
         }
         //Check if actually empty.
@@ -364,15 +364,15 @@ public class MaxPriorityQueueTest {
         assertEquals("Insert may not be allowing duplicate values", 5, intMPQ.size());
         // Add duplicate values.
         for (int i = 0; i < 5; i++) {
-            assertEquals("Duplicates not properly inserted.", 5, (long)intMPQ.removeMax());
+            assertEquals("Duplicates not properly inserted.", 5, (long)intMPQ.remove());
         }
         //Check if actually empty.
         assertTrue(intMPQ.isEmpty());
     }
 
-    @Test //Tests getMax() MPQ Method to check if expected MAX is returned.
+    @Test //Tests peek() MPQ Method to check if expected MAX is returned.
     public void testGetMaxValue() {
-        // Create Collections to test against getMax().
+        // Create Collections to test against peek().
         Collection<Integer> getMaxCol1 = new ArrayList<Integer>();
         Collection<Integer> getMaxCol2 = new ArrayList<Integer>();
         Collection<Integer> getMaxCol3 = new ArrayList<Integer>();
@@ -406,30 +406,30 @@ public class MaxPriorityQueueTest {
         //Trial Number 1
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol1);
-        assertEquals("GetMax() not properly handling single value", expectedMax[0], intMPQ.getMax());
+        assertEquals("GetMax() not properly handling single value", expectedMax[0], intMPQ.peek());
         //Trial Number 2
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol2);
-        assertEquals("GetMax() not properly handling single value", expectedMax[1], intMPQ.getMax());
+        assertEquals("GetMax() not properly handling single value", expectedMax[1], intMPQ.peek());
         //Trial Number 3
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol3);
-        assertEquals("GetMax() not properly handling single value", expectedMax[2], intMPQ.getMax());
+        assertEquals("GetMax() not properly handling single value", expectedMax[2], intMPQ.peek());
         //Trial Number 4
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol4);
-        assertEquals("GetMax() not properly handling single value", expectedMax[3], intMPQ.getMax());
+        assertEquals("GetMax() not properly handling single value", expectedMax[3], intMPQ.peek());
         //Trial Number 5
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol5);
-        assertEquals("GetMax() not properly handling single value", expectedMax[4], intMPQ.getMax());
+        assertEquals("GetMax() not properly handling single value", expectedMax[4], intMPQ.peek());
     }
 
-    @Test //Tests getMax() MPQ Method to make sure getMax isn't removing.
+    @Test //Tests peek() MPQ Method to make sure getMax isn't removing.
     public void testGetMaxValUpdateMax() {
         // Clear intMPQ.
         intMPQ.clear();
@@ -439,13 +439,13 @@ public class MaxPriorityQueueTest {
         assertFalse(intMPQ.isEmpty());
         // Perform getMax and ensure that size remains the same.
         int origSize = intMPQ.size();
-        intMPQ.getMax();
-        assertEquals("getMax() changed the size of the MPQ", origSize, intMPQ.size());
+        intMPQ.peek();
+        assertEquals("peek() changed the size of the MPQ", origSize, intMPQ.size());
     }
 
-    @Test //Tests getMax() MPQ Method to make sure getMax works w/ duplicates.
+    @Test //Tests peek() MPQ Method to make sure getMax works w/ duplicates.
     public void testGetMaxDuplicates() {
-        // Create Collections to test against getMax().
+        // Create Collections to test against peek().
         Collection<Integer> getMaxCol1 = new ArrayList<Integer>();
         Collection<Integer> getMaxCol2 = new ArrayList<Integer>();
         Collection<Integer> getMaxCol3 = new ArrayList<Integer>();
@@ -464,19 +464,19 @@ public class MaxPriorityQueueTest {
         //Trial Number 1
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol1);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[0], intMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[0], intMPQ.peek());
         //Trial Number 2
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol2);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[1], intMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[1], intMPQ.peek());
         //Trial Number 3
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
         intMPQ.init(getMaxCol3);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[2], intMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedMax[2], intMPQ.peek());
         // Test on Strings:
-                // Create Collections to test against getMax().
+                // Create Collections to test against peek().
         Collection<String> getStrMaxCol1 = new ArrayList<String>();
         Collection<String> getStrMaxCol2 = new ArrayList<String>();
         Collection<String> getStrMaxCol3 = new ArrayList<String>();
@@ -495,33 +495,33 @@ public class MaxPriorityQueueTest {
         //Trial Number 1
         assertTrue(strMPQ.isEmpty());
         strMPQ.init(getStrMaxCol1);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[0], strMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[0], strMPQ.peek());
         //Trial Number 2
         strMPQ.clear();
         assertTrue(strMPQ.isEmpty());
         strMPQ.init(getStrMaxCol2);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[1], strMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[1], strMPQ.peek());
         //Trial Number 3
         strMPQ.clear();
         assertTrue(strMPQ.isEmpty());
         strMPQ.init(getStrMaxCol3);
-        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[2], strMPQ.getMax());
+        assertEquals("GetMax() NOT handling duplicates well.", expectedStrMax[2], strMPQ.peek());
     }
     
-    // Tests whether getMax() throws an exception when called on an empty MPQ.
+    // Tests whether peek() throws an exception when called on an empty MPQ.
     @Test (expected=QueueEmptyException.class)
     public void testClearGetMax() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
         // Call getMax on Empty MPQ.
-        intMPQ.getMax();
+        intMPQ.peek();
     }
 
-    @Test // Tests whether removeMax() at least removes some value when called.
+    @Test // Tests whether remove() at least removes some value when called.
     public void testRemoveMaxValues() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
-        // Create Collection to test against removeMax().
+        // Create Collection to test against remove().
         Collection<Integer> getMaxCol = new ArrayList<Integer>();
         //Create Various Arrays to fill up the Collections.
         Integer[] gMaxAry = {1, 2, 3};
@@ -531,7 +531,7 @@ public class MaxPriorityQueueTest {
         }
         intMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            assertEquals(gMaxAry[j], intMPQ.removeMax());
+            assertEquals(gMaxAry[j], intMPQ.remove());
             assertEquals("Remove values aren't being removed", j, intMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
@@ -539,11 +539,11 @@ public class MaxPriorityQueueTest {
         assertEquals(0, intMPQ.size());
     }
 
-    @Test // Tests removeMax() removes the expected value with each operation.
+    @Test // Tests remove() removes the expected value with each operation.
     public void testRemoveMaxCorrectValues() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
-        // Create Collection to test against removeMax().
+        // Create Collection to test against remove().
         Collection<Integer> getMaxCol = new ArrayList<Integer>();
         //Create Various Arrays to fill up the Collections.
         Integer[] gMaxAry = {3, 2, 1, 5, 6, 4, 7, 8};
@@ -553,7 +553,7 @@ public class MaxPriorityQueueTest {
         }
         intMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            assertEquals("Remove Max is removing the wrong value.", j + 1, (long)intMPQ.removeMax());
+            assertEquals("Remove Max is removing the wrong value.", j + 1, (long)intMPQ.remove());
             assertEquals(j, intMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
@@ -561,11 +561,11 @@ public class MaxPriorityQueueTest {
         assertEquals(0, intMPQ.size());
     }
 
-    @Test // Tests whether removeMax() properly updates max after remove operation.
+    @Test // Tests whether remove() properly updates max after remove operation.
     public void testRemoveMaxUpdateMax() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
-        // Create Collection to test against removeMax().
+        // Create Collection to test against remove().
         Collection<Integer> getMaxCol = new ArrayList<Integer>();
         //Create Array to fill up the Collections.
         Integer[] gMaxAry =     {3, 2, 3, 5, 6, 4, 8, 8};
@@ -577,8 +577,8 @@ public class MaxPriorityQueueTest {
         }
         intMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            assertEquals("Remove Max is not properly updating Max.", expectedMax[j], intMPQ.getMax());
-            assertEquals(expectedMax[j], intMPQ.removeMax());
+            assertEquals("Remove Max is not properly updating Max.", expectedMax[j], intMPQ.peek());
+            assertEquals(expectedMax[j], intMPQ.remove());
             assertEquals(j, intMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
@@ -586,11 +586,11 @@ public class MaxPriorityQueueTest {
         assertEquals(0, intMPQ.size());
     }
 
-    @Test // Tests whether removeMax() properly updates when duplicates are present.
+    @Test // Tests whether remove() properly updates when duplicates are present.
     public void testRemoveMaxDuplicates() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
-        // Create Collection to test against removeMax().
+        // Create Collection to test against remove().
         Collection<String> getMaxCol = new ArrayList<String>();
         //Create Array to fill up the Collections.
         String[] gMaxAry = {"3", "3", "2", "2", "1", "1", "0", "0"};
@@ -602,7 +602,7 @@ public class MaxPriorityQueueTest {
         }
         strMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            assertEquals(expectedMaxAry[j], strMPQ.removeMax());
+            assertEquals(expectedMaxAry[j], strMPQ.remove());
             assertEquals(j, strMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
@@ -610,11 +610,11 @@ public class MaxPriorityQueueTest {
         assertEquals(0, strMPQ.size());
     }
 
-    @Test // Tests whether removeMax() properly updates duplicate max after remove operation.
+    @Test // Tests whether remove() properly updates duplicate max after remove operation.
     public void testRemoveMaxUpdateDuplicateMax() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
-        // Create Collection to test against removeMax().
+        // Create Collection to test against remove().
         Collection<Integer> getMaxCol = new ArrayList<Integer>();
         //Create Array to fill up the Collections.
         Integer[] gMaxAry = {1, 1, 1, 0, 0, 0};
@@ -626,8 +626,8 @@ public class MaxPriorityQueueTest {
         }
         intMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            assertEquals("RemoveMax not properly removing duplicate values.", expectedMax[j], intMPQ.getMax());
-            assertEquals((long)expectedMax[j], (long)intMPQ.removeMax());
+            assertEquals("RemoveMax not properly removing duplicate values.", expectedMax[j], intMPQ.peek());
+            assertEquals((long)expectedMax[j], (long)intMPQ.remove());
             assertEquals(j, intMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
@@ -635,13 +635,13 @@ public class MaxPriorityQueueTest {
         assertEquals(0, intMPQ.size());
     }
 
-    // Tests whether removeMax() throws an exception when called on an empty MPQ.
+    // Tests whether remove() throws an exception when called on an empty MPQ.
     @Test (expected=QueueEmptyException.class)
     public void testClearRemoveMax() {
         // Check if the MPQs are empty.
         assertTrue(intMPQ.isEmpty());
         // Call removeMax on Empty MPQ.
-        intMPQ.removeMax();
+        intMPQ.remove();
     }
 }
 
