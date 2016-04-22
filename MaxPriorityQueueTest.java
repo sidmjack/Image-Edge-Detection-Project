@@ -20,7 +20,7 @@
 // simpler tests (along with error message) was intended to make it easier 
 // to track down troublesome methods/functions.
 
-/** JUNIT TESTING FOR "MaxPQHeap.java":
+/** JUNIT TESTING FOR "PQHeap.java":
  *  Comprehensive Description: Tests Max Priority Queue Heap.
 
  *  (1) Explicit Tests for isEmpty() Method to ensure queue is empty.
@@ -78,13 +78,14 @@ import org.junit.Test;
 /*Java Library Imports: */
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 /** TESTING BEGINS HERE */
 public class MaxPriorityQueueTest {
 
-    static MaxPQHeap<Integer> intMPQ;
+    static PQHeap<Integer> intMPQ;
 
-    static MaxPQHeap<String> strMPQ;  
+    static PQHeap<String> strMPQ;  
     
     static Integer[] intArray = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     static ArrayList<Integer> intVals;
@@ -98,6 +99,15 @@ public class MaxPriorityQueueTest {
     static String[] strArray2 = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"};
     static ArrayList<String> strVals2;
     static Collection<String> strCol2;
+
+
+    private static class MaxComparator<T extends Comparable<? super T>> implements Comparator<T> {
+        public int compare(T t1, T t2) {
+            return t2.compareTo(t1);
+        }
+    }
+
+
 
     /** Helper Method that Ensures Collections are Equal.
      *  @param c1 -> First Collection
@@ -153,10 +163,10 @@ public class MaxPriorityQueueTest {
         }
     }
 
-    @Before // Simply sets up MaxPQHeaps to be tested against.       
+    @Before // Simply sets up PQHeaps to be tested against.       
     public void setup() {
-        intMPQ = new MaxPQHeap<Integer>();   
-        strMPQ = new MaxPQHeap<String>();   
+        intMPQ = new PQHeap<Integer>(new MaxComparator<Integer>());   
+        strMPQ = new PQHeap<String>(new MaxComparator<String>());   
     }
 
     @Test // Double checks that the ArrayLists were properly initialized.
