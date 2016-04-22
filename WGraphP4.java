@@ -257,6 +257,13 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> kruskals() {
+        int counter = 0;
+        for (GVertex<VT> vert : this.verts) {
+            int temp;
+            temp = vert.id();
+            temp = counter;
+            counter++;
+        }
         PQHeap<WEdge<VT>> Pqueue = new PQHeap<WEdge<VT>>();
         Pqueue.init(this.allEdges());
         Partition p = new Partition(this.numEdges);
