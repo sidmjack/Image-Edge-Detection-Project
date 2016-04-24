@@ -16,11 +16,11 @@ public class WGraphP4<VT> implements WGraph<VT> {
     private ArrayList<HashMap<Integer, Double>> edges;
     private int numEdges;
 
-    public WGraphP4(int maxVerts) {
+    public WGraphP4() {
         this.nextID = 0;
         this.numEdges = 0;
-        this.verts = new ArrayList<GVertex<VT>>(maxVerts);
-        this.edges = new ArrayList<HashMap<Integer, Double>>(maxVerts);
+        this.verts = new ArrayList<GVertex<VT>>();
+        this.edges = new ArrayList<HashMap<Integer, Double>>();
     }
 
     /** Get the number of edges. 
