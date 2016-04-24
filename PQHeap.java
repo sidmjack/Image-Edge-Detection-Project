@@ -104,6 +104,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
     public void clear() {
         this.size = 0;
         this.heapArray.clear();
+        this.heapArray.add(null);
     }
 
     /** Initialize a priority queue from a container of values.
@@ -111,9 +112,11 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
      */
     @Override
     public void init(Collection<T> values) {
+
+        this.clear();
+
         this.size = values.size();
 
-        this.heapArray.add(null);
 
         this.heapArray.addAll(1, values);
 
