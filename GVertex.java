@@ -18,7 +18,14 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
         this.data = d;
         this.num = id;
     }
-
+    /**
+     * Set the id of the Gvertex.
+     * @return T data.
+     */
+    public T getD() {
+        return this.data;
+    }
+    
     /** Get the id of this Gvertex.
      *  @return the id
      */

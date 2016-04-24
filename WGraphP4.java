@@ -11,16 +11,18 @@ public class WGraphP4<VT> implements WGraph<VT> {
     /** Used to sequentially generate Gvertex<T> IDs for this graph! */
     private int nextID;
 
+    
+
     /** the vertices */
     private ArrayList<GVertex<VT>> verts;
     private ArrayList<HashMap<Integer, Double>> edges;
     private int numEdges;
 
-    public WGraphP4() {
+    public WGraphP4(int maxVerts) {
         this.nextID = 0;
         this.numEdges = 0;
-        this.verts = new ArrayList<GVertex<VT>>();
-        this.edges = new ArrayList<HashMap<Integer, Double>>();
+        this.verts = new ArrayList<GVertex<VT>>(maxVerts);
+        this.edges = new ArrayList<HashMap<Integer, Double>>(maxVerts);
     }
 
     /** Get the number of edges. 
@@ -67,7 +69,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
             return false;
             
         } else {
-            return this.verts.add(v);
+            this.verts.add(v);
+            try {
+                this.edges.set(v.id(), new HashMap<Integer, Double>());
+            } catch (IndexOutOfBoundsException e) {
+                for (int i = edges.size(); i <= v.id(); i++) {
+                    edges.add(null);
+                }
+                this.edges.set(v.id(), new HashMap<Integer, Double>());
+            }
+            return true;
         }
     }
         
