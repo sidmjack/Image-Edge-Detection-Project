@@ -39,7 +39,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
     public void insert(T t) {
         // this.resizeIfNeeded();
         this.size++;
-        this.heapArray.add(this.size, t);
+        this.heapArray.add(t);
         for (int i = this.size / 2; i > 0; i /= 2) {
             this.siftDown(i); //sift up tree starting at inserted value
         }
@@ -57,7 +57,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
             throw new QueueEmptyException();
         } else {
             T bestValue = this.heapArray.get(1);
-            this.heapArray.add(1, this.heapArray.get(this.size--));
+            this.heapArray.set(1, this.heapArray.remove(this.size--));
             int toSift = 1;
             while(toSift != -1) { // sift down the displaced value
                 toSift = this.siftDown(toSift);
