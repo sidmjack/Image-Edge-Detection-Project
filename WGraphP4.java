@@ -65,6 +65,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     public boolean addVertex(GVertex<VT> v) {
         if (this.vertexInGraph(v)) {
             return false;
+            
         } else {
             return this.verts.add(v);
         }
@@ -257,13 +258,13 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> kruskals() {
-        int counter = 0;
+       /* int counter = 0;
         for (GVertex<VT> vert : this.verts) {
             int temp;
             temp = vert.id();
             temp = counter;
             counter++;
-        }
+        }*/
         PQHeap<WEdge<VT>> Pqueue = new PQHeap<WEdge<VT>>();
         Pqueue.init(this.allEdges());
         Partition p = new Partition(this.numEdges);
@@ -285,7 +286,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
             }
             
         }
-       
+       return edgeSet;
         
         
     }
@@ -306,5 +307,23 @@ public class WGraphP4<VT> implements WGraph<VT> {
     
     private GVertex<VT> getAssociatedVertex(int id) {
         return this.verts.get(id);
+    }
+    /**
+     * test main.
+     * @param args
+     */
+    public static void main(String args[]) {
+        WGraphP4<String> graph = new WGraphP4<String>(10);
+        graph.addEdge(new GVertex<String>("hi", 1), new GVertex<String>("hellow", 2), 2);
+        graph.addEdge(new GVertex<String>("bye", 3), new GVertex<String>("cya", 4), 3);
+        graph.addEdge(new GVertex<String>("hi", 1), new GVertex<String>("cya", 4), 4);
+        graph.addEdge(new GVertex<String>("hellow", 2), new GVertex<String>("cya", 4), 10);
+
+        
+        for(WEdge<String> e: graph.kruskals()) {
+            System.out.println(e.weight());
+        }
+
+        
     }
 }
