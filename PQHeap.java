@@ -113,6 +113,8 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
     public void init(Collection<T> values) {
         this.size = values.size();
 
+        this.heapArray.add(null);
+
         this.heapArray.addAll(1, values);
 
         // heapify
