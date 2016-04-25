@@ -278,7 +278,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         List<WEdge<VT>> edgeSet = new ArrayList<WEdge<VT>>();
         int addEdges = 0;
         int vert = this.numVerts();
-        while (addEdges < vert) {
+        while (addEdges < vert && pQueue.size() != 0) {
             WEdge<VT> small = pQueue.remove();
             //small is the current smallest edge 
             int uset = p.find(small.source().id());
