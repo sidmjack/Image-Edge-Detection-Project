@@ -14,15 +14,15 @@ public class WGraphP4<VT> implements WGraph<VT> {
     
 
     /** the vertices */
-    private ArrayList<GVertex<VT>> verts;
+    private HashMap<Integer, GVertex<VT>> verts;
     private HashMap<Integer, HashMap<Integer, Double>> edges;
     private int numEdges;
 
-    public WGraphP4(int maxVerts) {
+    public WGraphP4() {
         this.nextID = 0;
         this.numEdges = 0;
-        this.verts = new ArrayList<GVertex<VT>>(maxVerts);
-        this.edges = new HashMap<Integer, HashMap<Integer, Double>>(maxVerts);
+        this.verts = new HashMap<Integer, GVertex<VT>>();
+        this.edges = new HashMap<Integer, HashMap<Integer, Double>>();
     }
 
     /** Get the number of edges. 
@@ -71,7 +71,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
             // unless it's being called by addEdge()
             
         } else {
-            this.verts.add(v);
+            this.verts.put(v.id(), v);
             this.edges.put(v.id(), new HashMap<Integer, Double>());
             return true;
         }
@@ -211,7 +211,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> allVertices() {
-        return this.verts;
+        return new LinkedList<GVertex<VT>>(this.verts.values());
     }
 
     /** Return a list of all the vertices that can be reached from v,
@@ -270,14 +270,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
             temp = counter;
             counter++;
         }*/
-        PQHeap<WEdge<VT>> Pqueue = new PQHeap<WEdge<VT>>();
-        Pqueue.init(this.allEdges());
+        PQHeap<WEdge<VT>> pQueue = new PQHeap<WEdge<VT>>();
+        pQueue.init(this.allEdges());
         Partition p = new Partition(this.numEdges);
         List<WEdge<VT>> edgeSet = new ArrayList<WEdge<VT>>();
         int addEdges = 0;
         int vert = this.numVerts();
         while (addEdges < vert) {
-            WEdge<VT> small = Pqueue.remove();
+            WEdge<VT> small = pQueue.remove();
             //small is the current smallest edge 
             int uset = p.find(small.source().id());
             // uset is the id of one of small's two verticies
@@ -297,7 +297,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     }
 
     private boolean vertexInGraph(GVertex<VT> vtx) {
-        return this.verts.contains(vtx);
+        return this.verts.containsValue(vtx);
     }
 
     /**
@@ -318,7 +318,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      * @param args
      */
     public static void main(String args[]) {
-        WGraphP4<String> graph = new WGraphP4<String>(10);
+        WGraphP4<String> graph = new WGraphP4<String>();
 
         GVertex<String> hi = new GVertex<String>("hi", 1);
         GVertex<String> hellow = new GVertex<String>("hellow", 2);
