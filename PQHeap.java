@@ -155,8 +155,8 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
         if (this.comparator.compare(childMin, this.heapArray.get(idx)) < 0) {
             // swap better child with parent
             T temp = childMin;
-            this.heapArray.add(childMinIdx, this.heapArray.get(idx));
-            this.heapArray.add(idx, temp);
+            this.heapArray.set(childMinIdx, this.heapArray.get(idx));
+            this.heapArray.set(idx, temp);
             return childMinIdx; //return id of switched child
         } else {
             return -1;
