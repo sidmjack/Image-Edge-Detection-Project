@@ -105,6 +105,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         } else {
             tempH.put(u.id(), weight);
             tempHe.put(v.id(), weight);
+            this.numEdges++;
             return true;
         }
     }
@@ -126,6 +127,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
             edgeExists &= this.removeEdgeDirectional(v.id(), u.id()) != null;
             edgeExists &= this.removeEdgeDirectional(u.id(), v.id()) != null;
             if (edgeExists) {
+                this.numEdges--;
                 return true;
             }
         }
