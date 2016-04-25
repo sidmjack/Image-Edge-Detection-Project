@@ -165,8 +165,8 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
 
     }
 
-    public void print() {
-        System.out.println(this.heapArray);
+    public String toString() {
+        return this.heapArray.toString();
     }
 
     // private void resizeIfNeeded() {
