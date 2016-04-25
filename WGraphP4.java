@@ -15,14 +15,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
 
     /** the vertices */
     private ArrayList<GVertex<VT>> verts;
-    private ArrayList<HashMap<Integer, Double>> edges;
+    private HashMap<Integer, HashMap<Integer, Double>> edges;
     private int numEdges;
 
     public WGraphP4(int maxVerts) {
         this.nextID = 0;
         this.numEdges = 0;
         this.verts = new ArrayList<GVertex<VT>>(maxVerts);
-        this.edges = new ArrayList<HashMap<Integer, Double>>(maxVerts);
+        this.edges = new HashMap<Integer, HashMap<Integer, Double>>(maxVerts);
     }
 
     /** Get the number of edges. 
@@ -67,17 +67,12 @@ public class WGraphP4<VT> implements WGraph<VT> {
     public boolean addVertex(GVertex<VT> v) {
         if (this.vertexInGraph(v)) {
             return false;
+            // realistically this condition shouldn't happen
+            // unless it's being called by addEdge()
             
         } else {
             this.verts.add(v);
-            try {
-                this.edges.set(v.id(), new HashMap<Integer, Double>());
-            } catch (IndexOutOfBoundsException e) {
-                for (int i = edges.size(); i <= v.id(); i++) {
-                    edges.add(null);
-                }
-                this.edges.set(v.id(), new HashMap<Integer, Double>());
-            }
+            this.edges.put(v.id(), new HashMap<Integer, Double>());
             return true;
         }
     }
@@ -194,22 +189,21 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<WEdge<VT>> allEdges() {
-        Set<WEdge<VT>> setEdges = new HashSet<WEdge<VT>>();
         int nv = this.numVerts();
-        ArrayList<WEdge<VT>> edges = new ArrayList<WEdge<VT>>(nv);
-        int id = 0;// id of start index
-        for (HashMap<Integer, Double> index: this.edges) {
-            Set<Map.Entry<Integer, Double>> entrySet = index.entrySet();
-            GVertex<VT> start = this.getAssociatedVertex(id);
-            for(Map.Entry<Integer, Double> entry: entrySet) {
+        ArrayList<WEdge<VT>> edgesList = new ArrayList<WEdge<VT>>(nv);
+
+        for (Map.Entry<Integer, HashMap<Integer, Double>> index : this.edges.entrySet()) {
+
+            GVertex<VT> start = this.getAssociatedVertex(index.getKey());
+
+            for(Map.Entry<Integer, Double> entry : index.getValue().entrySet()) {
                 Double weight = entry.getValue();
                 GVertex<VT> end = this.getAssociatedVertex(entry.getKey());
                 WEdge<VT> tempEdge = new WEdge<VT>(start, end, weight);
-                setEdges.add(tempEdge); 
+                edgesList.add(tempEdge); 
             }
-            id++;
         }
-        return edges;
+        return edgesList;
     }
 
     /** Return a list of all the vertices.  
