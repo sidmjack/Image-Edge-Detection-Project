@@ -319,10 +319,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     public static void main(String args[]) {
         WGraphP4<String> graph = new WGraphP4<String>(10);
-        graph.addEdge(new GVertex<String>("hi", 1), new GVertex<String>("hellow", 2), 2);
-        graph.addEdge(new GVertex<String>("bye", 3), new GVertex<String>("cya", 4), 3);
-        graph.addEdge(new GVertex<String>("hi", 1), new GVertex<String>("cya", 4), 4);
-        graph.addEdge(new GVertex<String>("hellow", 2), new GVertex<String>("cya", 4), 10);
+
+        GVertex<String> hi = new GVertex<String>("hi", 1);
+        GVertex<String> hellow = new GVertex<String>("hellow", 2);
+        GVertex<String> bye = new GVertex<String>("bye", 3);
+        GVertex<String> cya = new GVertex<String>("cya", 4);
+
+        graph.addEdge(hi, hellow, 2);
+        graph.addEdge(bye, cya, 3);
+        graph.addEdge(hi, cya, 4);
+        graph.addEdge(hellow, cya, 10);
 
         
         for(WEdge<String> e: graph.kruskals()) {
