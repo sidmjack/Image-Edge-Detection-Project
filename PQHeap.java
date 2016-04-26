@@ -121,7 +121,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
         this.heapArray.addAll(1, values);
 
         // heapify
-        for (int j = this.size / 2; j > 0; j--) {
+        for (int j = this.size() / 2; j > 0; j--) {
             this.siftDown(j);
         }
 
