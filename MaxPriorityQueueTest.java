@@ -626,7 +626,7 @@ public class MaxPriorityQueueTest {
         }
         intMPQ.init(getMaxCol);
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
-            System.out.println(j + " " + intMPQ);
+            System.out.println(j + " " + intMPQ + " " + intMPQ.size());
             
             assertEquals("RemoveMax not properly removing duplicate values.", expectedMax[j], intMPQ.peek());
             assertEquals((long)expectedMax[j], (long)intMPQ.remove());
