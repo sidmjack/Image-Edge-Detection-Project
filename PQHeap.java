@@ -57,10 +57,15 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
             throw new QueueEmptyException();
         } else {
             T bestValue = this.heapArray.get(1);
-            this.heapArray.set(1, this.heapArray.remove(this.size--));
-            int toSift = 1;
-            while(toSift != -1) { // sift down the displaced value
-                toSift = this.siftDown(toSift);
+            if (this.size() == 1) {
+                this.heapArray.remove(1);
+                this.size--;
+            } else {
+                this.heapArray.set(1, this.heapArray.remove(this.size--));
+                int toSift = 1;
+                while(toSift != -1) { // sift down the displaced value
+                    toSift = this.siftDown(toSift);
+                }
             }
             return bestValue;
         }
