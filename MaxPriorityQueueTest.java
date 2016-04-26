@@ -462,13 +462,9 @@ public class MaxPriorityQueueTest {
             getMaxCol3.add(gMaxAry3[a]);
         }
         //Trial Number 1
-        System.out.println(intMPQ + " " + intMPQ.size());
         assertTrue(intMPQ.isEmpty());
-        System.out.println(intMPQ + " " + intMPQ.size());
         intMPQ.init(getMaxCol1);
-        System.out.println(intMPQ + " " + intMPQ.size());
         assertEquals("GetMax() NOT handling duplicates well.", expectedMax[0], intMPQ.peek());
-        System.out.println(intMPQ + " " + intMPQ.size());
         //Trial Number 2
         intMPQ.clear();
         assertTrue(intMPQ.isEmpty());
@@ -555,9 +551,15 @@ public class MaxPriorityQueueTest {
         for (int i = 0; i < gMaxAry.length; i++) {
             getMaxCol.add(gMaxAry[i]);
         }
+
+        System.out.println(intMPQ + " " + intMPQ.size());
+
         intMPQ.init(getMaxCol);
+        System.out.println(intMPQ + " " + intMPQ.size());
         for (int j = gMaxAry.length - 1; j >= 0; j--) {
+            System.out.println(intMPQ + " " + intMPQ.size());
             assertEquals("Remove Max is removing the wrong value.", j + 1, (long)intMPQ.remove());
+            System.out.println(intMPQ + " " + intMPQ.size());
             assertEquals(j, intMPQ.size());
         }
         //Check if the MPQ is empty and has size 0.
