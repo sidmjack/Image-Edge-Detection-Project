@@ -13,21 +13,22 @@ public class Pixel {
     private int b3; // RGB: Green, GRAY
     private int b4; // RGB: Blue, GRAY:
 
+    //Row Number, Column Number, Pixel Number
     public Pixel(int rN, int cN, int pN) {
         this.rowNum = rN;
         this.colNum = cN;
         this.pxNum = pN;
     }
 
-    public int getRow() {
+    public int row() {
         return this.rowNum;
     }
 
-    public int getCol() {
+    public int col() {
         return this.colNum;
     }
 
-    public int getPixel() {
+    public int value() {
         return this.pxNum;
     }
 
