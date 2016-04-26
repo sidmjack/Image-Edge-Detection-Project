@@ -22,7 +22,7 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
      * Set the id of the Gvertex.
      * @return T data.
      */
-    public T getD() {
+    public T data() {
         return this.data;
     }
     
