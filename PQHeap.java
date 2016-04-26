@@ -41,7 +41,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
         this.size++;
         this.heapArray.add(t);
         for (int i = this.size() / 2; i > 0; i /= 2) {
-            this.siftDown(i); //sift up tree starting at inserted value
+            this.minSwap(i); //sift up tree starting at inserted value
         }
         
     }
@@ -62,10 +62,8 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
                 this.size--;
             } else {
                 this.heapArray.set(1, this.heapArray.remove(this.size--));
-                int toSift = 1;
-                while(toSift != -1) { // sift down the displaced value
-                    toSift = this.siftDown(toSift);
-                }
+
+                this.siftDown(1);
             }
             return bestValue;
         }
@@ -139,7 +137,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
      * @return     returns the index of the child switched
      *             with or -1 if not switched
      */
-    private int siftDown(int idx) {
+    private int minSwap(int idx) {
         int n = this.size();
         //if too small to sift or if looking at childless elements of heap
         if (n <= 1 || idx > n / 2) {
@@ -166,10 +164,14 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
         } else {
             return -1;
         }
-
-
     }
 
+    private void siftDown(int idx) {
+        int toSift = idx;
+        while(toSift != -1) { // sift down the displaced value
+            toSift = this.minSwap(toSift);
+        }
+    }
     public String toString() {
         return this.heapArray.toString();
     }
