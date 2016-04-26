@@ -150,7 +150,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
 
         int childMinIdx = leftChildIdx;
         T childMin = this.heapArray.get(childMinIdx);
-        if (rightChildIdx < n && this.comparator.compare(
+        if (rightChildIdx <= n && this.comparator.compare(
             this.heapArray.get(rightChildIdx), childMin) < 0) {
 
             childMinIdx = rightChildIdx;
