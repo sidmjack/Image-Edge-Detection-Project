@@ -14,6 +14,12 @@ public class UnionConditionsCalcs {
 		int minB;
 
 		int size;
+	      private RGBStats(int R, int G, int B) {
+	            maxR = R; minR = R;
+	            maxG = G; minG = G;
+	            maxB = B; minB = B;
+	            size = 1;
+	        }
 
 	}
 
@@ -22,7 +28,11 @@ public class UnionConditionsCalcs {
 
 
 	public UnionConditionsCalcs(Collection<GVertex<Pixel>> pixList) {
-
+	    for (GVertex<Pixel> gv: pixList) {
+	       eqClasses.put(gv.id(), 
+	               new RGBStats(gv.data().getRed(), gv.data().getGreen(), gv.data().getBlue()));
+	    }
+	    
 	}
 
 	public void union(int idA, int idB) {
