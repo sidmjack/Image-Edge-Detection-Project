@@ -1,3 +1,4 @@
+------------------------------------------------------------------------------
 /**
  * Name: Lawrence Wolf-Sonkin, Sidney Jackson, Eddie Heredia
  * Blackboard Login:  lwolfso1, sjacks85, eheredi1 
@@ -5,9 +6,10 @@
  * Assignment: Project 4 (Images as Graphs)
  * Due Date: Friday - April 29, 2016
  */
-
+------------------------------------------------------------------------------
 README:
 ------------------------------------------------------------------------------
+
 PART A: 
 
 Last Modified 4/17/2016
@@ -30,22 +32,32 @@ tests the incidentEdges method (to compute a minimum spanning tree/forest),
 and the kruskals minimum spanning tree method for Part B .  
 
 ------------------------------------------------------------------------------
+
 PART B:
-Last Modified 4/20/2016
+Last Modified 4/26/2016
 Part B.1 -> WEdge.java (Kruskals Method):
 Worked on Kruskal's Method.
 
-Last Modified 4/20/2016
+Last Modified 4/26/2016
 Part B.2 -> PQHeap.java:
 Implemented interface methods.
+
 ------------------------------------------------------------------------------
-PART C: 
-	Not there yet! TBD!
+
+PART C: 4/26/2016
+Part C.1-2
+Created Pixel, MakeGraph (with Start Up Code), PixelDistance, and Distance
+Implemented ImagetoGraph Method, however Segmenter is still left hanging.
+
 ------------------------------------------------------------------------------
-Summary:
-	So far so good. 
+SUMMARY:
+	Had to rely on our confidence in modular testing alot. Because alot of
+	functions depended on each other, it was hard to test our methods. We
+	just had to be confident that each method worked well given tests we
+	understood.  
+
 ------------------------------------------------------------------------------
-Complications:
+COMPLICATIONS:
 	
 	We ran into the issue of composing primitive arrays out of generics.
 	For whatever reason, java doesn't like making generic arrays (???) which is
@@ -53,7 +65,23 @@ Complications:
 	Anyway, after "surfing piazza" we discovered that we should just switch to
 	Array lists because they're more flexible and makes java happy.
 
+	PQHeap took a bit of time due to a couple sneaky comparison errors, but
+	was resolved quickly once realized.
+
 	Took a bit of time to figure out how to implement Kruskal's Algorithm.
+
+	It was difficult not being able to test everything continuously. A lot
+	of the program was implemented in parts, meaning that it was difficult
+	to see how each piece of the program worked with other dependent pieces
+	of the program until we were working on a function that was implemented
+	later. Kruskals depended on PQHeap, making it difficult to test Kruskals
+	Method since we worked on these simultaneously. In turn, it was difficult
+	to test the imagetoGraph Method because the method (Kruskals) which
+	offered us visual feedback was not yet implemented. There wasn't really
+	much we could do about this other than being especially careful making 
+	sure our functions worked as expected given simply self made tests that
+	we had "answers" to.
+
 ------------------------------------------------------------------------------
 
 "ACTIVITY LOG":
@@ -75,7 +103,20 @@ PART B:
 WEdge.java (Eddie/Sidney) -> Implemented Kruskals Method
 PQHeap.java (Lawrence) -> Implemented Priority Queue Heap
 
+Date: 4/22 & 24/2016
+Part B:
+PQHeap.java (Lawrence) -> Continued Debugging  Priority Queue Heap
+WEdge.java (Eddie) -> Continued Debugging Kruskals Method
+Part C:
+Pixel.java/ Distance.java (Sidney) -> Made Simple Classes needed for part C
 
-Date: 4/22/2016
-...
+Date: 4/26/2016
+Part B:
+PQHeap.java (Lawrence) -> Copmleted Priority Queue Heap (Whoop!)
+WEdge.java (Eddie) -> Continued Debugging Kruskals Method
+Checkstyled (Lawrence/Sidney) -> Checkstyled majority of files.
+Part C:
+MakeGraph.java/ PixelDistance.java (Sidney) -> Added Part C classes and 
+implemented imagetoGraph (Not yet tested at this point)
+
 ------------------------------------------------------------------------------
