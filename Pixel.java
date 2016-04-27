@@ -63,7 +63,7 @@ public class Pixel {
      * @param  byteNum Desired byte in Pixel Value.
      * @return         returns integer value of desired byte.
      */
-    public int getByte(int byteNum) {    
+    private int getByte(int byteNum) {    
         
         final int three = 3;
         final int four = 4;
@@ -78,4 +78,30 @@ public class Pixel {
             return 0;
         }
     }
+
+    /**
+     * Gets the Red component of the Pixel
+     * @return Red component
+     */
+    public int getRed() {
+        return this.getByte(0);
+    }
+
+    /**
+     * Gets the Green component of the Pixel
+     * @return Green component
+     */
+    public int getGreen() {
+        return this.getByte(1);
+    }
+
+
+    /**
+     * Gets the Blue component of the Pixel
+     * @return Blue component
+     */
+    public int getBlue() {
+        return this.getByte(2);
+    }
+
 }
