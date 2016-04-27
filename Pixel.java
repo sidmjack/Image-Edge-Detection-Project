@@ -78,4 +78,30 @@ public class Pixel {
             return 0;
         }
     }
+
+    /**
+     * Gets the Red component of the Pixel
+     * @return Red component
+     */
+    public int getRed() {
+        return this.getByte(0);
+    }
+
+    /**
+     * Gets the Green component of the Pixel
+     * @return Green component
+     */
+    public int getGreen() {
+        return this.getByte(1);
+    }
+
+
+    /**
+     * Gets the Blue component of the Pixel
+     * @return Blue component
+     */
+    public int getBlue() {
+        return this.getByte(2);
+    }
+
 }
