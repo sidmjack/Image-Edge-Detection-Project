@@ -1,4 +1,7 @@
-/** Class to represent a Gvertex (in a graph).
+/**
+ * Class to represent a Gvertex (in a graph).
+ * @param <T> type of the data held by the GVertex
+ * 
  */
 public class GVertex<T> implements Comparable<GVertex<T>> {
 

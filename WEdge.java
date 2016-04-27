@@ -1,4 +1,6 @@
-/** Implementation of an Wedge class (for graphs), could be directed or not.
+/**
+ * Implementation of an Wedge class (for graphs), could be directed or not.
+ * @param <T> data type held by the GVertex
  */
 public class WEdge<T> implements Comparable<WEdge<T>> {
 
@@ -6,12 +8,14 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
     private GVertex<T> source;
     /** Ending Gvertex<T> of an Wedge. */
     private GVertex<T> end;
-    /** Edge Weight */
+    /** Edge Weight. */
     private double weight;
 
-    /** Create an undirected Wedge.
+    /**
+     *  Create an undirected Wedge.
      *  @param u the start
      *  @param v the end
+     *  @param w the weight
      */
     public WEdge(GVertex<T> u, GVertex<T> v, double w) {
         this.source = u;
@@ -62,13 +66,13 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
      *         and returns 0 if this is equal to that.
      */
     public int compareTo(WEdge<T> that) {
-       if (this.weight > that.weight) {
+        if (this.weight > that.weight) {
             return 1;
-       } else if (this.weight < that.weight) {
+        } else if (this.weight < that.weight) {
             return -1;
-       } else {
+        } else {
             return 0;
-       }
+        }
     }
 
     /** Check if two Wedges are the same.
