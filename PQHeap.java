@@ -18,10 +18,19 @@ import java.util.ArrayList;
 public class PQHeap<T extends Comparable<? super T>>
     implements PriorityQueue<T> {
     
-
+    /**
+     * This is a default comparator class.
+     * @param <T> Type of element values.
+     */
     private static class DefaultComparator<T extends Comparable<? super T>>
         implements Comparator<T> {
 
+        /**
+         * Comparison function for Comparator.
+         * @param  t1 first T to compare
+         * @param  t2 second T to compare
+         * @return    comparison output
+         */
         public int compare(T t1, T t2) {
             return t1.compareTo(t2);
         }
