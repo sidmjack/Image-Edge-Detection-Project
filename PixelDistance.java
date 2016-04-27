@@ -1,13 +1,20 @@
+/**
+ * Class that exists simply to define the distance function for Pixel.
+ */
 public class PixelDistance implements Distance<Pixel> {
 
-    /** Get the distance between two vertices. 
-     *  @return the distance.
+    /**
+     * Calculates the distance using two Pixels.
+     * @param  one : First Pixel.
+     * @param  two : Second Pixel.
+     * @return     returns distance. 
      */
     public double distance(Pixel one, Pixel two) {
         // sqdf = "Squared Distance"
+        final int four = 4;
         double dist = 0;
-        for (int i = 1; i <= 4; ++i) {
-            dist += sqdf(one.getByte(i), two.getByte(i));
+        for (int i = 1; i <= four; ++i) {
+            dist += this.sqdf(one.getByte(i), two.getByte(i));
         }
         return dist;
     }
@@ -21,5 +28,4 @@ public class PixelDistance implements Distance<Pixel> {
     private double sqdf(int a, int b) {
         return (a - b) * (a - b);
     }
-
 }
