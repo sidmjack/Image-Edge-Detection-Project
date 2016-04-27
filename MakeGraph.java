@@ -141,9 +141,10 @@ public final class MakeGraph {
      *  @return a list of the edges in the minimum spanning forest
      */
 
-    // static List<WEdge<Pixel>> segmenter(WGraph<Pixel> g, double kvalue) {
-        // Not yet implemented...
-    // }
+    //static List<WEdge<Pixel>> segmenter(WGraph<Pixel> g, double kvalue) {
+        //Not yet implemented...
+        //List<WEdge<Pixel>> edgeList = g.kruskals(k);
+    //}
 
     /**
      * Where the Pixel Graph is Made, Kruskal's is tested, and edges are ouput.
