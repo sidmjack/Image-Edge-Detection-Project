@@ -63,7 +63,7 @@ public class Pixel {
      * @param  byteNum Desired byte in Pixel Value.
      * @return         returns integer value of desired byte.
      */
-    public int getByte(int byteNum) {    
+    private int getByte(int byteNum) {    
         
         final int three = 3;
         final int four = 4;
