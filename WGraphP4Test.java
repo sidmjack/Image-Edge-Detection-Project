@@ -53,7 +53,6 @@ public class WGraphP4Test {
         assertTrue(k.size() == 0);
         
     }
-    /*
     @Test
     public void kruskalsTestThreeGraph() {
         GVertex<String> f = new GVertex<String>("f", 5);
@@ -74,5 +73,4 @@ public class WGraphP4Test {
         
         
     }
-*/
 }
