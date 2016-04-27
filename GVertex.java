@@ -41,16 +41,27 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
     }
 
     /** Check if two vertices are the same based on ID.
-     *  @param that the Gvertex to compare to this
+     *  @param other the Gvertex to compare to this
      *  @return true if the same, false otherwise
      */
-    public boolean equals(GVertex<T> that) {
-        return this.num == that.num;  // want these to be unique
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof GVertex<?>) {
+            GVertex<T> that = null;
+            try {
+                that = (GVertex<T>) other;
+            } catch (ClassCastException e) {
+                return false;
+            }
+            return this.num == that.num;  // want these to be unique
+        }
+        return false;
     }
 
     /** Get the hashcode of a Gvertex based on its ID.
      *  @return the hashcode
      */
+    @Override
     public int hashCode() {
         return (new Integer(this.num)).hashCode();
     }

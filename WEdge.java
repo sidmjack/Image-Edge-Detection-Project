@@ -75,16 +75,28 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
      *  @param other the Wedge to compare to this
      *  @return true if directedness and endpoints match, false otherwise
      */
-    public boolean equals(WEdge<T> that) {
-        return this.source.equals(that.source)
-            && this.end.equals(that.end)
-            || this.source.equals(that.end)
-            && this.end.equals(that.source);
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof WEdge<?>) {
+            WEdge<T> that = null;
+            try {
+                that = (WEdge<T>) other;
+            } catch (ClassCastException e) {
+                return false;
+            }
+            return this.source().equals(that.source())
+                && this.end().equals(that.end())
+                || this.source().equals(that.end())
+                && this.end().equals(that.source());
+        }
+        return false;
+
     }
 
     /** Make a hashCode based on the toString.
      *  @return the hashCode
      */
+    @Override
     public int hashCode() {
         return this.toString().hashCode();
     }
