@@ -15,6 +15,7 @@ import java.util.Set;
 
 /**
  * Adjacency list implementation of WGraph.
+ * @param <VT> Type of element values.
  */
 public class WGraphP4<VT> implements WGraph<VT> {
 
@@ -363,13 +364,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
         GVertex<String> bye = new GVertex<String>("bye", 2);
         GVertex<String> cya = new GVertex<String>("cya", 3);
 
+        final int three = 3;
+        final int four = 4;
+        final int ten = 10;
         graph.addEdge(hi, hellow, 2);
-        graph.addEdge(bye, cya, 3);
-        graph.addEdge(hi, cya, 4);
-        graph.addEdge(hellow, cya, 10);
+        graph.addEdge(bye, cya, three);
+        graph.addEdge(hi, cya, four);
+        graph.addEdge(hellow, cya, ten);
 
         
-        for (WEdge<String> e: graph.kruskals()) {
+        for (WEdge<String> e : graph.kruskals()) {
             System.out.println(e.weight());
         }
 
