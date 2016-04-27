@@ -81,19 +81,16 @@ public class WEdge<T> implements Comparable<WEdge<T>> {
      */
     @Override
     public boolean equals(Object other) {
-        if (other instanceof WEdge<?>) {
-            WEdge<T> that = null;
-            try {
-                that = (WEdge<T>) other;
-            } catch (ClassCastException e) {
-                return false;
-            }
-            return this.source().equals(that.source())
-                && this.end().equals(that.end())
-                || this.source().equals(that.end())
-                && this.end().equals(that.source());
+        WEdge<T> that = null;
+        try {
+            that = (WEdge<T>) other;
+        } catch (ClassCastException e) {
+            return false;
         }
-        return false;
+        return this.source().equals(that.source())
+            && this.end().equals(that.end())
+            || this.source().equals(that.end())
+            && this.end().equals(that.source());
 
     }
 

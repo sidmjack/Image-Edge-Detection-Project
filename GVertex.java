@@ -49,7 +49,6 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
      */
     @Override
     public boolean equals(Object other) {
-        if (other instanceof GVertex<?>) {
             GVertex<T> that = null;
             try {
                 that = (GVertex<T>) other;
@@ -57,8 +56,6 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
                 return false;
             }
             return this.num == that.num;  // want these to be unique
-        }
-        return false;
     }
 
     /** Get the hashcode of a Gvertex based on its ID.
