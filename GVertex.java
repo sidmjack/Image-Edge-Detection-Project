@@ -49,13 +49,13 @@ public class GVertex<T> implements Comparable<GVertex<T>> {
      */
     @Override
     public boolean equals(Object other) {
-            GVertex<T> that = null;
-            try {
-                that = (GVertex<T>) other;
-            } catch (ClassCastException e) {
-                return false;
-            }
-            return this.num == that.num;  // want these to be unique
+        GVertex<T> that = null;
+        try {
+            that = (GVertex<T>) other;
+        } catch (ClassCastException e) {
+            return false;
+        }
+        return this.num == that.num;  // want these to be unique
     }
 
     /** Get the hashcode of a Gvertex based on its ID.
