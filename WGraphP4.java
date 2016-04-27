@@ -359,12 +359,13 @@ public class WGraphP4<VT> implements WGraph<VT> {
     public static void main(String[] args) {
         WGraphP4<String> graph = new WGraphP4<String>();
 
+        final int three = 3;
+
         GVertex<String> hi = new GVertex<String>("hi", 0);
         GVertex<String> hellow = new GVertex<String>("hellow", 1);
         GVertex<String> bye = new GVertex<String>("bye", 2);
-        GVertex<String> cya = new GVertex<String>("cya", 3);
+        GVertex<String> cya = new GVertex<String>("cya", three);
 
-        final int three = 3;
         final int four = 4;
         final int ten = 10;
         graph.addEdge(hi, hellow, 2);
