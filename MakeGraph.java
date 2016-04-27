@@ -2,22 +2,26 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.Toolkit;
 import java.util.List;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.LinkedList;
 
+/** MakeGraph creates a WGraph given an image and K value.*/
+public final class MakeGraph {
 
-public class MakeGraph {
+    /** To appease checkstyle. */
+    private MakeGraph() {
+        // Does Absolutely Nothing.
+    }
 
-
-    /** Convert an image to a graph of Pixels with edges between
-     *  north, south, east and west neighboring pixels.
-     *  @param image the image to convert
-     *  @param pd the distance object for pixels
-     *  @return the graph that was created
+    /**
+     * Converts an image to a Pixel Graph.
+     * @param  image Image Passed through main.
+     * @param  pd    Function passed through main.
+     * @return       returns a pixel graph form the image given.
      */
     static WGraph<Pixel> imageToGraph(BufferedImage image, Distance<Pixel> pd) {
         //Create a Pixel WGraph. 
@@ -33,7 +37,7 @@ public class MakeGraph {
         // Here, add the pixels into the pixelGraph.
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                tempRGB = image.getRGB(i,j); // Get RGB Value of Pixel.
+                tempRGB = image.getRGB(i, j); // Get RGB Value of Pixel.
                 tempP = new Pixel(i, j, tempRGB); // Create new Pixel.
                 pixelGraph.addVertex(tempP); //Add new Pixel.
             }
@@ -58,9 +62,11 @@ public class MakeGraph {
     /**
      * Decides which vertex edge to form based off of pixel location in image.
      * @param pixelGraph : the Image Graph
+     * @param verts      : list of vertices form pixelGraph
      * @param vertID     : the Vertex ID of the observed vertex.
      * @param h          : the Height of the image.
      * @param w          : the Width of the image.
+     * @param pd         : the distance function for pixel.
      */
     static void formEdges(WGraphP4<Pixel> pixelGraph,
         LinkedList<GVertex<Pixel>> verts, int vertID,
@@ -75,25 +81,25 @@ public class MakeGraph {
 
         // Add edge if the pixel doesn't belong to the top edge of the image.
         if (vertID > w) {
-            endID = vertID-w; // North Vertex.
+            endID = vertID - w; // North Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add N Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the bottom edge of the image.
-        if (vertID <= (w*h)) {
-            endID = vertID+w; // South Vertex.
+        if (vertID <= (w * h)) {
+            endID = vertID + w; // South Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add S Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
         if ((vertID % w) != 0) {
-            endID = vertID-1; // West Vertex.
+            endID = vertID - 1; // West Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add W Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the right edge of the image.
         if ((vertID % w) != 1) {
-            endID = vertID+1; // East Vertex.
+            endID = vertID + 1; // East Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add E Vertex.
         }
     }
@@ -101,8 +107,10 @@ public class MakeGraph {
     /**
      * Helper Method for formsEdges that adds a new edge to the pixelGraph.
      * @param pixelGraph : the graph that we're adding edges to.
-     * @param vertID     : the Vertex ID of the "Source" Pixel
+     * @param verts      : the list of vertices form pixelGraph
+     * @param vertID     : the Vertex ID of the "Source" Pixel.
      * @param endID      : the Vertex ID of the "End" Pixel
+     * @param pd         : the distance function for pixel.
      */
     static void addEdge(WGraphP4<Pixel> pixelGraph, 
         LinkedList<GVertex<Pixel>> verts, int vertID, int endID,
@@ -137,6 +145,10 @@ public class MakeGraph {
         // Not yet implemented...
     // }
 
+    /**
+     * Where the Pixel Graph is Made, Kruskal's is tested, and edges are ouput.
+     * @param args : the image file name and Kruskals K value.
+     */
     public static void main(String[] args) {
 
         final int gray = 0x202020;
