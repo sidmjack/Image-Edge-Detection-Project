@@ -20,6 +20,41 @@ public class UnionConditionsCalcs {
 	            maxB = B; minB = B;
 	            size = 1;
 	        }
+	      /**
+	       * updates rgb values of with another rgbstatus object.
+	       * @param ohmToTheNomthPower other rgbstatus object.
+	       */
+	      public void update(RGBStats ohmToTheNomthPower) {
+	          maxR = this.get(maxR, ohmToTheNomthPower.maxR, 1);
+	          maxG = this.get(maxG, ohmToTheNomthPower.maxG, 1);
+	          maxB = this.get(maxB, ohmToTheNomthPower.maxB, 1);
+	          minR = this.get(minR, ohmToTheNomthPower.minR, 0);
+	          minG = this.get(minG, ohmToTheNomthPower.minG, 0);
+	          minB = this.get(minB, ohmToTheNomthPower.minB, 0);
+	          this.size += ohmToTheNomthPower.size;
+	      }
+
+	      /**
+	       * gets max or min of two ints.
+	       * @param one first int
+	       * @param two second int
+	       * @param max determins max or min. if max > 0 find max else min
+	       * @return max or min between one and two
+	       */
+	      private int get(int one, int two, int max) {
+	          if (max > 0) {//find max
+	              if (one > two) {
+	                  return one;
+	              }
+	              return two;
+	          } else {//find min
+	              if (one > two) {
+	                  return two;
+	              }
+	              return one;
+	              
+	          }
+	      }
 
 	}
 
