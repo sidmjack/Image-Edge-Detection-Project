@@ -1,3 +1,11 @@
+/**
+ * Name: Sidney Jackson, Eddie Heredia, & Lawrence Wolf-Sonkin
+ * Blackboard Login: sjacks85, eheredi1, & lwolfso1 
+ * Course: Data Structures 600.226.02 
+ * Assignment: Final Project
+ * Due Date: April 29, 2016
+ */
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -6,6 +14,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Adjacency list implementation of WGraph.
+ */
 public class WGraphP4<VT> implements WGraph<VT> {
 
     /** Used to sequentially generate Gvertex<T> IDs for this graph! */
@@ -15,9 +26,18 @@ public class WGraphP4<VT> implements WGraph<VT> {
 
     /** the vertices */
     private HashMap<Integer, GVertex<VT>> verts;
+    /**
+     * HashMap of Hashmaps holding the edges in an adjacancy list.
+     */
     private HashMap<Integer, HashMap<Integer, Double>> edges;
+    /**
+     * number of edges in the Graph.
+     */
     private int numEdges;
 
+    /**
+     * Default constructor for adjacency list Graph
+     */
     public WGraphP4() {
         this.nextID = 0;
         this.numEdges = 0;
@@ -56,7 +76,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     @Override
     public boolean addVertex(VT d) {
         GVertex<VT> vtx = new GVertex<VT>(d, this.nextID());
-        return addVertex(vtx);
+        return this.addVertex(vtx);
     }
 
     /** Add a vertex if it doesn't exist yet. 
@@ -84,7 +104,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean addEdge(WEdge<VT> e) {                
-        return addEdge(e.source(), e.end(), e.weight());  
+        return this.addEdge(e.source(), e.end(), e.weight());  
     }
 
     /** Add a weighted edge, may also add vertices. 
@@ -99,7 +119,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         this.addVertex(u);
         HashMap<Integer, Double> tempH = this.edges.get(v.id());
         HashMap<Integer, Double> tempHe = this.edges.get(u.id());
-        if(tempH.containsKey(u.id())) {
+        if (tempH.containsKey(u.id())) {
             return false;
             
         } else {
@@ -153,7 +173,9 @@ public class WGraphP4<VT> implements WGraph<VT> {
     public List<GVertex<VT>> neighbors(GVertex<VT> v) {
         if (this.vertexInGraph(v)) {
             Set<Integer> idSet = this.edges.get(v.id()).keySet();
-            List<GVertex<VT>> neighborList = new ArrayList<GVertex<VT>>(idSet.size());
+            List<GVertex<VT>> neighborList =
+                new ArrayList<GVertex<VT>>(idSet.size());
+
             for (Integer id : idSet) {
                 neighborList.add(this.getAssociatedVertex(id));
             }
@@ -194,11 +216,14 @@ public class WGraphP4<VT> implements WGraph<VT> {
         int nv = this.numVerts();
         ArrayList<WEdge<VT>> edgesList = new ArrayList<WEdge<VT>>(nv);
 
-        for (Map.Entry<Integer, HashMap<Integer, Double>> index : this.edges.entrySet()) {
+        for (Map.Entry<Integer, HashMap<Integer, Double>> index :
+            this.edges.entrySet()) {
 
             GVertex<VT> start = this.getAssociatedVertex(index.getKey());
 
-            for(Map.Entry<Integer, Double> entry : index.getValue().entrySet()) {
+            for (Map.Entry<Integer, Double> entry
+                : index.getValue().entrySet()) {
+
                 Double weight = entry.getValue();
                 GVertex<VT> end = this.getAssociatedVertex(entry.getKey());
                 WEdge<VT> tempEdge = new WEdge<VT>(start, end, weight);
@@ -224,17 +249,19 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public List<GVertex<VT>> depthFirst(GVertex<VT> v) {
-        ArrayList<GVertex<VT>> reaches = new ArrayList<GVertex<VT>>(this.numVerts());
+        ArrayList<GVertex<VT>> reaches =
+            new ArrayList<GVertex<VT>>(this.numVerts());
+
         // using LinkedList<Vertex> as a Stack
         LinkedList<GVertex<VT>> stack = new LinkedList<GVertex<VT>>();
         boolean[] visited = new boolean[this.numVerts()];  // inits to false
         stack.addFirst(v);
         visited[v.id()] = true;
-        while (! stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             v = stack.removeFirst();
             reaches.add(v);
             for (GVertex<VT> u: this.neighbors(v)) {
-                if (! visited[u.id()]) {
+                if (!visited[u.id()]) {
                     visited[u.id()] = true;
                     stack.addFirst(u);
                 }
@@ -250,7 +277,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     @Override
     public List<WEdge<VT>> incidentEdges(GVertex<VT> v) {
         List<WEdge<VT>> allEdges = this.allEdges();
-        List<WEdge<VT>> iEdges = new ArrayList <WEdge<VT>>();
+        List<WEdge<VT>> iEdges = new ArrayList<WEdge<VT>>();
         for (WEdge<VT> edge: allEdges) {
             if (this.areIncident(edge, v)) {
                 iEdges.add(edge);
@@ -293,17 +320,22 @@ public class WGraphP4<VT> implements WGraph<VT> {
             }
             
         }
-       return edgeSet;
+        return edgeSet;
         
         
     }
 
+    /**
+     * Tells whether a given vertex is in the graph or not.
+     * @param  vtx vertex in question
+     * @return     true if in graph, else false
+     */
     private boolean vertexInGraph(GVertex<VT> vtx) {
         return this.verts.containsValue(vtx);
     }
 
     /**
-     * Removes a directional edge
+     * Removes a directional edge.
      * @param  firstID  ID of source vertex
      * @param  secondID ID of destination vertex
      * @return          weight of removed vertex
@@ -312,14 +344,19 @@ public class WGraphP4<VT> implements WGraph<VT> {
         return this.edges.get(firstID).remove(secondID);
     }
     
+    /**
+     * Gets the vertex associated with an ID.
+     * @param  id ID
+     * @return    associated Vertex
+     */
     private GVertex<VT> getAssociatedVertex(int id) {
         return this.verts.get(id);
     }
     /**
      * test main.
-     * @param args
+     * @param args arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         WGraphP4<String> graph = new WGraphP4<String>();
 
         GVertex<String> hi = new GVertex<String>("hi", 0);
@@ -333,7 +370,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         graph.addEdge(hellow, cya, 10);
 
         
-        for(WEdge<String> e: graph.kruskals()) {
+        for (WEdge<String> e: graph.kruskals()) {
             System.out.println(e.weight());
         }
 
