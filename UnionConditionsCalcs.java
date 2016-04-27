@@ -24,25 +24,34 @@ public class UnionConditionsCalcs {
 	       * updates rgb values of with another rgbstatus object.
 	       * @param ohmToTheNomthPower other rgbstatus object.
 	       */
-	      public void update(RGBStats ohmToTheNomthPower) {
-	          maxR = this.get(maxR, ohmToTheNomthPower.maxR, 1);
-	          maxG = this.get(maxG, ohmToTheNomthPower.maxG, 1);
-	          maxB = this.get(maxB, ohmToTheNomthPower.maxB, 1);
-	          minR = this.get(minR, ohmToTheNomthPower.minR, 0);
-	          minG = this.get(minG, ohmToTheNomthPower.minG, 0);
-	          minB = this.get(minB, ohmToTheNomthPower.minB, 0);
-	          this.size += ohmToTheNomthPower.size;
+	      public RGBStats update(RGBStats ohmToTheNomthPower) {
+	          
+	          int Rx = this.get(maxR, ohmToTheNomthPower.maxR, true);
+	          int Gx = this.get(maxG, ohmToTheNomthPower.maxG, true);
+	          int Bx = this.get(maxB, ohmToTheNomthPower.maxB, true);
+	          
+	          int R = this.get(minR, ohmToTheNomthPower.minR, false);
+	          int G = this.get(minG, ohmToTheNomthPower.minG, false);
+	          int B = this.get(minB, ohmToTheNomthPower.minB, false);
+	          RGBStats r = new RGBStats(Rx, Gx, Bx);
+	          r.size = this.size + ohmToTheNomthPower.size;
+	          r.minR = R;
+	          r.minG = G;
+	          r.minB = B;
+	          return r;
+	          
+	          
 	      }
 
 	      /**
 	       * gets max or min of two ints.
 	       * @param one first int
 	       * @param two second int
-	       * @param max determins max or min. if max > 0 find max else min
+	       * @param max determins max or min. if true: max else min
 	       * @return max or min between one and two
 	       */
-	      private int get(int one, int two, int max) {
-	          if (max > 0) {//find max
+	      private int get(int one, int two, boolean max) {
+	          if (max) {//find max
 	              if (one > two) {
 	                  return one;
 	              }
