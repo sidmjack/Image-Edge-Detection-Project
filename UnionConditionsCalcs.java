@@ -25,19 +25,27 @@ public class UnionConditionsCalcs {
 
 	}
 
+	/**
+	 * Unions 2 sets, remembering the relavent information
+	 * to calculating statistics for diff, and unioning conditions.
+	 * @param idA The ID of the root of the first equivalence class union
+	 * @param idB The ID of the root of the second equivalence class union
+	 */
 	public void union(int idA, int idB) {
-		int root1 = this.find(a);     // Find root of node a
-		int root2 = this.find(b);     // Find root of node b
-		if (root1 != root2) {    // Merge with weighted union
-		    if (this.weight[root2] > this.weight[root1]) {
-		        this.parent[root1] = root2;
-		        this.weight[root2] += this.weight[root1];
-		    } else {
-		        this.parent[root2] = root1;
-		        this.weight[root1] += this.weight[root2];
-		    }
-		}
+		if (idA != idB) {    // Merge with weighted union
+			RGBStats aStats = this.eqClasses.get(idA);
+			RGBStats bStats = this.eqClasses.get(idB);
 
+			if (bStats.size > aStats.size) {
+				bStats.update(aStats);
+				this.eqClasses.put(idB, bStats);
+				this.eqClasses.remove(idA);
+			} else {
+				aStats.update(bStats);
+				this.eqClasses.put(idA, aStats);
+				this.eqClasses.remove(idB);
+			}
+		}
 	}
 
 
