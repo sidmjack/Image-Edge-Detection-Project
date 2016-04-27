@@ -1,31 +1,66 @@
+/**
+ * Name: Sidney Jackson, Eddie Heredia, & Lawrence Wolf-Sonkin
+ * Blackboard Login: sjacks85, eheredi1, & lwolfso1 
+ * Course: Data Structures 600.226.02 
+ * Assignment: Final Project
+ * Due Date: April 29, 2016
+ */
+
+
 import java.util.Comparator;
 import java.util.Collection;
 import java.util.ArrayList;
 
-public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T> {
+/**
+ * This is an implementation of a general Priority Queue of ordered values. 
+ * @param <T> Type of element values.
+*/
+public class PQHeap<T extends Comparable<? super T>>
+    implements PriorityQueue<T> {
     
 
-    private static class DefaultComparator<T extends Comparable<? super T>> implements Comparator<T> {
+    private static class DefaultComparator<T extends Comparable<? super T>>
+        implements Comparator<T> {
+
         public int compare(T t1, T t2) {
             return t1.compareTo(t2);
         }
     }
 
+    /**
+     * ArrayList holding the heap starting at index 1. Index 0 is always empty
+     * and null.
+     */
     private ArrayList<T> heapArray;
 
-    // private int capacity;
 
+    /**
+     * Size of the heap.
+     */
     private int size;
 
+    /**
+     * Comparator for comparisons within the heap.
+     */
     private Comparator<? super T> comparator;
 
 
+    /**
+     * Constructor for PQHeap object which uses the provided comparator to sort
+     * the heap, making a min heap where the "smallest" item, according to the
+     * given comparator, will be the top of the heap.
+     * @param  cmprtr Comparator for the PQHeap
+     */
     public PQHeap(Comparator<? super T> cmprtr) {
         this.comparator = cmprtr;
         this.heapArray = new ArrayList<T>();
         this.clear();
     }
 
+    /**
+     * Default constructor for a PQHeap object when no comparator is provided
+     * which uses the compareTo() function of the stored item.
+     */
     public PQHeap() {
         this(new DefaultComparator<T>());
     }
@@ -132,7 +167,7 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
     }
 
     /**
-     * Switches the index with the "best" of its 2 children
+     * Switches the index with the "best" of its 2 children.
      * @param  idx heap index to compare to its children
      * @return     returns the index of the child switched
      *             with or -1 if not switched
@@ -166,26 +201,25 @@ public class PQHeap<T extends Comparable<? super T>> implements PriorityQueue<T>
         }
     }
 
+    /**
+     * Sifts an item in the ArrayList down the Heap, fulfilling the heap
+     * property on it and the descendants it passes to.
+     * @param idx index to start at, from 1 <= idx <= size
+     */
     private void siftDown(int idx) {
         int toSift = idx;
-        while(toSift != -1) { // sift down the displaced value
+        while (toSift != -1) { // sift down the displaced value
             toSift = this.minSwap(toSift);
         }
     }
+
+    /**
+     * Makes string representation of internal ArrayList to the heap.
+     * @return String representation
+     */
     public String toString() {
         return this.heapArray.toString();
     }
-
-    // private void resizeIfNeeded() {
-    //     if (this.size + 1 >= this.capacity) {
-    //         this.capacity *= 2;
-    //         T[] temp = this.heapArray;
-    //         this.heapArray = new T[this.capacity];
-    //         for (int i = 1; i <= this.size(); i++) {
-    //             this.heapArray.add(i, temp[i]);
-    //         }
-    //     }
-    // }
 
 
 }
