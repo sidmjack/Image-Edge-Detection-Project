@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -24,7 +23,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
 
     
 
-    /** the vertices */
+    /** the vertices. */
     private HashMap<Integer, GVertex<VT>> verts;
     /**
      * HashMap of Hashmaps holding the edges in an adjacancy list.
@@ -36,7 +35,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     private int numEdges;
 
     /**
-     * Default constructor for adjacency list Graph
+     * Default constructor for adjacency list Graph.
      */
     public WGraphP4() {
         this.nextID = 0;
@@ -216,8 +215,8 @@ public class WGraphP4<VT> implements WGraph<VT> {
         int nv = this.numVerts();
         ArrayList<WEdge<VT>> edgesList = new ArrayList<WEdge<VT>>(nv);
 
-        for (Map.Entry<Integer, HashMap<Integer, Double>> index :
-            this.edges.entrySet()) {
+        for (Map.Entry<Integer, HashMap<Integer, Double>> index
+            : this.edges.entrySet()) {
 
             GVertex<VT> start = this.getAssociatedVertex(index.getKey());
 
