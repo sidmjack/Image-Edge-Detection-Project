@@ -3,67 +3,97 @@ import java.util.Collection;
 
 public class UnionConditionsCalcs {
 	
+	private class RGBSet {
+		int r;
+		int g;
+		int b;
+
+
+		public RGBSet(int newR, int newG, int newB) {
+			this.set(newR, newG, newB);
+		}
+
+		public int getR() {
+			return r;
+		}
+
+		public int getG() {
+			return g;
+		}
+
+		public int getB() {
+			return b;
+		}
+
+		public void setR(int newR) {
+			this.r = newR;
+		}
+
+		public void setG(int newG) {
+			this.g = newG;
+		}
+
+		public void setB(int newB) {
+			this.b = newB;
+		}
+
+		public void set(int newR, int newG, int newB) {
+			this.setR(newR);
+			this.setG(newG);
+			this.setB(newB);
+		}
+
+		public RGBSet getMin(RGBSet that) {
+			int minR = Math.min(this.getR(), that.getR());
+			int minG = Math.min(this.getG(), that.getG());
+			int minB = Math.min(this.getB(), that.getB());
+
+			return new RGBSet(minR, minG, minB);
+		}
+
+
+		public RGBSet getMax(RGBSet that) {
+			int maxR = Math.max(this.getR(), that.getR());
+			int maxG = Math.max(this.getG(), that.getG());
+			int maxB = Math.max(this.getB(), that.getB());
+
+			return new RGBSet(maxR, maxG, maxB);
+		}
+
+		public void plus(int adder) {
+			this.setR(this.getR() + adder);
+			this.setG(this.getG() + adder);
+			this.setB(this.getB() + adder);
+		}
+
+
+	}
+
+
 	private class RGBStats {
 		
-		int maxR;
-		int maxG;
-		int maxB;
+		RGBSet max;
+		RGBSet min;
 
-		int minR;
-		int minG;
-		int minB;
 
 		int size;
-	      private RGBStats(int R, int G, int B) {
-	            maxR = R; minR = R;
-	            maxG = G; minG = G;
-	            maxB = B; minB = B;
-	            size = 1;
-	        }
-	      /**
-	       * updates rgb values of with another rgbstatus object.
-	       * @param ohmToTheNomthPower other rgbstatus object.
-	       */
-	      public RGBStats update(RGBStats ohmToTheNomthPower) {
-	          
-	          int Rx = this.get(maxR, ohmToTheNomthPower.maxR, true);
-	          int Gx = this.get(maxG, ohmToTheNomthPower.maxG, true);
-	          int Bx = this.get(maxB, ohmToTheNomthPower.maxB, true);
-	          
-	          int R = this.get(minR, ohmToTheNomthPower.minR, false);
-	          int G = this.get(minG, ohmToTheNomthPower.minG, false);
-	          int B = this.get(minB, ohmToTheNomthPower.minB, false);
-	          RGBStats r = new RGBStats(Rx, Gx, Bx);
-	          r.size = this.size + ohmToTheNomthPower.size;
-	          r.minR = R;
-	          r.minG = G;
-	          r.minB = B;
-	          return r;
-	          
-	          
-	      }
 
-	      /**
-	       * gets max or min of two ints.
-	       * @param one first int
-	       * @param two second int
-	       * @param max determins max or min. if true: max else min
-	       * @return max or min between one and two
-	       */
-	      private int get(int one, int two, boolean max) {
-	          if (max) {//find max
-	              if (one > two) {
-	                  return one;
-	              }
-	              return two;
-	          } else {//find min
-	              if (one > two) {
-	                  return two;
-	              }
-	              return one;
-	              
-	          }
-	      }
+		public RGBStats(int r, int g, int b) {
+
+			this.max = new RGBSet(r, g, b);
+			this.min = new RGBSet(r, g, b);
+			this.size = 1;
+		}
+
+		public RGBStats(RGBStats first, RGBStats second) {
+			this.min = first.min.getMin(second.min);
+			this.max = first.max.getMax(second.max);
+			this.size = first.size + second.size;
+		}
+
+		public int getSize() {
+			return this.size;
+		}
 
 	}
 
@@ -90,17 +120,22 @@ public class UnionConditionsCalcs {
 			RGBStats aStats = this.eqClasses.get(idA);
 			RGBStats bStats = this.eqClasses.get(idB);
 
+			if (aStats == null || bStats == null) {
+				throw new IllegalArgumentException();
+			}
+
+			RGBStats newStats = new RGBStats(aStats, bStats);
+
 			if (bStats.size > aStats.size) {
-				bStats.update(aStats);
-				this.eqClasses.put(idB, bStats);
+				this.eqClasses.put(idB, newStats);
 				this.eqClasses.remove(idA);
 			} else {
-				aStats.update(bStats);
-				this.eqClasses.put(idA, aStats);
+				this.eqClasses.put(idA, newStats);
 				this.eqClasses.remove(idB);
 			}
 		}
 	}
+
 
 	// Has to be inforced that it is the root that is being passed to it.
 	/**
