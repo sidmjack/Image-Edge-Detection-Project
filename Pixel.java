@@ -1,25 +1,16 @@
 /**
  * Pixel Class (Will serve as the Vertex Data for Purposes of P4).
  */
-public class Pixel {
+public final class Pixel extends RGBSet {
 
     // Pixel Location:
     /** Pixel Location: Row.  */
-    private int rowNum;
+    private final int rowNum;
     /** Pixel Location: Column.  */
-    private int colNum;
+    private final int colNum;
     // Integer Value Containing Image Pixel Informatiom
     /** Pixel Number/ Integer.  */
-    private int pxNum;
-    //Pixel Components:
-    /** Pixel Component (Byte) 1. */
-    private int b1; // RGB: Empty
-    /** Pixel Component (Byte) 2. */
-    private int b2; // RGB: Red
-    /** Pixel Component (Byte) 3. */
-    private int b3; // RGB: Green
-    /** Pixel Component (Byte) 4. */
-    private int b4; // RGB: Blue
+    private final int pxNum;
 
     /**
      * Constructs Pixel given Row, Column, and Pixel Number.
@@ -29,6 +20,7 @@ public class Pixel {
      * @param  pN Pixel Number.
      */
     public Pixel(int rN, int cN, int pN) {
+        super(getByte(pN, 0), getByte(pN, 1), getByte(pN, 2));
         this.rowNum = rN;
         this.colNum = cN;
         this.pxNum = pN;
@@ -58,57 +50,72 @@ public class Pixel {
         return this.pxNum;
     }
 
+    // /**
+    //  * Returns the Pixel Byte asked for (indicated by passed integer).
+    //  * @param  byteNum Desired byte in Pixel Value.
+    //  * @return         returns integer value of desired byte.
+    //  */
+    // private int getByte(int byteNum) {    
+        
+    //     final int three = 3;
+    //     final int eight = 8;
+    //     final int mask = 0xFF;
+        
+    //     // Determine the BitMask based off of the input (desired) byteNum.
+    //     if (0 <= byteNum && byteNum <= three) {
+    //         return (this.pxNum >>> (eight * byteNum)) & mask;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
+
     /**
      * Returns the Pixel Byte asked for (indicated by passed integer).
      * @param  byteNum Desired byte in Pixel Value.
      * @return         returns integer value of desired byte.
      */
-    public int getByte(int byteNum) {    
+    private static int getByte(int pxNum, int byteNum) {    
         
         final int three = 3;
-        final int four = 4;
         final int eight = 8;
         final int mask = 0xFF;
         
         // Determine the BitMask based off of the input (desired) byteNum.
         if (0 <= byteNum && byteNum <= three) {
-            return (this.pxNum >>> (eight * byteNum)) & mask;
+            return (pxNum >>> (eight * byteNum)) & mask;
         } else {
             return 0;
         }
     }
 
-    /**
-     * Gets the Red component of the Pixel
-     * @return Red component
-     */
-    public int getRed() {
-        return this.getByte(2);
-    }
 
-    /**
-     * Gets the Green component of the Pixel
-     * @return Green component
-     */
-    public int getGreen() {
-        return this.getByte(1);
-    }
+    // /**
+    //  * Gets the Red component of the Pixel
+    //  * @return Red component
+    //  */
+    // public int getRed() {
+    //     return this.getR();
+    // }
+
+    // /**
+    //  * Gets the Green component of the Pixel
+    //  * @return Green component
+    //  */
+    // public int getGreen() {
+    //     return this.getG();
+    // }
 
 
-    /**
-     * Gets the Blue component of the Pixel
-     * @return Blue component
-     */
-    public int getBlue() {
-        return this.getByte(0);
-    }
+    // /**
+    //  * Gets the Blue component of the Pixel
+    //  * @return Blue component
+    //  */
+    // public int getBlue() {
+    //     return this.getB();
+    // }
 
     public String toString() {
-        String toPrint = "0x";
-        for (int i = 3; i >= 0; --i) {
-            toPrint += Integer.toHexString(this.getByte(i));
-        }
-        return toPrint;
+        return "(" + this.rowNum + ", " + this.colNum + ": " + super.toString() + ")";
     }
 
 }

@@ -12,9 +12,11 @@ public class PixelDistance implements Distance<Pixel> {
     public double distance(Pixel one, Pixel two) {
         // sqdf = "Squared Distance"
         final int three = 3;
+        RGBSet diff = one.diff(two);
+        int [] diffRa = {diff.getR(), diff.getG(), diff.getB()};
         double dist = 0;
-        for (int i = 0; i <= three; ++i) {
-            dist += this.sqdf(one.getByte(i), two.getByte(i));
+        for (int i = 0; i < three; ++i) {
+            dist += this.square(diffRa[i]);
         }
         return dist;
     }
@@ -27,5 +29,9 @@ public class PixelDistance implements Distance<Pixel> {
      */
     private double sqdf(int a, int b) {
         return (a - b) * (a - b);
+    }
+
+    private double square(int a) {
+        return a * a;
     }
 }

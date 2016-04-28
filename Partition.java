@@ -12,11 +12,17 @@ public class Partition {
     /** The array holding the weights (size) of the tree for each node. */
     private int[] weight;
 
+    /**
+     * The number of partitions.
+     */
+    private int partNum;
+
     /** Create a partition of singleton sets of the given size.
      *  @param num the starting size of the partition
      */
     public Partition(int num) {
         this.size = num;
+        this.partNum = num;
         this.parent = new int[num];
         this.weight = new int[num];
         for (int i = 0; i < this.size; i++) {
@@ -40,6 +46,7 @@ public class Partition {
                 this.parent[root2] = root1;
                 this.weight[root1] += this.weight[root2];
             }
+            this.partNum--;
         }
     }
 
@@ -54,4 +61,14 @@ public class Partition {
         this.parent[curr] = this.find(this.parent[curr]);
         return this.parent[curr];
     }
+
+    /**
+     * Returns the total number of partitions.
+     * @return number of partitions
+     */
+    int partitionCount() {
+        return this.partNum;
+    }
+
+
 }
