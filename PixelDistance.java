@@ -11,9 +11,9 @@ public class PixelDistance implements Distance<Pixel> {
      */
     public double distance(Pixel one, Pixel two) {
         // sqdf = "Squared Distance"
-        final int four = 4;
+        final int three = 3;
         double dist = 0;
-        for (int i = 1; i <= four; ++i) {
+        for (int i = 0; i <= three; ++i) {
             dist += this.sqdf(one.getByte(i), two.getByte(i));
         }
         return dist;
