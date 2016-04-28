@@ -18,6 +18,8 @@ public final class MakeGraph {
 
     static ArrayList<GVertex<Pixel>> verts;
 
+    static WGraphP4<Pixel> pixelGraph;
+
     /** To appease checkstyle. */
     private MakeGraph() {
         // Does Absolutely Nothing.
@@ -31,7 +33,7 @@ public final class MakeGraph {
      */
     static WGraph<Pixel> imageToGraph(BufferedImage image, Distance<Pixel> pd) {
         //Create a Pixel WGraph. 
-        WGraphP4<Pixel> pixelGraph = new WGraphP4<Pixel>();
+        pixelGraph = new WGraphP4<Pixel>();
 
         //Determine "height"/"width" of the image in pixels.
         int height = image.getHeight();
@@ -57,7 +59,7 @@ public final class MakeGraph {
         int vertID = 0;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                formEdges(pixelGraph, verts, vertID, height, width, pd);
+                formEdges(vertID, height, width, pd);
                 vertID++;
             }
         }
@@ -77,9 +79,7 @@ public final class MakeGraph {
      * @param w          : the Width of the image.
      * @param pd         : the distance function for pixel.
      */
-    static void formEdges(WGraphP4<Pixel> pixelGraph,
-        ArrayList<GVertex<Pixel>> verts, int vertID,
-        int h, int w, Distance<Pixel> pd) {
+    static void formEdges(int vertID, int h, int w, Distance<Pixel> pd) {
         
         // Q: Is this what we want "dist = pd.distance(vertID, endID);"?
         // Q: Should the helper's helper method not be names "addEdge"
@@ -91,25 +91,25 @@ public final class MakeGraph {
         // Add edge if the pixel doesn't belong to the top edge of the image.
         if (vertID >= w) {
             endID = vertID - w; // North Vertex.
-            addEdge(pixelGraph, verts, vertID, endID, pd); // Add N Vertex.
+            addEdge(vertID, endID, pd); // Add N Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the bottom edge of the image.
         if (vertID < (w * (h - 1))) {
             endID = vertID + w; // South Vertex.
-            addEdge(pixelGraph, verts, vertID, endID, pd); // Add S Vertex.
+            addEdge(vertID, endID, pd); // Add S Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
         if ((vertID % w) != 0) {
             endID = vertID - 1; // West Vertex.
-            addEdge(pixelGraph, verts, vertID, endID, pd); // Add W Vertex.
+            addEdge(vertID, endID, pd); // Add W Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the right edge of the image.
         if ((vertID % w) != (w - 1)) {
             endID = vertID + 1; // East Vertex.
-            addEdge(pixelGraph, verts, vertID, endID, pd); // Add E Vertex.
+            addEdge(vertID, endID, pd); // Add E Vertex.
         }
     }
 
@@ -121,9 +121,7 @@ public final class MakeGraph {
      * @param endID      : the Vertex ID of the "End" Pixel
      * @param pd         : the distance function for pixel.
      */
-    static void addEdge(WGraphP4<Pixel> pixelGraph, 
-        ArrayList<GVertex<Pixel>> verts, int vertID, int endID,
-        Distance<Pixel> pd) {
+    static void addEdge(int vertID, int endID, Distance<Pixel> pd) {
         
         // Helper Method Operation Variables.
         // Pixel p1;    // Pixel one, used to calculate distance (weight).
@@ -201,6 +199,7 @@ public final class MakeGraph {
 
             BufferedImage image = ImageIO.read(new File(args[0]));
             WGraph<Pixel> g = imageToGraph(image, new PixelDistance());
+            System.err.println("Graph built.");
             List<WEdge<Pixel>> res = segmenter(g, Double.parseDouble(args[1]));
 
             System.out.print("result =  " + res.size() + "\n");

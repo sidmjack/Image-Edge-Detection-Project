@@ -259,7 +259,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         while (!stack.isEmpty()) {
             v = stack.removeFirst();
             reaches.add(v);
-            for (GVertex<VT> u: this.neighbors(v)) {
+            for (GVertex<VT> u : this.neighbors(v)) {
                 if (!visited[u.id()]) {
                     visited[u.id()] = true;
                     stack.addFirst(u);
@@ -340,7 +340,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      * @return     true if in graph, else false
      */
     private boolean vertexInGraph(GVertex<VT> vtx) {
-        return this.verts.containsValue(vtx);
+        return this.verts.containsKey(vtx.id());
     }
 
     /**
