@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public class UnionConditionsCalcs {
     
-    private class RGBSet implements Comparable<RGBSet> {
+    private class RGBSet {
         int r;
         int g;
         int b;
@@ -67,17 +67,12 @@ public class UnionConditionsCalcs {
             this.setB(this.getB() + adder);
         }
 
-        public int compareTo(RGBSet that) {
+        public boolean compareTo(RGBSet that) {
             int rCond = this.getR() - that.getR();
             int gCond = this.getG() - that.getG();
             int bCond = this.getB() - that.getB();
-            if (rCond == 0 && gCond == 0 && bCond == 0) {
-                return 0;
-             } else if (rCond <= 0 && gCond <= 0 && bCond <= 0) {
-                return 1;
-             } else {
-                return -1;
-             }
+            return rCond <= 0 && gCond <= 0 && bCond <= 0;
+
         }
 
         public String toString() {
@@ -115,28 +110,14 @@ public class UnionConditionsCalcs {
 
         /**
          * Finds the difference between the max and min RGB components.
-         * @param  a : a RGBStat
-         * @param  b : b RGBStat
          * @return   Returns the difference set.
          */
-        public RGBSet diff(RGBStats that) {
-            // Determine the max and min for all RGB Stats.
-            int maxR = Math.max(this.max.getR(), that.max.getR());
-            int maxG = Math.max(this.max.getG(), that.max.getG());
-            int maxB = Math.max(this.max.getB(), that.max.getB());
-            int minR = Math.min(this.min.getR(), that.min.getR());
-            int minG = Math.min(this.min.getG(), that.min.getG());
-            int minB = Math.min(this.min.getB(), that.min.getB());
-            // Now determine the differences between min and max.
-            // Return the Difference Set.
-            return new RGBSet(maxR - minR, maxG - minG, maxB - minB);
-        }
-
         public RGBSet diff() {
             // Determine the max and min for all RGB Stats.
             int maxR = this.max.getR();
             int maxG = this.max.getG();
             int maxB = this.max.getB();
+
             int minR = this.min.getR();
             int minG = this.min.getG();
             int minB = this.min.getB();
@@ -202,30 +183,36 @@ public class UnionConditionsCalcs {
      */
     public boolean minDiffCond(int idA, int idB, double k) {
         // Grab the Desired sets, Check for Null (NONHEAD) Access Attempt.
-        RGBStats setA = this.eqClasses.get(idA);
-        RGBStats setB = this.eqClasses.get(idB);
+        RGBStats aStats = this.eqClasses.get(idA);
+        RGBStats bStats = this.eqClasses.get(idB);
 
-        if (setA == null || setB == null) {
+        if (aStats == null || bStats == null) {
              System.err.println("ERR: Invalid Access Attempt- Entry is Null!");
         }
 
         // Initialized/Grab Size of each Set.
-        int sizeA = setA.getSize();
-        int sizeB = setB.getSize();
+        int sizeA = aStats.getSize();
+        int sizeB = bStats.getSize();
 
 
-        RGBStats aUnionB = new RGBStats(setA, setB);
+        RGBStats aUnionB = new RGBStats(aStats, bStats);
 
-        RGBSet rhs = setA.diff().getMin(setB.diff());
+        RGBSet rhs = aStats.diff().getMin(bStats.diff());
         rhs.plus((int)(k / (sizeA + sizeB)));
+
+        RGBSet lhs = aUnionB.diff();
 
 
         // Return whether the condition is satisfied.
-        return (aUnionB.diff()).compareTo(rhs) >= 0;
+        return lhs.compareTo(rhs);
     }
 
     public Set<Integer> componentsHeadIDs() {
     	return this.eqClasses.keySet();
+    }
+
+    public int sizeOfGroup(int id) {
+    	return this.eqClasses.get(id).getSize();
     }
 
     public String toString() {
