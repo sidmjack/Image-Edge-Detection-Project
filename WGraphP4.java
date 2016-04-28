@@ -189,7 +189,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
     @Override
     public int degree(GVertex<VT> v) {
         if (this.vertexInGraph(v)) {
-            return this.edges.get(v.id()).keySet().size();
+            return this.edges.get(v.id()).size();
         }
         
         return -1;
@@ -202,7 +202,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      */
     @Override
     public boolean areIncident(WEdge<VT> e, GVertex<VT> v) {
-        return e.source().equals(v) || e.end().equals(v);
+        return e.isIncident(v);
     }
 
     /** Return a list of all the edges.  
@@ -278,7 +278,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         List<WEdge<VT>> allEdges = this.allEdges();
         List<WEdge<VT>> iEdges = new ArrayList<WEdge<VT>>();
         for (WEdge<VT> edge: allEdges) {
-            if (this.areIncident(edge, v)) {
+            if (edge.isIncident(v)) {
                 iEdges.add(edge);
             }
         }
