@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Collection;
 
 public class UnionConditionsCalcs {
@@ -190,7 +191,7 @@ public class UnionConditionsCalcs {
      * @param  k  : K Value.
      * @return     Returns "True" if for operation success.
      */
-    public boolean minDiffCond(int idA, int idB, int k) {
+    public boolean minDiffCond(int idA, int idB, double k) {
         // Grab the Desired sets, Check for Null (NONHEAD) Access Attempt.
         RGBStats setA = this.eqClasses.get(idA);
         RGBStats setB = this.eqClasses.get(idB);
@@ -207,10 +208,14 @@ public class UnionConditionsCalcs {
         RGBStats aUnionB = new RGBStats(setA, setB);
 
         RGBSet rhs = setA.diff().getMin(setB.diff());
-        rhs.plus(k / (sizeA + sizeB));
+        rhs.plus((int)(k / (sizeA + sizeB)));
 
 
         // Return whether the condition is satisfied.
         return (aUnionB.diff()).compareTo(rhs) >= 0;
+    }
+
+    public Set<Integer> componentsHeadIDs() {
+    	return this.eqClasses.keySet();
     }
 }
