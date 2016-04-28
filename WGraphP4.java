@@ -301,7 +301,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
         }*/
         PQHeap<WEdge<VT>> pQueue = new PQHeap<WEdge<VT>>();
         pQueue.init(this.allEdges());
-        Partition p = new Partition(this.numEdges);
+        Partition p = new Partition(this.numEdges());
         List<WEdge<VT>> edgeSet = new ArrayList<WEdge<VT>>();
         int addEdges = 0;
         int vert = this.numVerts();
