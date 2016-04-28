@@ -80,6 +80,10 @@ public class UnionConditionsCalcs {
              }
         }
 
+        public String toString() {
+        	return "0x" + Integer.toHexString(r) + Integer.toHexString(g) + Integer.toHexString(b);
+        }
+
 
     }
 
@@ -149,7 +153,8 @@ public class UnionConditionsCalcs {
 
 
     public UnionConditionsCalcs(Collection<GVertex<Pixel>> pixList) {
-        for (GVertex<Pixel> gv: pixList) {
+        this.eqClasses = new HashMap<Integer, RGBStats>();
+        for (GVertex<Pixel> gv : pixList) {
             Pixel pix = gv.data();
             eqClasses.put(gv.id(),
                 new RGBStats(pix.getRed(), pix.getGreen(), pix.getBlue()));

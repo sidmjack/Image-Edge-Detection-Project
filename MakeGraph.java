@@ -42,8 +42,8 @@ public final class MakeGraph {
         // Here, add the pixels into the pixelGraph.
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                tempRGB = image.getRGB(i, j); // Get RGB Value of Pixel.
-                tempP = new Pixel(i, j, tempRGB); // Create new Pixel.
+                tempRGB = image.getRGB(j, i); // Get RGB Value of Pixel.
+                tempP = new Pixel(j, i, tempRGB); // Create new Pixel.
                 pixelGraph.addVertex(tempP); //Add new Pixel.
             }
         }
@@ -96,7 +96,7 @@ public final class MakeGraph {
         }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
-        if ((vertID % w) != (w - 1)) {
+        if ((vertID % w) != 0) {
             endID = vertID - 1; // West Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add W Vertex.
         }
@@ -200,9 +200,12 @@ public final class MakeGraph {
 
             Set<Integer> compIDs = uCal.componentsHeadIDs();
 
+            System.err.println("# of components: " + compIDs.size());
+
             int compIdx = 1;
 
             for (Integer id : compIDs) {
+                System.err.println("On component: " + compIdx);
 
                 image = ImageIO.read(new File(args[0]));
                 
@@ -223,7 +226,7 @@ public final class MakeGraph {
                 // you can generate an output image like this:
                 for (GVertex<Pixel> i : g.depthFirst(verts.get(id)))  {
                     Pixel d = i.data();
-                    image.setRGB(d.col(), d.row(), d.value());
+                    image.setRGB(d.row(), d.col(), d.value());
                 }
 
                 File f = new File("output" + compIdx++ + ".png");

@@ -63,14 +63,13 @@ public class Pixel {
      * @param  byteNum Desired byte in Pixel Value.
      * @return         returns integer value of desired byte.
      */
-    private int getByte(int byteNum) {    
+    public int getByte(int byteNum) {    
         
         final int three = 3;
         final int four = 4;
         final int eight = 8;
         final int mask = 0xFF;
         
-        byteNum = four - byteNum;
         // Determine the BitMask based off of the input (desired) byteNum.
         if (0 <= byteNum && byteNum <= three) {
             return (this.pxNum >>> (eight * byteNum)) & mask;
@@ -84,7 +83,7 @@ public class Pixel {
      * @return Red component
      */
     public int getRed() {
-        return this.getByte(0);
+        return this.getByte(2);
     }
 
     /**
@@ -101,7 +100,7 @@ public class Pixel {
      * @return Blue component
      */
     public int getBlue() {
-        return this.getByte(2);
+        return this.getByte(0);
     }
 
 }
