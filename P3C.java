@@ -11,7 +11,7 @@ import java.util.Set;
 // import java.awt.image.BufferedImage;
 
 /** MakeGraph creates a WGraph given an image and K value.*/
-public final class MakeGraph {
+public final class P3C {
 
 
     static UnionConditionsCalcs uCal;
@@ -21,7 +21,7 @@ public final class MakeGraph {
     static WGraphP4<Pixel> pixelGraph;
 
     /** To appease checkstyle. */
-    private MakeGraph() {
+    private P3C() {
         // Does Absolutely Nothing.
     }
 
