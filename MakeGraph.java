@@ -6,11 +6,16 @@ import javax.imageio.ImageIO;
 //import java.awt.Image;
 //import java.awt.Toolkit;
 import java.util.List;
-//import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Set;
 
 /** MakeGraph creates a WGraph given an image and K value.*/
 public final class MakeGraph {
+
+
+    static UnionConditionsCalcs uCal;
+
+    static ArrayList<GVertex<Pixel>> verts;
 
     /** To appease checkstyle. */
     private MakeGraph() {
@@ -44,8 +49,7 @@ public final class MakeGraph {
         }
         
         // Create a list containing all verticies in pixelGraph
-        LinkedList<GVertex<Pixel>> verts 
-            = new LinkedList<GVertex<Pixel>>(pixelGraph.allVertices());
+        verts = new ArrayList<GVertex<Pixel>>(pixelGraph.allVertices());
 
         // Using the known shape of the image and the collected pixels, 
         // create add the edges of the image to the pixelGraph.
@@ -69,7 +73,7 @@ public final class MakeGraph {
      * @param pd         : the distance function for pixel.
      */
     static void formEdges(WGraphP4<Pixel> pixelGraph,
-        LinkedList<GVertex<Pixel>> verts, int vertID,
+        ArrayList<GVertex<Pixel>> verts, int vertID,
         int h, int w, Distance<Pixel> pd) {
         
         // Q: Is this what we want "dist = pd.distance(vertID, endID);"?
@@ -80,25 +84,25 @@ public final class MakeGraph {
         double dist; // Distance b/w 2 pixels found using distance function.  
 
         // Add edge if the pixel doesn't belong to the top edge of the image.
-        if (vertID > w) {
+        if (vertID >= w) {
             endID = vertID - w; // North Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add N Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the bottom edge of the image.
-        if (vertID <= (w * h)) {
+        if (vertID < (w * (h - 1))) {
             endID = vertID + w; // South Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add S Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
-        if ((vertID % w) != 0) {
+        if ((vertID % w) != (w - 1)) {
             endID = vertID - 1; // West Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add W Vertex.
         }
         
         // Add edge if the pixel doesn't belong to the right edge of the image.
-        if ((vertID % w) != 1) {
+        if ((vertID % w) != (w - 1)) {
             endID = vertID + 1; // East Vertex.
             addEdge(pixelGraph, verts, vertID, endID, pd); // Add E Vertex.
         }
@@ -113,20 +117,20 @@ public final class MakeGraph {
      * @param pd         : the distance function for pixel.
      */
     static void addEdge(WGraphP4<Pixel> pixelGraph, 
-        LinkedList<GVertex<Pixel>> verts, int vertID, int endID,
+        ArrayList<GVertex<Pixel>> verts, int vertID, int endID,
         Distance<Pixel> pd) {
         
         // Helper Method Operation Variables.
-        Pixel p1;    // Pixel one, used to calculate distance (weight).
-        Pixel p2;    // Pixel two, used to calculate distance (weight). 
+        // Pixel p1;    // Pixel one, used to calculate distance (weight).
+        // Pixel p2;    // Pixel two, used to calculate distance (weight). 
         GVertex<Pixel> pixVert1; // Vertex Pixel 1 needed to create edge.
         GVertex<Pixel> pixVert2; // Vertex Pixel 2 needed to create edge.
         double dist; // Distance <- Weight needed to add edge to pixelGraph.
         
         // Create teh Pixels.
-        p1 = verts.get(vertID).data(); 
-        p2 = verts.get(endID).data(); 
-        dist = pd.distance(p1, p2);
+        pixVert1 = verts.get(vertID); 
+        pixVert2 = verts.get(endID); 
+        dist = pd.distance(pixVert1.data(), pixVert2.data());
         
         //Add the edge given the Pixels p1 & p2, and the weight (dist)
         pixelGraph.addEdge(pixVert1, pixVert2, dist);
@@ -141,10 +145,38 @@ public final class MakeGraph {
      *  @return a list of the edges in the minimum spanning forest
      */
 
-    //static List<WEdge<Pixel>> segmenter(WGraph<Pixel> g, double kvalue) {
-        //Not yet implemented...
-        //List<WEdge<Pixel>> edgeList = g.kruskals(k);
-    //}
+    static List<WEdge<Pixel>> segmenter(WGraph<Pixel> g, double kvalue) {
+
+        PQHeap<WEdge<Pixel>> pQueue = new PQHeap<WEdge<Pixel>>();
+        pQueue.init(g.allEdges());
+        Partition p = new Partition(g.numEdges());
+        List<WEdge<Pixel>> edgeSet = new ArrayList<WEdge<Pixel>>();
+        int addEdges = 0;
+        int vert = g.numVerts();
+
+        uCal = new UnionConditionsCalcs(g.allVertices());
+
+        while (addEdges < vert && !pQueue.isEmpty()) {
+            WEdge<Pixel> small = pQueue.remove();
+            //small is the current smallest edge 
+            int uset = p.find(small.source().id());
+            // uset is the id of one of small's two verticies
+            int vset = p.find(small.end().id());
+            // vset is the id of small's second vertex
+            if (uset != vset) {
+                if (uCal.minDiffCond(uset, vset, kvalue)) {
+                    //meaning I can add an edge 
+                    addEdges++;
+                    edgeSet.add(small);
+                    p.union(uset, vset);
+                    uCal.union(uset, vset);
+                }
+            }
+
+        }
+        return edgeSet;
+
+    }
 
     /**
      * Where the Pixel Graph is Made, Kruskal's is tested, and edges are ouput.
@@ -165,28 +197,46 @@ public final class MakeGraph {
             System.out.print("NSegments =  "
                              + (g.numVerts() - res.size()) + "\n");
 
-            // make a background image to put a segment into
-            for (int i = 0; i < image.getHeight(); i++) {
-                for (int j = 0; j < image.getWidth(); j++) {
-                    image.setRGB(j, i, gray);
+
+            Set<Integer> compIDs = uCal.componentsHeadIDs();
+
+            int compIdx = 1;
+
+            for (Integer id : compIDs) {
+
+                image = ImageIO.read(new File(args[0]));
+                
+
+                // make a background image to put a segment into
+                for (int i = 0; i < image.getHeight(); i++) {
+                    for (int j = 0; j < image.getWidth(); j++) {
+                        image.setRGB(j, i, gray);
+                    }
                 }
+
+
+
+
+                // Couldn't we just use res as 'x'?
+
+                // After you have a spanning tree connected component x, 
+                // you can generate an output image like this:
+                for (GVertex<Pixel> i : g.depthFirst(verts.get(id)))  {
+                    Pixel d = i.data();
+                    image.setRGB(d.col(), d.row(), d.value());
+                }
+
+                File f = new File("output" + compIdx++ + ".png");
+                ImageIO.write(image, "png", f);
+
+                // You'll need to do that for each connected component,
+                // writing each one to a different file, clearing the
+                // image buffer first
+
             }
 
-            // Couldn't we just use res as 'x'?
 
-            // After you have a spanning tree connected component x, 
-            // you can generate an output image like this:
-            for (GVertex<Pixel> i: x)  {
-                Pixel d = i.data();
-                image.setRGB(d.col(), d.row(), d.value());
-            }
 
-            File f = new File("output.png");
-            ImageIO.write(image, "png", f);
-
-            // You'll need to do that for each connected component,
-            // writing each one to a different file, clearing the
-            // image buffer first
 
         } catch (IOException e) {
             System.out.print("Missing File!\n");
