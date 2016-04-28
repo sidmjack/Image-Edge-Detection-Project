@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+// import java.awt.image.BufferedImage;
 
 /** MakeGraph creates a WGraph given an image and K value.*/
 public final class MakeGraph {
@@ -60,6 +61,10 @@ public final class MakeGraph {
                 vertID++;
             }
         }
+        //Print for sanity
+        // for (WEdge<Pixel> eg : pixelGraph.allEdges()) {
+        //     System.err.println(eg);
+        // }
         return pixelGraph;
     }
     
@@ -149,12 +154,13 @@ public final class MakeGraph {
 
         PQHeap<WEdge<Pixel>> pQueue = new PQHeap<WEdge<Pixel>>();
         pQueue.init(g.allEdges());
-        Partition p = new Partition(g.numEdges());
+        Partition p = new Partition(g.numVerts());
         List<WEdge<Pixel>> edgeSet = new ArrayList<WEdge<Pixel>>();
         int addEdges = 0;
         int vert = g.numVerts();
 
         uCal = new UnionConditionsCalcs(g.allVertices());
+        // System.err.println(uCal);
 
         while (addEdges < vert && !pQueue.isEmpty()) {
             WEdge<Pixel> small = pQueue.remove();
@@ -173,6 +179,9 @@ public final class MakeGraph {
                 }
             }
 
+            // System.err.println(uCal);
+
+
         }
         return edgeSet;
 
@@ -184,10 +193,11 @@ public final class MakeGraph {
      */
     public static void main(String[] args) {
 
-        final int gray = 0x202020;
+        final int gray = 0xD0D0D0;
 
         try {
           // the line that reads the image file
+            WGraphP4<Pixel> limitedEdgesGraph = new WGraphP4<Pixel>();
 
             BufferedImage image = ImageIO.read(new File(args[0]));
             WGraph<Pixel> g = imageToGraph(image, new PixelDistance());
@@ -207,8 +217,7 @@ public final class MakeGraph {
             for (Integer id : compIDs) {
                 System.err.println("On component: " + compIdx);
 
-                image = ImageIO.read(new File(args[0]));
-                
+                image = new BufferedImage(image.getWidth(), image.getHeight(), 1);                
 
                 // make a background image to put a segment into
                 for (int i = 0; i < image.getHeight(); i++) {
@@ -216,15 +225,22 @@ public final class MakeGraph {
                         image.setRGB(j, i, gray);
                     }
                 }
+                // System.err.println("\n");
 
-
-
+                // System.err.println(res);
+                limitedEdgesGraph.clear();
+                for (GVertex<Pixel> vt : verts) {
+                    limitedEdgesGraph.addVertex(vt);
+                }
+                for (WEdge<Pixel> eg : res) {
+                    limitedEdgesGraph.addEdge(eg);
+                }
 
                 // Couldn't we just use res as 'x'?
 
                 // After you have a spanning tree connected component x, 
                 // you can generate an output image like this:
-                for (GVertex<Pixel> i : g.depthFirst(verts.get(id)))  {
+                for (GVertex<Pixel> i : limitedEdgesGraph.depthFirst(verts.get(id)))  {
                     Pixel d = i.data();
                     image.setRGB(d.row(), d.col(), d.value());
                 }
