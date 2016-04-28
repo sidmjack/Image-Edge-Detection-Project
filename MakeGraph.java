@@ -63,9 +63,9 @@ public final class MakeGraph {
                 vertID++;
             }
         }
-        //Print for sanity
+        // Print for sanity
         // for (WEdge<Pixel> eg : pixelGraph.allEdges()) {
-        //     System.err.println(eg);
+            // System.err.println(eg);
         // }
         return pixelGraph;
     }
@@ -94,11 +94,11 @@ public final class MakeGraph {
             addEdge(vertID, endID, pd); // Add N Vertex.
         }
         
-        // Add edge if the pixel doesn't belong to the bottom edge of the image.
-        if (vertID < (w * (h - 1))) {
-            endID = vertID + w; // South Vertex.
-            addEdge(vertID, endID, pd); // Add S Vertex.
-        }
+        // // Add edge if the pixel doesn't belong to the bottom edge of the image.
+        // if (vertID < (w * (h - 1))) {
+        //     endID = vertID + w; // South Vertex.
+        //     addEdge(vertID, endID, pd); // Add S Vertex.
+        // }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
         if ((vertID % w) != 0) {
@@ -106,11 +106,11 @@ public final class MakeGraph {
             addEdge(vertID, endID, pd); // Add W Vertex.
         }
         
-        // Add edge if the pixel doesn't belong to the right edge of the image.
-        if ((vertID % w) != (w - 1)) {
-            endID = vertID + 1; // East Vertex.
-            addEdge(vertID, endID, pd); // Add E Vertex.
-        }
+        // // Add edge if the pixel doesn't belong to the right edge of the image.
+        // if ((vertID % w) != (w - 1)) {
+        //     endID = vertID + 1; // East Vertex.
+        //     addEdge(vertID, endID, pd); // Add E Vertex.
+        // }
     }
 
     /**
@@ -134,6 +134,7 @@ public final class MakeGraph {
         pixVert1 = verts.get(vertID); 
         pixVert2 = verts.get(endID); 
         dist = pd.distance(pixVert1.data(), pixVert2.data());
+        // System.err.println(pixVert1.data() + " " + pixVert2.data() + " " + dist);
         
         //Add the edge given the Pixels p1 & p2, and the weight (dist)
         pixelGraph.addEdge(pixVert1, pixVert2, dist);
@@ -159,7 +160,7 @@ public final class MakeGraph {
 
         uCal = new UnionConditionsCalcs(g.allVertices());
         // System.err.println(uCal);
-
+        int i = 0;
         while (addEdges < vert && !pQueue.isEmpty()) {
             WEdge<Pixel> small = pQueue.remove();
             //small is the current smallest edge 
@@ -177,10 +178,19 @@ public final class MakeGraph {
                 }
             }
 
+            // "Partition count not in sync with UnionConditionsCalcs.",
+            if(p.partitionCount() != uCal.size()) {
+                throw new IllegalStateException("Partition count not in sync with UnionConditionsCalcs. Partition says: " + p.partitionCount() + ", uCal says: " + uCal.size() + ": i = " +  i++);
+            }
+
+
             // System.err.println(uCal);
 
 
         }
+
+
+
         return edgeSet;
 
     }
@@ -214,7 +224,7 @@ public final class MakeGraph {
             int compIdx = 1;
 
             for (Integer id : compIDs) {
-                System.err.println("On component: " + compIdx);
+                System.err.print("On component: " + compIdx + " with head at " + verts.get(id).data() + " of size: " + uCal.sizeOfGroup(id));
 
                 image = new BufferedImage(image.getWidth(), image.getHeight(), 1);                
 
@@ -235,11 +245,20 @@ public final class MakeGraph {
                     limitedEdgesGraph.addEdge(eg);
                 }
 
+                List<GVertex<Pixel>> componentVertices = limitedEdgesGraph.depthFirst(verts.get(id));
+
+
+                System.err.println(" with actual numVerts: " + componentVertices.size());
+
+                if (uCal.sizeOfGroup(id) == 1) {
+                    System.err.println(limitedEdgesGraph.incidentEdges(verts.get(id)));
+                }
+
                 // Couldn't we just use res as 'x'?
 
                 // After you have a spanning tree connected component x, 
                 // you can generate an output image like this:
-                for (GVertex<Pixel> i : limitedEdgesGraph.depthFirst(verts.get(id)))  {
+                for (GVertex<Pixel> i : componentVertices)  {
                     Pixel d = i.data();
                     image.setRGB(d.row(), d.col(), d.value());
                 }
