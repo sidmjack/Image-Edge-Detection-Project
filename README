@@ -50,13 +50,20 @@ Created Pixel, MakeGraph (with Start Up Code), PixelDistance, and Distance
 Implemented ImagetoGraph Method, however Segmenter is still left hanging.
 
 ------------------------------------------------------------------------------
+
 SUMMARY:
 	Had to rely on our confidence in modular testing alot. Because alot of
 	functions depended on each other, it was hard to test our methods. We
 	just had to be confident that each method worked well given tests we
 	understood.  
 
+	Part C took FOREVER! After we implemented all of the functions that we
+	believed we needed to implement and after getting all of our source
+	code to compile, the deugging began. That proved to be the most 
+	frustrating part of the project, BUT! It works sooo! Woo, hoo!
+
 ------------------------------------------------------------------------------
+
 COMPLICATIONS:
 	
 	We ran into the issue of composing primitive arrays out of generics.
@@ -81,6 +88,24 @@ COMPLICATIONS:
 	much we could do about this other than being especially careful making 
 	sure our functions worked as expected given simply self made tests that
 	we had "answers" to.
+
+	Once Part A through C were completed and all of the source files needed
+	to run the program we began testing on the blackandwhite image.
+	After working out a couple of exceptions and bugs, we were able to run
+	the program. Unfortunately, after the program took longer than 5 minutes
+	to run, we realized we either had a majot time complexity issue, or some
+	other broken bit of code that could literally be anything. We suspected
+	that it was the segmented that was giving us problems because our program
+	was producing hundreds of completely unparsed/non-segmented images.
+	In other words, our program spit back the same image we gave it...several
+	times. So! We decided to debug using a smaller image (10 x 12) which proved
+	to also be too large, so we began testing on an even smaller image (2 x 4)
+	to see if we could at least get results we understood and work from there.
+
+	After making a ton of toString methods, print statements, and running GDB
+	(shout out to eclipse), we started working out the (many) bugs that were
+	in our program. It took a few hours, but in the end we seemed to get it 
+	to work!
 
 ------------------------------------------------------------------------------
 
@@ -121,7 +146,8 @@ implemented imagetoGraph (Not yet tested at this point)
 
 Date: 4/27/2016
 Part C:
-Created UnionConditionCalcs Class and a couple other helper subclasses
+Created UnionConditionCalcs Class and a couple of git other helper subclasses
 to handle the modified Kruskals function (Lawrence, Eddie, Sidney)
 -> Got Modified Kruskals to Work.
+-> Completed Part C (Began/Completed debugging/testing)
 ------------------------------------------------------------------------------
