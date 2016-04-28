@@ -29,7 +29,7 @@ We modified the given JUnit test so that it could work with
 generics and tested the new implementation for unweighted graph by 
 changing the type of graph instantiated. Further, the modified JUNIT test
 tests the incidentEdges method (to compute a minimum spanning tree/forest), 
-and the kruskals minimum spanning tree method for Part B .  
+and the kruskals minimum spanning tree method for Part B.  
 
 ------------------------------------------------------------------------------
 
@@ -119,4 +119,9 @@ Part C:
 MakeGraph.java/ PixelDistance.java (Sidney) -> Added Part C classes and 
 implemented imagetoGraph (Not yet tested at this point)
 
+Date: 4/27/2016
+Part C:
+Created UnionConditionCalcs Class and a couple other helper subclasses
+to handle the modified Kruskals function (Lawrence, Eddie, Sidney)
+-> Got Modified Kruskals to Work.
 ------------------------------------------------------------------------------
