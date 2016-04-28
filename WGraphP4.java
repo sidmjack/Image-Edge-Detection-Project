@@ -39,10 +39,7 @@ public class WGraphP4<VT> implements WGraph<VT> {
      * Default constructor for adjacency list Graph.
      */
     public WGraphP4() {
-        this.nextID = 0;
-        this.numEdges = 0;
-        this.verts = new HashMap<Integer, GVertex<VT>>();
-        this.edges = new HashMap<Integer, HashMap<Integer, Double>>();
+        this.clear();
     }
 
     /** Get the number of edges. 
@@ -254,7 +251,9 @@ public class WGraphP4<VT> implements WGraph<VT> {
 
         // using LinkedList<Vertex> as a Stack
         LinkedList<GVertex<VT>> stack = new LinkedList<GVertex<VT>>();
+
         boolean[] visited = new boolean[this.numVerts()];  // inits to false
+
         stack.addFirst(v);
         visited[v.id()] = true;
         while (!stack.isEmpty()) {
@@ -323,6 +322,16 @@ public class WGraphP4<VT> implements WGraph<VT> {
         return edgeSet;
         
         
+    }
+
+    /**
+     * Clears the Graph.
+     */
+    public void clear() {
+        this.nextID = 0;
+        this.numEdges = 0;
+        this.verts = new HashMap<Integer, GVertex<VT>>();
+        this.edges = new HashMap<Integer, HashMap<Integer, Double>>();
     }
 
     /**

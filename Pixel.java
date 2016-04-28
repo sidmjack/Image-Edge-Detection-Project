@@ -103,4 +103,12 @@ public class Pixel {
         return this.getByte(0);
     }
 
+    public String toString() {
+        String toPrint = "0x";
+        for (int i = 3; i >= 0; --i) {
+            toPrint += Integer.toHexString(this.getByte(i));
+        }
+        return toPrint;
+    }
+
 }

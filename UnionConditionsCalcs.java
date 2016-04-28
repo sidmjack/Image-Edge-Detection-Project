@@ -73,7 +73,7 @@ public class UnionConditionsCalcs {
             int bCond = this.getB() - that.getB();
             if (rCond == 0 && gCond == 0 && bCond == 0) {
                 return 0;
-             } else if (rCond >= 0 && gCond >= 0 && bCond >= 0) {
+             } else if (rCond <= 0 && gCond <= 0 && bCond <= 0) {
                 return 1;
              } else {
                 return -1;
@@ -143,6 +143,10 @@ public class UnionConditionsCalcs {
             // Now determine the differences between min and max.
             // Return the Difference Set.
             return new RGBSet(maxR - minR, maxG - minG, maxB - minB);
+        }
+
+        public String toString() {
+        	return "<" + max + ", " + min + ", " + size + ">";
         }
 
 
@@ -222,5 +226,9 @@ public class UnionConditionsCalcs {
 
     public Set<Integer> componentsHeadIDs() {
     	return this.eqClasses.keySet();
+    }
+
+    public String toString() {
+    	return this.eqClasses.toString();
     }
 }
