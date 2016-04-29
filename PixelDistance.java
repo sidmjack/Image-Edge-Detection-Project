@@ -20,16 +20,6 @@ public class PixelDistance implements Distance<Pixel> {
         }
         return dist;
     }
-
-    /**
-     * Finds the squared difference between two integers.
-     * @param  a First integer parameter.
-     * @param  b Second integer parameter.
-     * @return   Return the squared difference b/w 'a' and 'b'.
-     */
-    private double sqdf(int a, int b) {
-        return (a - b) * (a - b);
-    }
     /**
      * squares a number a.
      * @param a number a.

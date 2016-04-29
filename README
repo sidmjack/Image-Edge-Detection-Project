@@ -37,8 +37,8 @@ sure why either and we've been debugging for days).
 Mostly works, please give us a good grade!
 
 Yours truly,
-	Desperate DataStructures students who would be forever greatful
-	for any and all mercy you choose to impart in the grading of our project.
+    Desperate DataStructures students who would be forever greatful
+    for any and all mercy you choose to impart in the grading of our project.
 
 ------------------------------------------------------------------------------
 
@@ -84,63 +84,63 @@ Implemented ImagetoGraph Method, however Segmenter is still left hanging.
 ------------------------------------------------------------------------------
 
 SUMMARY:
-	Had to rely on our confidence in modular testing alot. Because alot of
-	functions depended on each other, it was hard to test our methods. We
-	just had to be confident that each method worked well given tests we
-	understood.  
+    Had to rely on our confidence in modular testing alot. Because alot of
+    functions depended on each other, it was hard to test our methods. We
+    just had to be confident that each method worked well given tests we
+    understood.  
 
-	Part C took FOREVER! After we implemented all of the functions that we
-	believed we needed to implement and after getting all of our source
-	code to compile, the deugging began. That proved to be the most 
-	frustrating part of the project, BUT! It works sooo! Woo, hoo!
+    Part C took FOREVER! After we implemented all of the functions that we
+    believed we needed to implement and after getting all of our source
+    code to compile, the deugging began. That proved to be the most 
+    frustrating part of the project, BUT! It works sooo! Woo, hoo!
 
-	Disclaimer: Though it works, it still does take about a minute to process 
-	reasonable images...
+    Disclaimer: Though it works, it still does take about a minute to process 
+    reasonable images...
 
 ------------------------------------------------------------------------------
 
 COMPLICATIONS:
-	
-	We ran into the issue of composing primitive arrays out of generics.
-	For whatever reason, java doesn't like making generic arrays (???) which is
-	a bit odd considering that it's the most basic data strcture in java. 
-	Anyway, after "surfing piazza" we discovered that we should just switch to
-	Array lists because they're more flexible and makes java happy.
+    
+    We ran into the issue of composing primitive arrays out of generics.
+    For whatever reason, java doesn't like making generic arrays (???) which is
+    a bit odd considering that it's the most basic data strcture in java. 
+    Anyway, after "surfing piazza" we discovered that we should just switch to
+    Array lists because they're more flexible and makes java happy.
 
-	PQHeap took a bit of time due to a couple sneaky comparison errors, but
-	was resolved quickly once realized.
+    PQHeap took a bit of time due to a couple sneaky comparison errors, but
+    was resolved quickly once realized.
 
-	Took a bit of time to figure out how to implement Kruskal's Algorithm.
+    Took a bit of time to figure out how to implement Kruskal's Algorithm.
 
-	It was difficult not being able to test everything continuously. A lot
-	of the program was implemented in parts, meaning that it was difficult
-	to see how each piece of the program worked with other dependent pieces
-	of the program until we were working on a function that was implemented
-	later. Kruskals depended on PQHeap, making it difficult to test Kruskals
-	Method since we worked on these simultaneously. In turn, it was difficult
-	to test the imagetoGraph Method because the method (Kruskals) which
-	offered us visual feedback was not yet implemented. There wasn't really
-	much we could do about this other than being especially careful making 
-	sure our functions worked as expected given simply self made tests that
-	we had "answers" to.
+    It was difficult not being able to test everything continuously. A lot
+    of the program was implemented in parts, meaning that it was difficult
+    to see how each piece of the program worked with other dependent pieces
+    of the program until we were working on a function that was implemented
+    later. Kruskals depended on PQHeap, making it difficult to test Kruskals
+    Method since we worked on these simultaneously. In turn, it was difficult
+    to test the imagetoGraph Method because the method (Kruskals) which
+    offered us visual feedback was not yet implemented. There wasn't really
+    much we could do about this other than being especially careful making 
+    sure our functions worked as expected given simply self made tests that
+    we had "answers" to.
 
-	Once Part A through C were completed and all of the source files needed
-	to run the program we began testing on the blackandwhite image.
-	After working out a couple of exceptions and bugs, we were able to run
-	the program. Unfortunately, after the program took longer than 5 minutes
-	to run, we realized we either had a majot time complexity issue, or some
-	other broken bit of code that could literally be anything. We suspected
-	that it was the segmented that was giving us problems because our program
-	was producing hundreds of completely unparsed/non-segmented images.
-	In other words, our program spit back the same image we gave it...several
-	times. So! We decided to debug using a smaller image (10 x 12) which proved
-	to also be too large, so we began testing on an even smaller image (2 x 4)
-	to see if we could at least get results we understood and work from there.
+    Once Part A through C were completed and all of the source files needed
+    to run the program we began testing on the blackandwhite image.
+    After working out a couple of exceptions and bugs, we were able to run
+    the program. Unfortunately, after the program took longer than 5 minutes
+    to run, we realized we either had a majot time complexity issue, or some
+    other broken bit of code that could literally be anything. We suspected
+    that it was the segmented that was giving us problems because our program
+    was producing hundreds of completely unparsed/non-segmented images.
+    In other words, our program spit back the same image we gave it...several
+    times. So! We decided to debug using a smaller image (10 x 12) which proved
+    to also be too large, so we began testing on an even smaller image (2 x 4)
+    to see if we could at least get results we understood and work from there.
 
-	After making a ton of toString methods, print statements, and running GDB
-	(shout out to eclipse), we started working out the (many) bugs that were
-	in our program. It took a few hours, but in the end we seemed to get it 
-	to work!
+    After making a ton of toString methods, print statements, and running GDB
+    (shout out to eclipse), we started working out the (many) bugs that were
+    in our program. It took a few hours, but in the end we seemed to get it 
+    to work!
 
 ------------------------------------------------------------------------------
 
@@ -149,11 +149,11 @@ COMPLICATIONS:
 Date: 4/17/2016
 PART A:
 WGraph.java (Lawrence/Eddie) -> Modified Graph Implementation to use lists instead
-	of matrices,
+    of matrices,
 GVertex.java (Sidney/Lawrence) -> Modified Vertex.java to handle generics 
-	for  GVertex.java.  
+    for  GVertex.java.  
 WEdge.java (Sidney/Eddie) -> Modified Edge.java to include weight/ implement 
-		comparable for WEdge.java 
+        comparable for WEdge.java 
 
 Date: 4/20/2016
 PART A:

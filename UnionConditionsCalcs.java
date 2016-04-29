@@ -1,17 +1,26 @@
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Collection;
-
+/**
+ * Calculations before Unions. 
+ *
+ */
 public class UnionConditionsCalcs {
-    
+    /**
+     * hashmap of vetieicy id and rgb stats.
+     */
+            
     private HashMap<Integer, RGBStats> eqClasses;
 
-
+    /**
+     * construtor. 
+     * @param pixList collection of veerticeis of pixels. 
+     */
     public UnionConditionsCalcs(Collection<GVertex<Pixel>> pixList) {
         this.eqClasses = new HashMap<Integer, RGBStats>();
         for (GVertex<Pixel> gv : pixList) {
             Pixel pix = gv.data();
-            eqClasses.put(gv.id(),
+            this.eqClasses.put(gv.id(),
                 new RGBStats(pix.getR(), pix.getG(), pix.getB()));
         }
         
@@ -40,13 +49,15 @@ public class UnionConditionsCalcs {
                 this.eqClasses.put(idB, newStats);
                 kickedOutVal = this.eqClasses.remove(idA);
                 if (kickedOutVal == null) {
-                	throw new IllegalArgumentException("This RGBStats object wasn't in the HashMap.");
+                    throw new IllegalArgumentException(
+                            "This RGBStats object wasn't in the HashMap.");
                 }
             } else {
                 this.eqClasses.put(idA, newStats);
                 kickedOutVal = this.eqClasses.remove(idB);
                 if (kickedOutVal == null) {
-                	throw new IllegalArgumentException("This RGBStats object wasn't in the HashMap.");
+                    throw new IllegalArgumentException(
+                            "This RGBStats object wasn't in the HashMap.");
                 }
             }
         }
@@ -65,7 +76,7 @@ public class UnionConditionsCalcs {
         RGBStats bStats = this.eqClasses.get(idB);
 
         if (aStats == null || bStats == null) {
-             System.err.println("ERR: Invalid Access Attempt- Entry is Null!");
+            System.err.println("ERR: Invalid Access Attempt- Entry is Null!");
         }
 
         // Initialized/Grab Size of each Set.
@@ -76,7 +87,7 @@ public class UnionConditionsCalcs {
         RGBStats aUnionB = new RGBStats(aStats, bStats);
 
         RGBSet rhs = aStats.diff().getMin(bStats.diff());
-        rhs.plus((int)(k / (sizeA + sizeB)));
+        rhs.plus((int) (k / (sizeA + sizeB)));
 
         RGBSet lhs = aUnionB.diff();
 
@@ -84,20 +95,33 @@ public class UnionConditionsCalcs {
         // Return whether the condition is satisfied.
         return lhs.compareTo(rhs);
     }
-
+    /**
+     * gets all heads.
+     * @return set of integers. each being a head. 
+     */
     public Set<Integer> componentsHeadIDs() {
-    	return this.eqClasses.keySet();
+        return this.eqClasses.keySet();
     }
-
+    /**
+     * group sizes. 
+     * @param id of vertex
+     * @return size
+     */
     public int sizeOfGroup(int id) {
-    	return this.eqClasses.get(id).getSize();
+        return this.eqClasses.get(id).getSize();
     }
-
+    /**
+     * size of hashmap ov vertexies. 
+     * @return number of verticies.
+     */
     public int size() {
-    	return this.eqClasses.size();
+        return this.eqClasses.size();
     }
-
+    /**
+     * toString fcn.
+     * @return string
+     */
     public String toString() {
-    	return this.eqClasses.toString();
+        return this.eqClasses.toString();
     }
 }
