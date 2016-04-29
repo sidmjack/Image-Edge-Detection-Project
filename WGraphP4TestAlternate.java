@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WGraphP4Test {
+public class WGraphP4TestAlternate {
 	/** Graph. */
     public WGraphP4<String> testGraph;
     /** Lists. */
