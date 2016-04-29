@@ -16,29 +16,36 @@ Dear whom ever this may concern,
 
 We would like to convey to you the major issues our program is having to
 hopefully make grading easier and make the functionality of our code 
-(along with some of it's flaws) apparent (casue it DOES sort of work...
+(along with some of it's flaws) apparent (cause it DOES mostly work...
 we swear!)
 
 Anyway, our program seems to work perfectly for small images (around 400 x 240
-pixels). The program is able to properly segment images for the black
-and white test image, the flag image (our own test image), tiny image 
+pixels). The program is able to properly segment images for the small black
+and white test image, the flag image (our own test images), tiny image 
 (our test image), and pixel (another test image of our creation). These should
 at least demonstrate that for small images our program is capabe of segmenting
-small images into expected parses and printing the correct number of segments/
-edges. 
+images into expected parsed images and printing the correct number of segments/
+edges. Further, the time it takes to run is definitely reasonable running 
+in about 5 to 6 seconds.
 
 The issue with our program becomes apparent when we try using larger test 
-iamegs. For whatever reason, larger images "break" the segmenter. Instead
+images. For whatever reason, larger images "break" the segmenter. Instead
 of parsing images into the expected large pieces of color we'd like to 
-have output, it not only segments the images into hundreds (at times thousands)
-of segments, but prints the whole image multiple times (yeah, we're not 
-sure why either and we've been debugging for days). 
+have as output, it not only segments the images into hundreds (at times 
+thousands) of segments, but prints the whole image multiple times (yeah,
+we're not sure why... and we've been debugging for DAYS).
 
-Mostly works, please give us a good grade!
+Finally, if you would like to take a closer look at what's going on at 
+runtime (while the images are being segmented and output) we have a 
+commented out print function in main that may offer some insight
+(for example: segment size, the current output number, etc.)
+
+All in all, it mostly works... (ehem- please give us a good grade!)
 
 Yours truly,
-	Desperate DataStructures students who would be forever greatful
-	for any and all mercy you choose to impart in the grading of our project.
+	Desperate Data Structures students who would be forever greatful
+	for any and all mercy you choose to impart on in the grading of our 
+	P4 project.
 
 ------------------------------------------------------------------------------
 
@@ -187,5 +194,5 @@ to handle the modified Kruskals function (Lawrence, Eddie, Sidney)
 -> Completed Part C (Began/Completed debugging/testing)
 
 Date: 4/29/2016
-DEBUGGING!!!!!!!!
+STILLLLL DEBUGGING!!!!!!!!
 ------------------------------------------------------------------------------
