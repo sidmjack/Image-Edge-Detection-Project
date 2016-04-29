@@ -10,6 +10,38 @@
 README:
 ------------------------------------------------------------------------------
 
+TESTING DISCLAIMER:
+
+Dear whom ever this may concern, 
+
+We would like to convey to you the major issues our program is having to
+hopefully make grading easier and make the functionality of our code 
+(along with some of it's flaws) apparent (casue it DOES sort of work...
+we swear!)
+
+Anyway, our program seems to work perfectly for small images (around 400 x 240
+pixels). The program is able to properly segment images for the black
+and white test image, the flag image (our own test image), tiny image 
+(our test image), and pixel (another test image of our creation). These should
+at least demonstrate that for small images our program is capabe of segmenting
+small images into expected parses and printing the correct number of segments/
+edges. 
+
+The issue with our program becomes apparent when we try using larger test 
+iamegs. For whatever reason, larger images "break" the segmenter. Instead
+of parsing images into the expected large pieces of color we'd like to 
+have output, it not only segments the images into hundreds (at times thousands)
+of segments, but prints the whole image multiple times (yeah, we're not 
+sure why either and we've been debugging for days). 
+
+Mostly works, please give us a good grade!
+
+Yours truly,
+	Desperate DataStructures students who would be forever greatful
+	for any and all mercy you choose to impart in the grading of our project.
+
+------------------------------------------------------------------------------
+
 PART A: 
 
 Last Modified 4/17/2016
@@ -153,4 +185,7 @@ Created UnionConditionCalcs Class and a couple of git other helper subclasses
 to handle the modified Kruskals function (Lawrence, Eddie, Sidney)
 -> Got Modified Kruskals to Work.
 -> Completed Part C (Began/Completed debugging/testing)
+
+Date: 4/29/2016
+DEBUGGING!!!!!!!!
 ------------------------------------------------------------------------------
