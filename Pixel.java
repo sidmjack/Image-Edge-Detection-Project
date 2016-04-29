@@ -71,6 +71,7 @@ public final class Pixel extends RGBSet {
 
     /**
      * Returns the Pixel Byte asked for (indicated by passed integer).
+     * @param  pxNum number 
      * @param  byteNum Desired byte in Pixel Value.
      * @return         returns integer value of desired byte.
      */
@@ -87,35 +88,13 @@ public final class Pixel extends RGBSet {
             return 0;
         }
     }
-
-
-    // /**
-    //  * Gets the Red component of the Pixel
-    //  * @return Red component
-    //  */
-    // public int getRed() {
-    //     return this.getR();
-    // }
-
-    // /**
-    //  * Gets the Green component of the Pixel
-    //  * @return Green component
-    //  */
-    // public int getGreen() {
-    //     return this.getG();
-    // }
-
-
-    // /**
-    //  * Gets the Blue component of the Pixel
-    //  * @return Blue component
-    //  */
-    // public int getBlue() {
-    //     return this.getB();
-    // }
-
+    /**
+     * toString bruh.
+     * @return the row, col num and super to sting.
+     */
     public String toString() {
-        return "(" + this.rowNum + ", " + this.colNum + ": " + super.toString() + ")";
+        return "(" + this.rowNum 
+                + ", " + this.colNum + ": " + super.toString() + ")";
     }
 
 }

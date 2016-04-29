@@ -13,11 +13,17 @@ import java.util.Set;
 /** MakeGraph creates a WGraph given an image and K value.*/
 public final class P4C {
 
-
+    /**
+     * ucal.
+     */
     static UnionConditionsCalcs uCal;
-
+    /**
+     * list of verties.
+     */
     static ArrayList<GVertex<Pixel>> verts;
-
+    /**
+     * graph of pixels.
+     */
     static WGraphP4<Pixel> pixelGraph;
 
     /** To appease checkstyle. */
@@ -63,17 +69,15 @@ public final class P4C {
                 vertID++;
             }
         }
-        // Print for sanity
+        //Print for sanity
         // for (WEdge<Pixel> eg : pixelGraph.allEdges()) {
-            // System.err.println(eg);
+        //     System.err.println(eg);
         // }
         return pixelGraph;
     }
     
     /**
      * Decides which vertex edge to form based off of pixel location in image.
-     * @param pixelGraph : the Image Graph
-     * @param verts      : list of vertices form pixelGraph
      * @param vertID     : the Vertex ID of the observed vertex.
      * @param h          : the Height of the image.
      * @param w          : the Width of the image.
@@ -86,7 +90,7 @@ public final class P4C {
 
         // Helper Method Operation Variables.
         int endID;   // Vertex ID of Vertex to serve as "end" of edge
-        double dist; // Distance b/w 2 pixels found using distance function.  
+          
 
         // Add edge if the pixel doesn't belong to the top edge of the image.
         if (vertID >= w) {
@@ -94,11 +98,11 @@ public final class P4C {
             addEdge(vertID, endID, pd); // Add N Vertex.
         }
         
-        // // Add edge if the pixel doesn't belong to the bottom edge of the image.
-        // if (vertID < (w * (h - 1))) {
-        //     endID = vertID + w; // South Vertex.
-        //     addEdge(vertID, endID, pd); // Add S Vertex.
-        // }
+        // Add edge if the pixel doesn't belong to the bottom edge of the image.
+        if (vertID < (w * (h - 1))) {
+            endID = vertID + w; // South Vertex.
+            addEdge(vertID, endID, pd); // Add S Vertex.
+        }
         
         // Add edge if the pixel doesn't belong to the left edge of the image.
         if ((vertID % w) != 0) {
@@ -106,17 +110,15 @@ public final class P4C {
             addEdge(vertID, endID, pd); // Add W Vertex.
         }
         
-        // // Add edge if the pixel doesn't belong to the right edge of the image.
-        // if ((vertID % w) != (w - 1)) {
-        //     endID = vertID + 1; // East Vertex.
-        //     addEdge(vertID, endID, pd); // Add E Vertex.
-        // }
+        // Add edge if the pixel doesn't belong to the right edge of the image.
+        if ((vertID % w) != (w - 1)) {
+            endID = vertID + 1; // East Vertex.
+            addEdge(vertID, endID, pd); // Add E Vertex.
+        }
     }
 
     /**
      * Helper Method for formsEdges that adds a new edge to the pixelGraph.
-     * @param pixelGraph : the graph that we're adding edges to.
-     * @param verts      : the list of vertices form pixelGraph
      * @param vertID     : the Vertex ID of the "Source" Pixel.
      * @param endID      : the Vertex ID of the "End" Pixel
      * @param pd         : the distance function for pixel.
@@ -134,7 +136,6 @@ public final class P4C {
         pixVert1 = verts.get(vertID); 
         pixVert2 = verts.get(endID); 
         dist = pd.distance(pixVert1.data(), pixVert2.data());
-        // System.err.println(pixVert1.data() + " " + pixVert2.data() + " " + dist);
         
         //Add the edge given the Pixels p1 & p2, and the weight (dist)
         pixelGraph.addEdge(pixVert1, pixVert2, dist);
@@ -178,19 +179,10 @@ public final class P4C {
                 }
             }
 
-            // "Partition count not in sync with UnionConditionsCalcs.",
-            if(p.partitionCount() != uCal.size()) {
-                throw new IllegalStateException("Partition count not in sync with UnionConditionsCalcs. Partition says: " + p.partitionCount() + ", uCal says: " + uCal.size() + ": i = " +  i++);
-            }
-
-
             // System.err.println(uCal);
 
 
         }
-
-
-
         return edgeSet;
 
     }
@@ -224,9 +216,11 @@ public final class P4C {
             int compIdx = 1;
 
             for (Integer id : compIDs) {
-                System.err.print("On component: " + compIdx + " with head at " + verts.get(id).data() + " of size: " + uCal.sizeOfGroup(id));
+                System.err.println("On component: " + compIdx);
 
-                // image = new BufferedImage(image.getWidth(), image.getHeight(), 1);                
+                image = new 
+                        BufferedImage(image.getWidth(), 
+                                image.getHeight(), 1);                
 
                 // make a background image to put a segment into
                 for (int i = 0; i < image.getHeight(); i++) {
@@ -245,20 +239,12 @@ public final class P4C {
                     limitedEdgesGraph.addEdge(eg);
                 }
 
-                List<GVertex<Pixel>> componentVertices = limitedEdgesGraph.depthFirst(verts.get(id));
-
-
-                System.err.println(" with actual numVerts: " + componentVertices.size());
-
-                if (uCal.sizeOfGroup(id) == 1) {
-                    System.err.println(limitedEdgesGraph.incidentEdges(verts.get(id)));
-                }
-
                 // Couldn't we just use res as 'x'?
 
                 // After you have a spanning tree connected component x, 
                 // you can generate an output image like this:
-                for (GVertex<Pixel> i : componentVertices)  {
+                for (GVertex<Pixel> i 
+                        : limitedEdgesGraph.depthFirst(verts.get(id)))  {
                     Pixel d = i.data();
                     image.setRGB(d.row(), d.col(), d.value());
                 }
