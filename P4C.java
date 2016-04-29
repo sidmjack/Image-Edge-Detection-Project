@@ -161,7 +161,7 @@ public final class P4C {
         uCal = new UnionConditionsCalcs(g.allVertices());
         // System.err.println(uCal);
         int i = 0;
-        while (addEdges < vert && !pQueue.isEmpty()) {
+        while (!pQueue.isEmpty()) {
             WEdge<Pixel> small = pQueue.remove();
             //small is the current smallest edge 
             int uset = p.find(small.source().id());
@@ -226,7 +226,7 @@ public final class P4C {
             for (Integer id : compIDs) {
                 System.err.print("On component: " + compIdx + " with head at " + verts.get(id).data() + " of size: " + uCal.sizeOfGroup(id));
 
-                image = new BufferedImage(image.getWidth(), image.getHeight(), 1);                
+                // image = new BufferedImage(image.getWidth(), image.getHeight(), 1);                
 
                 // make a background image to put a segment into
                 for (int i = 0; i < image.getHeight(); i++) {
