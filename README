@@ -42,6 +42,18 @@ Yours truly,
 
 ------------------------------------------------------------------------------
 
+ASCI ART Graph Used to Create JUNIT Test:
+      1
+   A ----- E             
+   |     / | \
+   |    /  |  \  7
+ 3 | 4 /   |   \       <------   ININTIAL GRAPH:
+   |  /    | 6  \                Num Edges: 7 (Weights = Numbers)
+   | /     |     \               Num Verts: 5 ()Vertices = Letters)
+   B ------C------D   
+       5       2 
+------------------------------------------------------------------------------
+
 PART A: 
 
 Last Modified 4/17/2016
