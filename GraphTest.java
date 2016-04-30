@@ -2,111 +2,142 @@ import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
 
-/** Set of Junit tests for our Graph implementations.
+/**
+ * Set of Junit tests for our Graph implementations.
  */
 public class GraphTest {
+    /**  */
     Graph g;
+    /**  */
     Vertex v, u, x, y;
+    /** Set of Edges. */
     Edge e, f;
 
+    /**
+     * Sets up graph.
+     */
     @Before
     public void setupGraph() {
-        g = new GraphAdjMatrix(100);
-        v = new Vertex('v', g.nextID());
-        u = new Vertex('u', g.nextID());
-        x = new Vertex('x', g.nextID());
-        y = new Vertex('y', g.nextID());
-        e = new Edge(v, u);
-        f = new Edge(v, x);
+        final int hundred = 100;
+        this.g = new GraphAdjMatrix(hundred);
+        this.v = new Vertex('v', this.g.nextID());
+        this.u = new Vertex('u', this.g.nextID());
+        this.x = new Vertex('x', this.g.nextID());
+        this.y = new Vertex('y', this.g.nextID());
+        this.e = new Edge(this.v, this.u);
+        this.f = new Edge(this.v, this.x);
     }
 
+    /**
+     * Tests Empty.
+     */
     @Test
     public void testEmpty() {
-        assertEquals(0, g.numEdges());
-        assertEquals(0, g.numVerts());
+        assertEquals(0, this.g.numEdges());
+        assertEquals(0, this.g.numVerts());
     }
 
+    /**
+     * Tests Add Vertex.
+     */
     @Test
     public void testAddVertex() {
-        assertEquals(true, g.addVertex(v));
-        assertEquals(true, g.addVertex(u));
-        assertEquals(false, g.addVertex(v));
+        assertEquals(true, this.g.addVertex(this.v));
+        assertEquals(true, this.g.addVertex(this.u));
+        assertEquals(false, this.g.addVertex(this.v));
     }
 
+    /**
+     * Tests add edge.
+     */
     @Test
     public void testAddEdge() {
-        assertEquals(true, g.addEdge(e));
-        assertEquals(true, g.addEdge(v, x));
-        assertEquals(false, g.addEdge(v, u));
-        assertEquals(false, g.addEdge(f));
+        assertEquals(true, this.g.addEdge(this.e));
+        assertEquals(true, this.g.addEdge(this.v, this.x));
+        assertEquals(false, this.g.addEdge(this.v, this.u));
+        assertEquals(false, this.g.addEdge(this.f));
     }
 
+    /**
+     * Tests Adjacency.
+     */
     @Test
     public void testAdjacency() {
-        g.addVertex(v);
-        g.addVertex(u);
-        g.addVertex(x);
-        g.addVertex(y);
-        assertEquals(false, g.areAdjacent(u, v));
-        g.addEdge(e);
-        g.addEdge(f);
-        assertEquals(true, g.areAdjacent(u, v));
-        assertEquals(true, g.areAdjacent(v, u));
-        assertEquals(true, g.areAdjacent(v, x));
-        assertEquals(false, g.areAdjacent(x, u));
-        assertEquals(false, g.areAdjacent(v, y));
+        this.g.addVertex(this.v);
+        this.g.addVertex(this.u);
+        this.g.addVertex(this.x);
+        this.g.addVertex(this.y);
+        assertEquals(false, this.g.areAdjacent(this.u, this.v));
+        this.g.addEdge(this.e);
+        this.g.addEdge(this.f);
+        assertEquals(true, this.g.areAdjacent(this.u, this.v));
+        assertEquals(true, this.g.areAdjacent(this.v, this.u));
+        assertEquals(true, this.g.areAdjacent(this.v, this.x));
+        assertEquals(false, this.g.areAdjacent(this.x, this.u));
+        assertEquals(false, this.g.areAdjacent(this.v, this.y));
     }
 
+    /**
+     * Tests Incidence.
+     */
     @Test
     public void testIncidence() {
-        g.addVertex(v);
-        g.addVertex(u);
-        g.addVertex(x);
-        g.addVertex(y);
-        g.addEdge(e);
-        assertEquals(false, g.areIncident(e, x));
-        assertEquals(false, g.areIncident(e, y));
-        assertEquals(true, g.areIncident(e, v));
-        assertEquals(true, g.areIncident(e, u));
-        g.addEdge(f);
-        assertEquals(true, g.areIncident(f, x));
-        assertEquals(false, g.areIncident(f, u));
-        assertEquals(4, g.numVerts());
-        assertEquals(2, g.numEdges());
+        this.g.addVertex(this.v);
+        this.g.addVertex(this.u);
+        this.g.addVertex(this.x);
+        this.g.addVertex(this.y);
+        this.g.addEdge(this.e);
+        assertEquals(false, this.g.areIncident(this.e, this.x));
+        assertEquals(false, this.g.areIncident(this.e, this.y));
+        assertEquals(true, this.g.areIncident(this.e, this.v));
+        assertEquals(true, this.g.areIncident(this.e, this.u));
+        this.g.addEdge(this.f);
+        final int four = 4;
+        final int two = 2;
+        assertEquals(true, this.g.areIncident(this.f, this.x));
+        assertEquals(false, this.g.areIncident(this.f, this.u));
+        assertEquals(four, this.g.numVerts());
+        assertEquals(two, this.g.numEdges());
     }
-
+    
+    /**
+     * Tests Degree.
+     */
     @Test
     public void testDegree() {
-        g.addVertex(v);
-        g.addVertex(u);
-        g.addVertex(x);
-        g.addVertex(y);
-        assertEquals(0, g.degree(v));
-        g.addEdge(e);
-        assertEquals(1, g.degree(v));
-        g.addEdge(f);
-        assertEquals(2, g.degree(v));
-        assertEquals(1, g.degree(x));
-        assertEquals(0, g.degree(y));
+        this.g.addVertex(this.v);
+        this.g.addVertex(this.u);
+        this.g.addVertex(this.x);
+        this.g.addVertex(this.y);
+        assertEquals(0, this.g.degree(this.v));
+        this.g.addEdge(this.e);
+        assertEquals(1, this.g.degree(this.v));
+        this.g.addEdge(this.f);
+        final int two = 2;
+        assertEquals(two, this.g.degree(this.v));
+        assertEquals(1, this.g.degree(this.x));
+        assertEquals(0, this.g.degree(this.y));
     }
 
-
+    /**
+     * Tests Neighbors.
+     */
     @Test
     public void testNeighbors() {
-        g.addVertex(v);
-        g.addVertex(u);
-        g.addVertex(x);
-        g.addVertex(y);
-        assertEquals("[]", g.neighbors(v).toString());
-        g.addEdge(e);
+        this.g.addVertex(this.v);
+        this.g.addVertex(this.u);
+        this.g.addVertex(this.x);
+        this.g.addVertex(this.y);
+        assertEquals("[]", this.g.neighbors(this.v).toString());
+        this.g.addEdge(this.e);
         //        System.out.println(g.neighbors(v).toString());
-        assertEquals("[1]", g.neighbors(v).toString());
-        assertEquals("[0]", g.neighbors(u).toString());
-        g.addEdge(f);
-        assertEquals("[1, 2]", g.neighbors(v).toString());
-        assertEquals("[0]", g.neighbors(u).toString());
-        assertEquals("[0]", g.neighbors(x).toString());
-        assertEquals("[]", g.neighbors(y).toString());
+        assertEquals("[1]", this.g.neighbors(this.v).toString());
+        assertEquals("[0]", this.g.neighbors(this.u).toString());
+        this.g.addEdge(this.f);
+        assertEquals("[1, 2]", this.g.neighbors(this.v).toString());
+        assertEquals("[0]", this.g.neighbors(this.u).toString());
+        assertEquals("[0]", this.g.neighbors(this.x).toString());
+        assertEquals("[]", this.g.neighbors(this.y).toString());
     }
 
 }
