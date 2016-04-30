@@ -6,307 +6,436 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+/** Giant WGraphP4 Test. */
 public class WGraphP4TestAlternate {
-	/** Graph. */
+    
+    /** Magic Number 2. */
+    public static final int TWO = 2;
+    /** Magic Number 3. */
+    public static final int THREE = 3;
+    /** Magic Number 3.5. */
+    public static final double TPF = 3.5;
+    /** Magic Number 4. */
+    public static final int FOUR = 4;
+    /** Magic Number 5. */
+    public static final int FIVE = 5;
+    /** Magic Number 6. */
+    public static final int SIX = 6;
+    /** Magic Number 7. */
+    public static final int SEVEN = 7;
+    /** Magic Number 8. */
+    public static final int EIGHT = 8;
+    /** Magic Number 9. */
+    public static final int NINE = 9;
+    /** Magic Number 10. */
+    public static final int TEN = 10;
+    /**Magic Number 12. */
+    public static final int TWELVE = 12;
+
+    /** Graph. */
     public WGraphP4<String> testGraph;
     /** Lists. */
     public List<WEdge<String>> expectedEdges;
-    /** Vertices */
+    /** Vertices. */
     GVertex<String> a, b, c, d, e;
-    /** WEdges */
+    /** WEdges. */
     WEdge<String> ae, ab, be, bc, ec, cd, ed;
-    
-    /** the setup for the tests. */
+
+    /** The setup for the tests. */
     @Before 
     public void setup() {
-        testGraph = new WGraphP4<String>();
-        expectedEdges = new ArrayList<WEdge<String>>();
+        this.testGraph = new WGraphP4<String>();
+        this.expectedEdges = new ArrayList<WEdge<String>>();
         
-        a = new GVertex<String>("a", 0);
-        b = new GVertex<String>("b", 1);
-        c = new GVertex<String>("c", 2);
-        d = new GVertex<String>("d", 3);
-        e = new GVertex<String>("e", 4);
+        this.a = new GVertex<String>("a", 0);
+        this.b = new GVertex<String>("b", 1);
+        this.c = new GVertex<String>("c", TWO);
+        this.d = new GVertex<String>("d", THREE);
+        this.e = new GVertex<String>("e", FOUR);
         ArrayList<GVertex<String>> verts = new ArrayList<GVertex<String>>();
-        verts.add(a); verts.add(b); verts.add(c); verts.add(d); verts.add(e);
-        for(GVertex<String> v: verts) {
-            testGraph.addVertex(v);
+        verts.add(this.a); 
+        verts.add(this.b); 
+        verts.add(this.c); 
+        verts.add(this.d); 
+        verts.add(this.e);
+        for (GVertex<String> v: verts) {
+            this.testGraph.addVertex(v);
         }
-        assertEquals(5, testGraph.numVerts());
-        ae = new WEdge<String>(a, e, 1);
-        ab = new WEdge<String>(a, b, 3);
-        be = new WEdge<String>(b, e, 4);
-        bc = new WEdge<String>(b, c, 5);
-        ec = new WEdge<String>(e, c, 6);
-        cd = new WEdge<String>(c, d, 2);
-        ed = new WEdge<String>(e, d, 7);
-        assertEquals(5, testGraph.numVerts());
+        assertEquals(FIVE, this.testGraph.numVerts());
+        this.ae = new WEdge<String>(this.a, this.e, one);
+        this.ab = new WEdge<String>(this.a, this.b, THREE);
+        this.be = new WEdge<String>(this.b, this.e, FOUR);
+        this.bc = new WEdge<String>(this.b, this.c, FIVE);
+        this.ec = new WEdge<String>(this.e, this.c, SIX);
+        this.cd = new WEdge<String>(this.c, this.d, TWO);
+        this.ed = new WEdge<String>(this.e, this.d, SEVEN);
+        assertEquals(FIVE, this.testGraph.numVerts());
         
-        expectedEdges.add(ae); expectedEdges.add(ab); expectedEdges.add(bc);
-        expectedEdges.add(cd);
+        this.expectedEdges.add(this.ae); 
+        this.expectedEdges.add(this.ab); 
+        this.expectedEdges.add(this.bc);
+        this.expectedEdges.add(this.cd);
         
-        assertEquals(5, testGraph.numVerts());
-        testGraph.addEdge(ae); testGraph.addEdge(ab); testGraph.addEdge(be);
-        testGraph.addEdge(bc); testGraph.addEdge(ec); testGraph.addEdge(cd);
-        testGraph.addEdge(ed); testGraph.addEdge(a, a, 2);
-        assertEquals(8, testGraph.numEdges());
+        assertEquals(FIVE, this.testGraph.numVerts());
+        this.testGraph.addEdge(this.ae); 
+        this.testGraph.addEdge(this.ab); 
+        this.testGraph.addEdge(this.be);
+        this.testGraph.addEdge(this.bc); 
+        this.testGraph.addEdge(this.ec); 
+        this.testGraph.addEdge(this.cd);
+        this.testGraph.addEdge(this.ed); 
+        this.testGraph.addEdge(this.a, this.a, TWO);
+        assertEquals(EIGHT, this.testGraph.numEdges());
     }
     
+    /**
+     * Tests Add Vertex.
+     */
     @Test
     public void testAddV() {
-    	testGraph = new WGraphP4<String>();
-    	GVertex<String> a = new GVertex<String>("a", 0);
+        this.testGraph = new WGraphP4<String>();
+        GVertex<String> a = new GVertex<String>("a", 0);
         GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", 2);
-    	assertEquals(true, testGraph.addVertex(a));
-        assertEquals(true, testGraph.addVertex(b));
-        assertEquals("replicated vertex added", false, testGraph.addVertex(a));
+        GVertex<String> c = new GVertex<String>("c", TWO);
+        assertEquals(true, this.testGraph.addVertex(this.a));
+        assertEquals(true, this.testGraph.addVertex(this.b));
+        assertEquals("replicated vertex added", false,
+            this.testGraph.addVertex(a));
     }
     
+    /**
+     * Tests Add Edge.
+     */
     public void testAddE() {
-    	testGraph = new WGraphP4<String>();
-        expectedEdges = new ArrayList<WEdge<String>>();
+        this.testGraph = new WGraphP4<String>();
+        this.expectedEdges = new ArrayList<WEdge<String>>();
         
         GVertex<String> a = new GVertex<String>("a", 0);
         GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", 2);
-        GVertex<String> d = new GVertex<String>("d", 3);
-        GVertex<String> e = new GVertex<String>("e", 4);
+        GVertex<String> c = new GVertex<String>("c", TWO);
+        GVertex<String> d = new GVertex<String>("d", THREE);
+        GVertex<String> e = new GVertex<String>("e", FOUR);
         ArrayList<GVertex<String>> verts = new ArrayList<GVertex<String>>();
-        verts.add(a); verts.add(b); verts.add(c); verts.add(d); verts.add(e);
-        for(GVertex<String> v: verts) {
-            testGraph.addVertex(v);
+        verts.add(this.a); 
+        verts.add(this.b); 
+        verts.add(this.c); 
+        verts.add(this.d); 
+        verts.add(this.e);
+        for (GVertex<String> v: verts) {
+            this.testGraph.addVertex(v);
         }
-        assertEquals(5, testGraph.numVerts());
-        WEdge<String> ae = new WEdge<String>(a, e, 1);
-        WEdge<String> ab = new WEdge<String>(a, b, 3);
-        WEdge<String> be = new WEdge<String>(b, e, 4);
-        WEdge<String> bc = new WEdge<String>(b, c, 5);
-        WEdge<String> ec = new WEdge<String>(e, c, 6);
-        WEdge<String> cd = new WEdge<String>(c, d, 2);
-        WEdge<String> ed = new WEdge<String>(e, d, 7);
+        assertEquals(FIVE, this.testGraph.numVerts());
+        WEdge<String> ae = new WEdge<String>(this.a, this.e, 1);
+        WEdge<String> ab = new WEdge<String>(this.a, this.b, THREE);
+        WEdge<String> be = new WEdge<String>(this.b, this.e, FOUR);
+        WEdge<String> bc = new WEdge<String>(this.b, this.c, FIVE);
+        WEdge<String> ec = new WEdge<String>(this.e, this.c, SIX);
+        WEdge<String> cd = new WEdge<String>(this.c, this.d, TWO);
+        WEdge<String> ed = new WEdge<String>(this.e, this.d, SEVEN);
         
-        assertEquals(5, testGraph.numVerts());
+        assertEquals(FIVE, this.testGraph.numVerts());
         
-        expectedEdges.add(ae); expectedEdges.add(ab); expectedEdges.add(bc);
-        expectedEdges.add(cd);
+        this.expectedEdges.add(this.ae); 
+        this.expectedEdges.add(this.ab); 
+        this.expectedEdges.add(this.bc);
+        this.expectedEdges.add(this.cd);
         
-        assertEquals(5, testGraph.numVerts());
-        assertTrue(testGraph.addEdge(ae));
-        assertFalse(testGraph.addEdge(ae));
-        assertTrue(testGraph.addEdge(b, e, 4));
-        assertFalse(testGraph.addEdge(be));
-        assertTrue(testGraph.addEdge(bc));
-        assertTrue(testGraph.addEdge(ec));
-        assertTrue(testGraph.addEdge(cd));
-        assertTrue(testGraph.addEdge(ed));
-        assertEquals(5, testGraph.numVerts()); 
+        assertEquals(FIVE, this.testGraph.numVerts());
+        assertTrue(this.testGraph.addEdge(this.ae));
+        assertFalse(this.testGraph.addEdge(this.ae));
+        assertTrue(this.testGraph.addEdge(this.b, this.e, FOUR));
+        assertFalse(this.testGraph.addEdge(this.be));
+        assertTrue(this.testGraph.addEdge(this.bc));
+        assertTrue(this.testGraph.addEdge(this.ec));
+        assertTrue(this.testGraph.addEdge(this.cd));
+        assertTrue(this.testGraph.addEdge(this.ed));
+        assertEquals(FIVE, this.testGraph.numVerts()); 
     }
     
+    /**
+     * Tests Deletion.
+     */
     @Test
     public void testDeletion() {
-    	testGraph = new WGraphP4<String>();
+        this.testGraph = new WGraphP4<String>();
         
         GVertex<String> a = new GVertex<String>("a", 0);
         GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", 2);
-        GVertex<String> d = new GVertex<String>("d", 3);
-        GVertex<String> e = new GVertex<String>("e", 4);
-        ArrayList<GVertex<String>> verts = new ArrayList<GVertex<String>>();
-        verts.add(a); verts.add(b); verts.add(c); verts.add(d); verts.add(e);
-        for(GVertex<String> v: verts) {
-            testGraph.addVertex(v);
+        GVertex<String> c = new GVertex<String>("c", TWO);
+        GVertex<String> d = new GVertex<String>("d", THREE);
+        GVertex<String> e = new GVertex<String>("e", FOUR);
+        ArrayList<GVertex<String>> verts 
+            = new ArrayList<GVertex<String>>();
+        verts.add(a); 
+        verts.add(b); 
+        verts.add(c);
+        verts.add(d); 
+        verts.add(e);
+        for (GVertex<String> v: verts) {
+            this.testGraph.addVertex(v);
         }
-        assertEquals(5, testGraph.numVerts());
-        WEdge<String> ae = new WEdge<String>(a, e, 1);
-        WEdge<String> ab = new WEdge<String>(a, b, 3);
-        WEdge<String> be = new WEdge<String>(b, e, 4);
-        WEdge<String> bc = new WEdge<String>(b, c, 5);
-        WEdge<String> ec = new WEdge<String>(e, c, 6);
-        WEdge<String> cd = new WEdge<String>(c, d, 2);
-        WEdge<String> ed = new WEdge<String>(e, d, 7);
-        expectedEdges.add(ae); expectedEdges.add(ab); expectedEdges.add(bc);
-        expectedEdges.add(cd);
-        testGraph.addEdge(ae); testGraph.addEdge(ab); testGraph.addEdge(be);
-        testGraph.addEdge(bc); testGraph.addEdge(ec); testGraph.addEdge(cd);
-        testGraph.addEdge(ed);
+        assertEquals(FIVE, this.testGraph.numVerts());
+        this.ae = new WEdge<String>(this.a, this.e, 1);
+        this.ab = new WEdge<String>(this.a, this.b, THREE);
+        this.be = new WEdge<String>(this.b, this.e, FOUR);
+        this.bc = new WEdge<String>(this.b, this.c, FIVE);
+        this.ec = new WEdge<String>(this.e, this.c, SIX);
+        this.cd = new WEdge<String>(this.c, this.d, TWO);
+        this.ed = new WEdge<String>(this.e, this.d, SEVEN);
+        this.expectedEdges.add(this.ae); 
+        this.expectedEdges.add(this.ab); 
+        this.expectedEdges.add(this.bc);
+        this.expectedEdges.add(this.cd);
+        this.testGraph.addEdge(this.ae);
+        this.testGraph.addEdge(this.ab); 
+        this.testGraph.addEdge(this.be);
+        this.testGraph.addEdge(this.bc); 
+        this.testGraph.addEdge(this.ec); 
+        this.testGraph.addEdge(this.cd);
+        this.testGraph.addEdge(this.ed);
         
-        assertTrue(testGraph.deleteEdge(a, e));
-        assertEquals("Edge num not updated", 6, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(e, a));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(a, e));
-        assertTrue(testGraph.deleteEdge(a, b));
-        assertEquals("Edge num not updated", 5, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(b, a));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(a, b));
-        assertTrue(testGraph.deleteEdge(b, e));
-        assertEquals("Edge num not updated", 4, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(e, b));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(b, e));
-        assertTrue(testGraph.deleteEdge(b, c));
-        assertEquals("Edge num not updated", 3, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(c, b));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(b, c));
-        assertTrue(testGraph.deleteEdge(e, c));
-        assertEquals("Edge num not updated", 2, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(c, e));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(e, c));
-        assertTrue(testGraph.deleteEdge(c, d));
-        assertEquals("Edge num not updated", 1, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(d, c));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(c, d));
-        assertTrue(testGraph.deleteEdge(e, d));
-        assertEquals("Edge num not updated", 0, testGraph.numEdges());
-        assertFalse(testGraph.deleteEdge(d, e));
-        assertEquals("connection not deleted", false, testGraph.areAdjacent(e, d));
+        assertTrue(this.testGraph.deleteEdge(this.a, this.e));
+        assertEquals("Edge num not updated", SIX, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.e, this.a));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.a, this.e));
+        assertTrue(this.testGraph.deleteEdge(this.a, this.b));
+        assertEquals("Edge num not updated", FIVE, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.b, this.a));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.a, this.b));
+        assertTrue(this.testGraph.deleteEdge(this.b, this.e));
+        assertEquals("Edge num not updated", FOUR, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.e, this.b));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.b, this.e));
+        assertTrue(this.testGraph.deleteEdge(this.b, this.c));
+        assertEquals("Edge num not updated", THREE, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.c, this.b));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.b, this.c));
+        assertTrue(this.testGraph.deleteEdge(this.e, this.c));
+        assertEquals("Edge num not updated", TWO, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.c, this.e));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.e, this.c));
+        assertTrue(this.testGraph.deleteEdge(this.c, this.d));
+        assertEquals("Edge num not updated", one, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.d, this.c));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.c, this.d));
+        assertTrue(this.testGraph.deleteEdge(this.e, this.d));
+        assertEquals("Edge num not updated", 0, this.testGraph.numEdges());
+        assertFalse(this.testGraph.deleteEdge(this.d, this.e));
+        assertEquals("connection not deleted", 
+            false, this.testGraph.areAdjacent(this.e, this.d));
     }
     
+    /**
+     * Tests Adjacency.
+     */
     @Test
     public void testAdj() {
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(a, b));
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(b, a));
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(b, c));
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(c, b));
-    	GVertex<String> f = new GVertex<String>("f", 5);
-    	testGraph.addVertex(f);
-    	assertEquals("wrong adjacecy established",false, testGraph.areAdjacent(f, b));
-    	assertEquals("wrong adjacecy established",false, testGraph.areAdjacent(f, a));
-    	testGraph.addEdge(f, a, 8);
-    	assertTrue(testGraph.addEdge(f, f, 2));
-    	testGraph.addEdge(f, c, 9);
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(f, a));
-    	assertEquals("adjacency not established",true, testGraph.areAdjacent(f, f));
-    	//assertEquals("reverse adjacency not established",true, testGraph.areAdjacent(a, f)); //?	
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.a, this.b));
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.b, this.a));
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.b, this.c));
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.c, this.b));
+        this.f = new GVertex<String>("f", FIVE);
+        this.testGraph.addVertex(this.f);
+        assertEquals("wrong adjacecy established", false, 
+            this.testGraph.areAdjacent(this.f, this.b));
+        assertEquals("wrong adjacecy established", false, 
+            this.testGraph.areAdjacent(this.f, this.a));
+        this.testGraph.addEdge(this.f, this.a, EIGHT);
+        assertTrue(this.testGraph.addEdge(this.f, this.f, TWO));
+        this.testGraph.addEdge(this.f, this.c, NINE);
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.f, this.a));
+        assertEquals("adjacency not established", true, 
+            this.testGraph.areAdjacent(this.f, this.f));
+        //assertEquals("reverse adjacency not established", 
+        //true, testGraph.areAdjacent(a, f)); //?   
     }
     
+    /**
+     * Tests Incidence.
+     */
     @Test
     public void testIncidence() {
-        testGraph = new WGraphP4<String>();
-        testGraph.addVertex(a);
-        testGraph.addVertex(b);
-        testGraph.addVertex(c);
-        testGraph.addVertex(d);
-        testGraph.addEdge(cd);
-        assertEquals("wrong incident", false, testGraph.areIncident(cd, b));
-        assertEquals("wrong incident", false, testGraph.areIncident(cd, b));
-        assertEquals("incident haven't established", true, testGraph.areIncident(cd, c));
-        assertEquals("incident haven't established", true, testGraph.areIncident(cd, d));
-        testGraph.addEdge(ab);
-        assertEquals(true, testGraph.areIncident(ab, b));
-        assertEquals(false, testGraph.areIncident(ab, c));
-        assertEquals(4, testGraph.numVerts());
-        assertEquals(2, testGraph.numEdges());
+        this.testGraph = new WGraphP4<String>();
+        this.testGraph.addVertex(this.a);
+        this.testGraph.addVertex(this.b);
+        this.testGraph.addVertex(this.c);
+        this.testGraph.addVertex(this.d);
+        this.testGraph.addEdge(this.cd);
+        assertEquals("wrong incident", false, 
+            this.testGraph.areIncident(this.cd, this.b));
+        assertEquals("wrong incident", false, 
+            this.testGraph.areIncident(this.cd, this.b));
+        assertEquals("incident haven't established", true, 
+            this.testGraph.areIncident(this.cd, this.c));
+        assertEquals("incident haven't established", true, 
+            this.testGraph.areIncident(this.cd, this.d));
+        this.testGraph.addEdge(this.ab);
+        assertEquals(true, this.testGraph.areIncident(this.ab, this.b));
+        assertEquals(false, this.testGraph.areIncident(this.ab, this.c));
+        assertEquals(FOUR, this.testGraph.numVerts());
+        assertEquals(TWO, this.testGraph.numEdges());
     }
     
+    /**
+     * Tests Degree.
+     */
     @Test
     public void testDegree() {
-    	testGraph = new WGraphP4<String>();
-    	testGraph.addVertex(a);
-        testGraph.addVertex(b);
-        testGraph.addVertex(c);
-        testGraph.addVertex(d);
-        assertEquals("degree num not consistant", 0, testGraph.degree(a));
-        assertEquals("degree num not consistant", 0, testGraph.degree(b));
-        assertEquals("degree num not consistant", 0, testGraph.degree(c));
-        testGraph.addEdge(ab);
-        assertEquals("degree num not consistant", 1, testGraph.degree(a));
-        testGraph.addEdge(bc);
-        assertEquals("degree num not consistant", 2, testGraph.degree(b));
-        assertEquals("degree num not consistant", 1, testGraph.degree(a));
-        assertEquals("degree num not consistant", 0, testGraph.degree(d));
+        this.testGraph = new WGraphP4<String>();
+        this.testGraph.addVertex(this.a);
+        this.testGraph.addVertex(this.b);
+        this.testGraph.addVertex(this.c);
+        this.testGraph.addVertex(this.d);
+        assertEquals("degree num not consistant", 0, 
+            this.testGraph.degree(this.a));
+        assertEquals("degree num not consistant", 0, 
+            this.testGraph.degree(this.b));
+        assertEquals("degree num not consistant", 0, 
+            this.testGraph.degree(this.c));
+        this.testGraph.addEdge(this.ab);
+        assertEquals("degree num not consistant", 1, 
+            this.testGraph.degree(this.a));
+        this.testGraph.addEdge(this.bc);
+        assertEquals("degree num not consistant", TWO, 
+            this.testGraph.degree(this.b));
+        assertEquals("degree num not consistant", 1, 
+            this.testGraph.degree(this.a));
+        assertEquals("degree num not consistant", 0, 
+            this.testGraph.degree(this.d));
     }
     
+    /**
+     * Tests Neighbours.
+     */
     @Test
     public void testNeighbour() {
-    	assertEquals("[4, 1, 0]", testGraph.neighbors(a).toString());
-    	assertEquals("[0, 4, 2]", testGraph.neighbors(b).toString());
-    	assertEquals("[1, 4, 3]", testGraph.neighbors(c).toString());
-    	assertEquals("[2, 4]", testGraph.neighbors(d).toString());
-    	assertTrue(testGraph.addEdge(a, c, 3));
-    	assertEquals("[4, 1, 0, 2]", testGraph.neighbors(a).toString());
-    	assertTrue(testGraph.deleteEdge(a, a));
-    	assertEquals("[4, 1, 2]", testGraph.neighbors(a).toString());
-    	assertTrue(testGraph.deleteEdge(a, b));
-    	assertFalse(testGraph.deleteEdge(b, b));
-    	assertTrue(testGraph.deleteEdge(a, e));
-    	assertTrue(testGraph.deleteEdge(a, c));
-    	assertEquals("[]", testGraph.neighbors(a).toString());
+        assertEquals("[4, 1, 0]", this.testGraph.neighbors(this.a).toString());
+        assertEquals("[0, 4, 2]", this.testGraph.neighbors(this.b).toString());
+        assertEquals("[1, 4, 3]", this.testGraph.neighbors(this.c).toString());
+        assertEquals("[2, 4]", this.testGraph.neighbors(this.d).toString());
+        assertTrue(this.testGraph.addEdge(this.a, this.c, THREE));
+        assertEquals("[4, 1, 0, 2]", 
+            this.testGraph.neighbors(this.a).toString());
+        assertTrue(this.testGraph.deleteEdge(this.a, this.a));
+        assertEquals("[4, 1, 2]", this.testGraph.neighbors(this.a).toString());
+        assertTrue(test.testGraph.deleteEdge(this.a, this.b));
+        assertFalse(test.testGraph.deleteEdge(this.b, this.b));
+        assertTrue(test.testGraph.deleteEdge(this.a, this.e));
+        assertTrue(test.testGraph.deleteEdge(this.a, this.c));
+        assertEquals("[]", this.testGraph.neighbors(this.a).toString());
     }
     
+    /**
+     * Tests Degress.
+     */
     @Test
     public void testDegrees() {
-    	assertEquals("degree num not consistant", 3, testGraph.degree(a));
-    	assertEquals("degree num not consistant", 3, testGraph.degree(b));
-    	assertEquals("degree num not consistant", 3, testGraph.degree(c));
-        assertEquals("degree num not consistant", 4, testGraph.degree(e));
-        testGraph.deleteEdge(c, d);
-        testGraph.deleteEdge(e, d);
-        assertEquals("degree num not consistant", 0, testGraph.degree(d));
+        assertEquals("degree num not consistant", THREE, 
+            this.testGraph.degree(this.a));
+        assertEquals("degree num not consistant", THREE, 
+            this.testGraph.degree(this.b));
+        assertEquals("degree num not consistant", THREE, 
+            this.testGraph.degree(this.c));
+        assertEquals("degree num not consistant", FOUR, 
+            this.testGraph.degree(this.e));
+        this.testGraph.deleteEdge(this.c, this.d);
+        this.testGraph.deleteEdge(this.e, this.d);
+        assertEquals("degree num not consistant", 0, 
+            this.testGraph.degree(this.d));
        
-        WGraphP4<String> tg = new WGraphP4<String> ();
-        tg.addVertex(a);
-        tg.addVertex(b);
-        assertEquals("degree num not consistant", 0, tg.degree(a));
-        tg.addEdge(a, a, 1);
-        tg.addEdge(a, a, 1);
-        tg.addEdge(a, b, 1);
-        tg.addEdge(b, a, 1);
-        assertEquals("degree num not consistant", 2, tg.degree(a));
+        WGraphP4<String> tg = new WGraphP4<String>();
+        tg.addVertex(this.a);
+        tg.addVertex(this.b);
+        assertEquals("degree num not consistant", 0, tg.degree(this.a));
+        tg.addEdge(this.a, this.a, 1);
+        tg.addEdge(this.a, this.a, 1);
+        tg.addEdge(this.a, this.b, 1);
+        tg.addEdge(this.b, this.a, 1);
+        assertEquals("degree num not consistant", TWO, tg.degree(this.a));
     }
     
+    /**
+     * Tests All Edges.
+     */
     @Test // problem is there's no space, should there be space between values?
     public void testAllEdges() { 
-    	assertEquals(8, testGraph.numEdges());
-    	assertEquals("[(0,4,1.0), (0,1,3.0), (0,0,2.0), (1,4,4.0), "
-    			+ "(1,2,5.0), (2,4,6.0), (2,3,2.0), (3,4,7.0)]",testGraph.allEdges().toString());
-    	testGraph.deleteEdge(a, a);
-    	assertEquals("[(0,4,1.0), (0,1,3.0), (1,4,4.0), "
-    			+ "(1,2,5.0), (2,4,6.0), (2,3,2.0), (3,4,7.0)]",testGraph.allEdges().toString());
-    	
-    	WGraphP4<String> tg = new WGraphP4<String> ();
-    	assertEquals(0, tg.numEdges());
-    	assertEquals("[]",tg.allEdges().toString());
-    	tg.addVertex(a);
-    	tg.addEdge(a, a, 2);
-    	assertEquals(1, tg.numEdges());
-    	assertEquals("[(0,0,2.0)]",tg.allEdges().toString());	
-    	tg.addVertex(b);
-    	tg.addEdge(a, b, 3.5);
-    	assertEquals(2, tg.numEdges());
-    	assertEquals("[(0,0,2.0), (0,1,3.5)]",tg.allEdges().toString());	
+        assertEquals(EIGHT, this.testGraph.numEdges());
+        assertEquals("[(0,4,1.0), (0,1,3.0), (0,0,2.0), (1,4,4.0), "
+               + "(1,2,5.0), (2,4,6.0), (2,3,2.0), (3,4,7.0)]", 
+            this.testGraph.allEdges().toString());
+        this.testGraph.deleteEdge(this.a, this.a);
+        assertEquals("[(0,4,1.0), (0,1,3.0), (1,4,4.0), "
+               + "(1,2,5.0), (2,4,6.0), (2,3,2.0), (3,4,7.0)]", 
+            this.testGraph.allEdges().toString());
+        
+        WGraphP4<String> tg = new WGraphP4<String>();
+        assertEquals(0, tg.numEdges());
+        assertEquals("[]", tg.allEdges().toString());
+        tg.addVertex(this.a);
+        tg.addEdge(this.a, this.a, TWO);
+        assertEquals(1, tg.numEdges());
+        assertEquals("[(0,0,2.0)]", tg.allEdges().toString());  
+        tg.addVertex(this.b);
+        tg.addEdge(this.a, this.b, TPF);
+        assertEquals(TWO, tg.numEdges());
+        assertEquals("[(0,0,2.0), (0,1,3.5)]", tg.allEdges().toString());   
     }
     
+    /**
+     * Tests All Vertices.
+     */
     @Test
     public void testAllVertices() {
-    	assertEquals("[0, 1, 2, 3, 4]", testGraph.allVertices().toString());
-    	assertEquals(5, testGraph.numVerts());
-    	WGraphP4<String> tg = new WGraphP4<String> ();
-    	assertEquals("[]",tg.allVertices().toString());
-    	assertEquals(0, tg.numVerts());
+        assertEquals("[0, 1, 2, 3, 4]", 
+            this.testGraph.allVertices().toString());
+        assertEquals(FIVE, this.testGraph.numVerts());
+        WGraphP4<String> tg = new WGraphP4<String>();
+        assertEquals("[]", tg.allVertices().toString());
+        assertEquals(0, tg.numVerts());
     }
     
+    /**
+     * Tests Kruskals.
+     */
     @Test
     public void kruskalsTestOneGraph() {
-        List<WEdge<String>> k = testGraph.kruskals();
-        for (WEdge<String> e: expectedEdges) {
+        List<WEdge<String>> k = this.testGraph.kruskals();
+        for (WEdge<String> e: this.expectedEdges) {
             assertTrue(k.contains(e));
             k.remove(e);
         }
         assertTrue(k.size() == 0);    
     }
     
+    /**
+     * Tests Kurskals.
+     */
     @Test
-    public void kruskalsTestThreeGraph() {
-        GVertex<String> f = new GVertex<String>("f", 5);
-        GVertex<String> g = new GVertex<String>("g", 6);
-        GVertex<String> h = new GVertex<String>("h", 7);
-        WEdge<String> fg = new WEdge<String>(f, g, 10);
-        WEdge<String> fh = new WEdge<String>(f, h, 2);
-        WEdge<String> hg = new WEdge<String>(h, g, 12);
-        expectedEdges.add(fh); expectedEdges.add(fg);
-        testGraph.addEdge(fg); testGraph.addEdge(fh); testGraph.addEdge(hg);
-        List<WEdge<String>> k = testGraph.kruskals();
-        for (WEdge<String> e: expectedEdges) {
+    public void kruskalsTestTHREEGraph() {
+        GVertex<String> f = new GVertex<String>("f", FIVE);
+        GVertex<String> g = new GVertex<String>("g", SIX);
+        GVertex<String> h = new GVertex<String>("h", SEVEN);
+        WEdge<String> fg = new WEdge<String>(f, g, TEN);
+        WEdge<String> fh = new WEdge<String>(f, h, TWO);
+        WEdge<String> hg = new WEdge<String>(h, g, TWELVE);
+        this.expectedEdges.add(fh); 
+        this.expectedEdges.add(fg);
+        this.testGraph.addEdge(fg); 
+        this.testGraph.addEdge(fh); 
+        this.testGraph.addEdge(hg);
+        List<WEdge<String>> k = this.testGraph.kruskals();
+        for (WEdge<String> e: this.expectedEdges) {
             assertTrue(k.contains(e));
             k.remove(e);
         }
