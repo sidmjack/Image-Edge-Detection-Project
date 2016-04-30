@@ -1,8 +1,7 @@
-import static org.junit.Assert.*;
-
 import java.util.List;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 
