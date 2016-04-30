@@ -22,10 +22,10 @@ we swear!)
 Anyway, our program seems to work perfectly for small images (around 400 x 240
 pixels). The program is able to properly segment images for the black
 and white test image, the flag image (our own test image), tiny image 
-(our test image), and pixel (another test image of our creation). These should
-at least demonstrate that for small images our program is capabe of segmenting
-small images into expected parses and printing the correct number of segments/
-edges. 
+(our test image), and littlePixels (another test image of our creation). These
+should at least demonstrate that for small images our program is capabe of
+segmenting small images into expected parses and printing the correct number 
+of segments/edges. 
 
 The issue with our program becomes apparent when we try using larger test 
 iamegs. For whatever reason, larger images "break" the segmenter. Instead
@@ -41,7 +41,17 @@ Yours truly,
     for any and all mercy you choose to impart in the grading of our project.
 
 ------------------------------------------------------------------------------
+Test Images that We Provide that will demonstrate functionality of our code.
 
+1. bwtest.png
+2. littlePixles.png
+3. niceTestImage.png
+4. prTestImage.png (flag) <--- mostly works.
+5. stripe.png
+6. tiniestThing.png
+7. tinyTest.png
+
+------------------------------------------------------------------------------
 ASCI ART Graph Used to Create JUNIT Test:
       1
    A ----- E             
