@@ -1,3 +1,8 @@
+/**
+ * Name: Sidney Jackson & Lawrence Wolf-Sonkin
+ * Blackboard Login: sjacks85 & lwolfso1 & eheredi1
+ * Course: Data Structures 600.226.02
+ **/
 /** Implementation of an edge class (for graphs), could be directed or not.
  */
 public class Edge {

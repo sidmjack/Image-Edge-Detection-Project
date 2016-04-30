@@ -1,6 +1,6 @@
 /**
  * Name: Sidney Jackson & Lawrence Wolf-Sonkin
- * Blackboard Login: sjacks85 & lwolfso1 
+ * Blackboard Login: sjacks85 & lwolfso1 & eheredi1
  * Course: Data Structures 600.226.02 
  * Assignment: Written Assignment 4
  * Description: PQ JUnit Testing

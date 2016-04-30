@@ -1,5 +1,11 @@
+/**
+ * Name: Sidney Jackson & Lawrence Wolf-Sonkin
+ * Blackboard Login: sjacks85 & lwolfso1 & eheredi1
+ * Course: Data Structures 600.226.02
+ **/
 import java.util.List;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import org.junit.Before;
@@ -36,7 +42,7 @@ public class WGraphP4TestAlternate {
     /** Lists. */
     public List<WEdge<String>> expectedEdges;
     /** Vertices. */
-    GVertex<String> a, b, c, d, e;
+    GVertex<String> a, b, c, d, e, f;
     /** WEdges. */
     WEdge<String> ae, ab, be, bc, ec, cd, ed;
 
@@ -61,7 +67,7 @@ public class WGraphP4TestAlternate {
             this.testGraph.addVertex(v);
         }
         assertEquals(FIVE, this.testGraph.numVerts());
-        this.ae = new WEdge<String>(this.a, this.e, one);
+        this.ae = new WEdge<String>(this.a, this.e, 1);
         this.ab = new WEdge<String>(this.a, this.b, THREE);
         this.be = new WEdge<String>(this.b, this.e, FOUR);
         this.bc = new WEdge<String>(this.b, this.c, FIVE);
@@ -93,13 +99,10 @@ public class WGraphP4TestAlternate {
     @Test
     public void testAddV() {
         this.testGraph = new WGraphP4<String>();
-        GVertex<String> a = new GVertex<String>("a", 0);
-        GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", TWO);
         assertEquals(true, this.testGraph.addVertex(this.a));
         assertEquals(true, this.testGraph.addVertex(this.b));
         assertEquals("replicated vertex added", false,
-            this.testGraph.addVertex(a));
+            this.testGraph.addVertex(this.a));
     }
     
     /**
@@ -108,12 +111,6 @@ public class WGraphP4TestAlternate {
     public void testAddE() {
         this.testGraph = new WGraphP4<String>();
         this.expectedEdges = new ArrayList<WEdge<String>>();
-        
-        GVertex<String> a = new GVertex<String>("a", 0);
-        GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", TWO);
-        GVertex<String> d = new GVertex<String>("d", THREE);
-        GVertex<String> e = new GVertex<String>("e", FOUR);
         ArrayList<GVertex<String>> verts = new ArrayList<GVertex<String>>();
         verts.add(this.a); 
         verts.add(this.b); 
@@ -124,13 +121,6 @@ public class WGraphP4TestAlternate {
             this.testGraph.addVertex(v);
         }
         assertEquals(FIVE, this.testGraph.numVerts());
-        WEdge<String> ae = new WEdge<String>(this.a, this.e, 1);
-        WEdge<String> ab = new WEdge<String>(this.a, this.b, THREE);
-        WEdge<String> be = new WEdge<String>(this.b, this.e, FOUR);
-        WEdge<String> bc = new WEdge<String>(this.b, this.c, FIVE);
-        WEdge<String> ec = new WEdge<String>(this.e, this.c, SIX);
-        WEdge<String> cd = new WEdge<String>(this.c, this.d, TWO);
-        WEdge<String> ed = new WEdge<String>(this.e, this.d, SEVEN);
         
         assertEquals(FIVE, this.testGraph.numVerts());
         
@@ -157,19 +147,13 @@ public class WGraphP4TestAlternate {
     @Test
     public void testDeletion() {
         this.testGraph = new WGraphP4<String>();
-        
-        GVertex<String> a = new GVertex<String>("a", 0);
-        GVertex<String> b = new GVertex<String>("b", 1);
-        GVertex<String> c = new GVertex<String>("c", TWO);
-        GVertex<String> d = new GVertex<String>("d", THREE);
-        GVertex<String> e = new GVertex<String>("e", FOUR);
         ArrayList<GVertex<String>> verts 
             = new ArrayList<GVertex<String>>();
-        verts.add(a); 
-        verts.add(b); 
-        verts.add(c);
-        verts.add(d); 
-        verts.add(e);
+        verts.add(this.a); 
+        verts.add(this.b); 
+        verts.add(this.c);
+        verts.add(this.d); 
+        verts.add(this.e);
         for (GVertex<String> v: verts) {
             this.testGraph.addVertex(v);
         }
@@ -219,7 +203,7 @@ public class WGraphP4TestAlternate {
         assertEquals("connection not deleted", 
             false, this.testGraph.areAdjacent(this.e, this.c));
         assertTrue(this.testGraph.deleteEdge(this.c, this.d));
-        assertEquals("Edge num not updated", one, this.testGraph.numEdges());
+        assertEquals("Edge num not updated", 1, this.testGraph.numEdges());
         assertFalse(this.testGraph.deleteEdge(this.d, this.c));
         assertEquals("connection not deleted", 
             false, this.testGraph.areAdjacent(this.c, this.d));
@@ -328,10 +312,10 @@ public class WGraphP4TestAlternate {
             this.testGraph.neighbors(this.a).toString());
         assertTrue(this.testGraph.deleteEdge(this.a, this.a));
         assertEquals("[4, 1, 2]", this.testGraph.neighbors(this.a).toString());
-        assertTrue(test.testGraph.deleteEdge(this.a, this.b));
-        assertFalse(test.testGraph.deleteEdge(this.b, this.b));
-        assertTrue(test.testGraph.deleteEdge(this.a, this.e));
-        assertTrue(test.testGraph.deleteEdge(this.a, this.c));
+        assertTrue(this.testGraph.deleteEdge(this.a, this.b));
+        assertFalse(this.testGraph.deleteEdge(this.b, this.b));
+        assertTrue(this.testGraph.deleteEdge(this.a, this.e));
+        assertTrue(this.testGraph.deleteEdge(this.a, this.c));
         assertEquals("[]", this.testGraph.neighbors(this.a).toString());
     }
     
@@ -410,9 +394,9 @@ public class WGraphP4TestAlternate {
     @Test
     public void kruskalsTestOneGraph() {
         List<WEdge<String>> k = this.testGraph.kruskals();
-        for (WEdge<String> e: this.expectedEdges) {
-            assertTrue(k.contains(e));
-            k.remove(e);
+        for (WEdge<String> z: this.expectedEdges) {
+            assertTrue(k.contains(z));
+            k.remove(z);
         }
         assertTrue(k.size() == 0);    
     }
@@ -422,11 +406,11 @@ public class WGraphP4TestAlternate {
      */
     @Test
     public void kruskalsTestTHREEGraph() {
-        GVertex<String> f = new GVertex<String>("f", FIVE);
+        this.f = new GVertex<String>("f", FIVE);
         GVertex<String> g = new GVertex<String>("g", SIX);
         GVertex<String> h = new GVertex<String>("h", SEVEN);
-        WEdge<String> fg = new WEdge<String>(f, g, TEN);
-        WEdge<String> fh = new WEdge<String>(f, h, TWO);
+        WEdge<String> fg = new WEdge<String>(this.f, g, TEN);
+        WEdge<String> fh = new WEdge<String>(this.f, h, TWO);
         WEdge<String> hg = new WEdge<String>(h, g, TWELVE);
         this.expectedEdges.add(fh); 
         this.expectedEdges.add(fg);
@@ -434,9 +418,9 @@ public class WGraphP4TestAlternate {
         this.testGraph.addEdge(fh); 
         this.testGraph.addEdge(hg);
         List<WEdge<String>> k = this.testGraph.kruskals();
-        for (WEdge<String> e: this.expectedEdges) {
-            assertTrue(k.contains(e));
-            k.remove(e);
+        for (WEdge<String> z: this.expectedEdges) {
+            assertTrue(k.contains(z));
+            k.remove(z);
         }
         assertTrue(k.size() == 0);     
     }

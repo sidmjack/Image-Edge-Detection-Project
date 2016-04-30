@@ -1,4 +1,9 @@
 /**
+ * Name: Sidney Jackson & Lawrence Wolf-Sonkin
+ * Blackboard Login: sjacks85 & lwolfso1 & eheredi1
+ * Course: Data Structures 600.226.02
+ **/
+/**
  * Pixel Class (Will serve as the Vertex Data for Purposes of P4).
  */
 public final class Pixel extends RGBSet {
